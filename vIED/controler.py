@@ -101,6 +101,7 @@ class vIED_Brain:
         ptoc_n = [{}, {}, {}]
         ptuv = [{}, {}, {}]
         ptov = [{}, {}, {}]
+        pdis = [{}, {}, {}]
         for i in range(3):
             conf = protConfig['PIOC Phase'][i]
             pioc_p[i]['config'] = conf
@@ -144,12 +145,25 @@ class vIED_Brain:
             ptov[i]['running'] = False
             ptov[i]['enable'] = conf['Enabled']
 
+            conf = protConfig['PDIS'][i]
+            pdis[i]['config'] = conf
+            if conf['Type'] == 'Admitancia':
+                pdis[i]['command'] = f"{C_buildPath}/pdis_moh {i+1} {conf['Ajuste']} {conf['Angle']} {conf['Time Delay']} PROT.P{i+1}PDIS.Op.general"
+            elif conf['Type'] == 'Reatancia':
+                pdis[i]['command'] = f"{C_buildPath}/pdis_reat {i+1} {conf['Ajuste']} {conf['Time Delay']} PROT.P{i+1}PDIS.Op.general"
+            elif conf['Type'] == 'Impedancia':
+                pdis[i]['command'] = f"{C_buildPath}/pdis_ohm {i+1} {conf['Ajuste']} {conf['Time Delay']} PROT.P{i+1}PDIS.Op.general"
+            pdis[i]['process'] = None
+            pdis[i]['running'] = False
+            pdis[i]['enable'] = conf['Enabled']
+
         self.prot['PIOC Phase'] = pioc_p
         self.prot['PTOC Phase'] = ptoc_p
         self.prot['PIOC Neutral'] = pioc_n
         self.prot['PTOC Neutral'] = ptoc_n
         self.prot['PTUV'] = ptuv
         self.prot['PTOV'] = ptov
+        self.prot['PDIS'] = pdis
 
     def runProt(self, name):
         if name == 'all':
