@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataframes to HTML Tables</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 24px;
+            padding: 20px;
+        }
+
+        .table-container {
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+            max-width: 45%; /* Adjust the width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #e5e5e5;
+        }
+
+        #refreshButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Dataframes to HTML Tables</h1>
+    {% for df in dataframes %}
+    <div class="table-container">
+        <h2>Table {{ name[loop.index-1] }}</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in df.columns %}
+                    <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in df.iterrows() %}
+                <tr>
+                    {% for column in df.columns %}
+                    <td>{{ row[column] }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    \<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <button id="refreshButton" onclick="toggleRefresh();">Stop Refresh</button>
+    <script>
+        // Function to refresh the page
+        let isRefreshing = true;
+        function toggleRefresh() {
+            if (isRefreshing) {
+                isRefreshing = false;
+                document.getElementById("refreshButton").innerHTML = "Start Refresh";
+            } else {
+                isRefreshing = true;
+                document.getElementById("refreshButton").innerHTML = "Stop Refresh";
+            }
+        }
+
+        function refreshPage() {
+            if (isRefreshing) {
+                location.reload();
+            }
+        }
+
+        // Set up an interval to call refreshPage every 500 milliseconds (0.5 seconds)
+        const refreshInterval = setInterval(refreshPage, 500);
+    </script>
+</body>
+</html>

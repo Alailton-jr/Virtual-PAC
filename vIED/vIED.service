@@ -1,0 +1,12 @@
+#File
+[Unit]
+Description=Virtual IED
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /root/vIED/controler.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+#file

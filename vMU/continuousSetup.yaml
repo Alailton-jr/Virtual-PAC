@@ -1,0 +1,28 @@
+Test:
+  pps: 4800
+  type: Iabc
+  values:
+  - angle: 0
+    frequency: 60
+    module: 1900
+  - angle: 120
+    frequency: 60
+    module: 1900
+  - angle: 120
+    frequency: 60
+    module: 1900
+  - angle: 0
+    frequency: 60
+    module: 100
+  - angle: 0
+    frequency: 60
+    module: 13800
+  - angle: 120
+    frequency: 60
+    module: 13800
+  - angle: 120
+    frequency: 60
+    module: 13800
+  - angle: 0
+    frequency: 60
+    module: 80

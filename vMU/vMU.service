@@ -1,0 +1,12 @@
+#File
+[Unit]
+Description=Virtual Merging Unit
+
+[Service]
+Type=simple
+ExecStart=/root/vMU/controler.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+#file

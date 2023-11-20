@@ -1,0 +1,14 @@
+network:
+  ethernets:
+    enp1s0:
+      addresses:
+      - 10.3.193.104/16
+      dhcp4: false
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 8.8.4.4
+      routes:
+      - to: 0.0.0.0/0
+        via: 10.3.192.1
+  version: 2

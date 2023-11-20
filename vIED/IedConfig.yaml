@@ -1,0 +1,101 @@
+General Settings:
+  CurrentNominal: 1200
+  IpAddress: 10.3.193.102
+  Port: 8080
+  VoltageNominal: 13800
+  frequecy: 60
+Goose:
+- appId: 16384
+  cbRef: GOOSE
+  confRef: 1
+  dataSet:
+  - PROT.P1PIOC.Op.general
+  dataSetName: DataSet_0
+  goId: GO01
+  macDst: 01:0C:CD:01:00:00
+  maxTime: 2000
+  minTime: 2
+  vLanId: 256
+  vLanPriority: 4
+Logic:
+  Name: Temp
+Protection Function:
+  PIOC Neutral:
+  - Enabled: false
+    Pickup: 0
+    Time Delay: 0
+  - Enabled: false
+    Pickup: 0
+    Time Delay: 0
+  - Enabled: false
+    Pickup: 0
+    Time Delay: 0
+  PIOC Phase:
+  - Enabled: true
+    Pickup: 1200
+    Time Delay: 0.5
+  - Enabled: true
+    Pickup: 3600
+    Time Delay: 0.2
+  - Enabled: true
+    Pickup: 4800
+    Time Delay: 0.05
+  PTOC Neutral:
+  - Curve: C1
+    Enabled: false
+    Pickup: 0
+    Time Dial: 0
+  - Curve: C1
+    Enabled: false
+    Pickup: 0
+    Time Dial: 0
+  - Curve: C1
+    Enabled: false
+    Pickup: 0
+    Time Dial: 0
+  PTOC Phase:
+  - Curve: C5
+    Enabled: true
+    Pickup: 12
+    Time Dial: 0.5
+  - Curve: U2
+    Enabled: true
+    Pickup: 12
+    Time Dial: 2
+  - Curve: U3
+    Enabled: true
+    Pickup: 16
+    Time Dial: 4
+  PTOV:
+  - Enabled: true
+    Pickup: 14490
+    Time Delay: 0.5
+  - Enabled: true
+    Pickup: 15180
+    Time Delay: 0.3
+  - Enabled: false
+    Pickup: 0
+    Time Delay: 0
+  PTUV:
+  - Enabled: true
+    Pickup: 13110
+    Time Delay: 0.5
+  - Enabled: true
+    Pickup: 12420
+    Time Delay: 0.2
+  - Enabled: false
+    Pickup: 0
+    Time Delay: 0
+Sniffer:
+  AppId: 0
+  ConfRev: 0
+  Frequency: 60
+  Iface: null
+  IfaceIntern: null
+  MacDst: 01:0C:CD:04:00:00
+  MacIntern: 01:0C:CD:0A:00:00
+  NoAsdu: 0
+  Ppc: 80
+  Pps: 4800
+  SvId: TRTC
+  Vlan: 0

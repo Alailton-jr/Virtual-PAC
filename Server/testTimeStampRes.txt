@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <pcap.h>
+#include <stdint.h>
+#include <sched.h>
+#include <stdlib.h>
+
+uint64_t t0 = 0;
+uint64_t t1 = 0;
+
+void packet_handler(unsigned char *user_data, const struct pcap_pkthdr *pkthdr, const unsigned char *packet) {
+    // printf("Packet captured. Length: %d\n", pkthdr->len);
+    if (pkthdr->len == 120)
+    {
+        t1 = pkthdr->ts.tv_sec*9 + pkthdr->ts.tv_usec;
+        printf("%lu\n", t1-t0);
+        t0 = t1;
+    }
+    
+}
+
+int compare_descending(const void *a, const void *b) {
+    return (*(int *)b - *(int *)a);
+}
+
+int main()
+{
+
+    struct sched_param paramS;
+    paramS.sched_priority = 80;
+    sched_setscheduler(0,SCHED_FIFO, &paramS);
+
+    char errbuf[PCAP_ERRBUF_SIZE];
+    pcap_t *handle;
+    
+    handle = pcap_create("eno1", errbuf);
+    if (handle == NULL) {
+        fprintf(stderr, "Error creating handle: %s\n", errbuf);
+        return 1;
+    }
+
+    // Set time stamp precision to microsecond
+    if (pcap_set_tstamp_precision(handle, PCAP_TSTAMP_ADAPTER_HPREC) != 0) {
+        fprintf(stderr, "Error setting time stamp precision: %s\n", pcap_geterr(handle));
+        pcap_close(handle);
+        return 1;
+    }
+
+    // Activate the capture handle
+    if (pcap_activate(handle) != 0) {
+        fprintf(stderr, "Error activating handle: %s\n", pcap_geterr(handle));
+        pcap_close(handle);
+        return 1;
+    }
+    const unsigned char *packet;
+    struct pcap_pkthdr header;
+    long intergap[90000] = {0};
+    int i = 0;
+    while (1) { // Infinite loop
+        // Capture a single packet
+        packet = pcap_next(handle, &header);
+        if (header.len == 120)
+        {
+            t1 = header.ts.tv_sec*9 + header.ts.tv_usec;
+            printf("%lu\n", t1-t0);
+            // if (t1-t0 < 220000)
+            //     intergap[i] = t1-t0;
+            t0 = t1;
+            i++;
+            if (i==90000-1)
+                break;
+        }
+    }
+
+    qsort(intergap, 90000, sizeof(long), compare_descending);
+
+    for (int ii=0;ii<35;ii++)
+        printf("%ld\n", intergap[ii]);
+
+    // int max_value = intergap[0]; // Initialize with the first element
+    // for (int i = 1; i < 90000; i++) {
+    //     if (intergap[i] > max_value) {
+    //         max_value = intergap[i];
+    //     }
+    // }
+
+    // Start capturing packets
+    // pcap_loop(handle, 0, packet_handler, NULL);
+
+    // Close the capture interface
+    pcap_close(handle);
+
+    return 0;
+}
