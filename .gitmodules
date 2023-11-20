@@ -1,0 +1,9 @@
+[submodule "vIED"]
+	path = vIED
+	url = https://github.com/Alailton-jr/vIED.git
+[submodule "vMU"]
+	path = vMU
+	url = https://github.com/Alailton-jr/vMU.git
+[submodule "Server"]
+	path = Server
+	url = https://github.com/Alailton-jr/vSubstation.git
