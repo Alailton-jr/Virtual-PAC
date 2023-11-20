@@ -1,6 +1,6 @@
 General Settings:
   CurrentNominal: 1200
-  IpAddress: 10.3.193.102
+  IpAddress: 10.3.193.101
   Port: 8080
   VoltageNominal: 13800
   frequecy: 60
@@ -20,6 +20,27 @@ Goose:
 Logic:
   Name: Temp
 Protection Function:
+  PDIR:
+    Angle: 0
+    Enabled: false
+    Pickup: 0
+    Polarity: null
+  PDIS:
+  - Ajuste: 10.4
+    Angle: 30
+    Enabled: true
+    Time Delay: 0
+    Type: Admitancia
+  - Ajuste: 23.4
+    Angle: 30
+    Enabled: true
+    Time Delay: 0.5
+    Type: Admitancia
+  - Ajuste: 32
+    Angle: 80
+    Enabled: true
+    Time Delay: 1
+    Type: Reatancia
   PIOC Neutral:
   - Enabled: false
     Pickup: 0
