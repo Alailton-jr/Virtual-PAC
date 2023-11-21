@@ -1,0 +1,196 @@
+{
+  "devices": [
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied02",
+      "ip": "10.3.193.102",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied03",
+      "ip": "10.3.193.103",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied04",
+      "ip": "10.3.193.104",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied05",
+      "ip": "10.3.193.105",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied06",
+      "ip": "10.3.193.106",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "IED07",
+      "ip": "10.3.193.100",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu02",
+      "ip": "10.3.193.122",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu03",
+      "ip": "10.3.193.123",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu04",
+      "ip": "10.3.193.124",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu05",
+      "ip": "10.3.193.125",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu06",
+      "ip": "10.3.193.126",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu07",
+      "ip": "10.3.193.120",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 0,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu08",
+      "ip": "10.3.193.120",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    },
+    {
+      "type": 0,
+      "VmState": 1,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "ied01",
+      "ip": "10.3.193.101",
+      "processors": 0,
+      "memory": 0,
+      "port": 8080,
+      "password": null
+    },
+    {
+      "type": 1,
+      "VmState": 1,
+      "ApiState": 0,
+      "ApiCon": null,
+      "name": "mu01",
+      "ip": "10.3.193.121",
+      "processors": 0,
+      "memory": 0,
+      "port": 8081,
+      "password": null
+    }
+  ],
+  "communicationConfig": {
+    "status": false,
+    "name": "Server 01",
+    "password": "passwd",
+    "ip": "10.3.193.10",
+    "port": 8082
+  },
+  "serverCon": {
+    "serverIp": "0.0.0.0",
+    "serverPort": 8000,
+    "isConnected": false
+  }
+}

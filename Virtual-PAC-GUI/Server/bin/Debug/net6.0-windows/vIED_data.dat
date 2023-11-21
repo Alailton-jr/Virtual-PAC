@@ -1,0 +1,301 @@
+{
+  "wasSent": false,
+  "pioc": {
+    "phase": {
+      "currentType": 1,
+      "timeType": 1,
+      "level": [
+        {
+          "enabled": true,
+          "pickup": 1200.0,
+          "timeDelay": 0.5
+        },
+        {
+          "enabled": true,
+          "pickup": 3600.0,
+          "timeDelay": 0.2
+        },
+        {
+          "enabled": true,
+          "pickup": 4800.0,
+          "timeDelay": 0.05
+        }
+      ]
+    },
+    "neutral": {
+      "currentType": 1,
+      "timeType": 1,
+      "level": [
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        }
+      ]
+    }
+  },
+  "ptoc": {
+    "phase": {
+      "curves": {
+        "U1": {
+          "A": 0.0226,
+          "B": 0.0104,
+          "C": 0.02
+        },
+        "U2": {
+          "A": 0.18,
+          "B": 5.95,
+          "C": 2.0
+        },
+        "U3": {
+          "A": 0.0963,
+          "B": 3.88,
+          "C": 2.0
+        },
+        "U4": {
+          "A": 0.0352,
+          "B": 5.67,
+          "C": 2.0
+        },
+        "U5": {
+          "A": 0.00262,
+          "B": 0.00342,
+          "C": 0.02
+        },
+        "C1": {
+          "A": 0.0,
+          "B": 0.14,
+          "C": 0.02
+        },
+        "C2": {
+          "A": 0.0,
+          "B": 13.5,
+          "C": 1.0
+        },
+        "C3": {
+          "A": 0.0,
+          "B": 80.0,
+          "C": 2.0
+        },
+        "C4": {
+          "A": 0.0,
+          "B": 120.0,
+          "C": 1.0
+        },
+        "C5": {
+          "A": 0.0,
+          "B": 0.05,
+          "C": 0.04
+        }
+      },
+      "level": [
+        {
+          "enabled": true,
+          "pickup": 12.0,
+          "timeDial": 0.5,
+          "Curve": "C5"
+        },
+        {
+          "enabled": true,
+          "pickup": 12.0,
+          "timeDial": 2.0,
+          "Curve": "U2"
+        },
+        {
+          "enabled": true,
+          "pickup": 16.0,
+          "timeDial": 4.0,
+          "Curve": "U3"
+        }
+      ]
+    },
+    "neutral": {
+      "curves": {
+        "U1": {
+          "A": 0.0226,
+          "B": 0.0104,
+          "C": 0.02
+        },
+        "U2": {
+          "A": 0.18,
+          "B": 5.95,
+          "C": 2.0
+        },
+        "U3": {
+          "A": 0.0963,
+          "B": 3.88,
+          "C": 2.0
+        },
+        "U4": {
+          "A": 0.0352,
+          "B": 5.67,
+          "C": 2.0
+        },
+        "U5": {
+          "A": 0.00262,
+          "B": 0.00342,
+          "C": 0.02
+        },
+        "C1": {
+          "A": 0.0,
+          "B": 0.14,
+          "C": 0.02
+        },
+        "C2": {
+          "A": 0.0,
+          "B": 13.5,
+          "C": 1.0
+        },
+        "C3": {
+          "A": 0.0,
+          "B": 80.0,
+          "C": 2.0
+        },
+        "C4": {
+          "A": 0.0,
+          "B": 120.0,
+          "C": 1.0
+        },
+        "C5": {
+          "A": 0.0,
+          "B": 0.05,
+          "C": 0.04
+        }
+      },
+      "level": [
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        }
+      ]
+    }
+  },
+  "pdir": null,
+  "ptuv": {
+    "voltageType": 0,
+    "timeType": 1,
+    "level": [
+      {
+        "enabled": true,
+        "pickup": 13110.0,
+        "timeDelay": 0.5
+      },
+      {
+        "enabled": true,
+        "pickup": 12420.0,
+        "timeDelay": 0.2
+      },
+      {
+        "enabled": false,
+        "pickup": 0.0,
+        "timeDelay": 0.0
+      }
+    ]
+  },
+  "ptov": {
+    "voltageType": 0,
+    "timeType": 1,
+    "level": [
+      {
+        "enabled": true,
+        "pickup": 14490.0,
+        "timeDelay": 0.5
+      },
+      {
+        "enabled": true,
+        "pickup": 15180.0,
+        "timeDelay": 0.3
+      },
+      {
+        "enabled": false,
+        "pickup": 0.0,
+        "timeDelay": 0.0
+      }
+    ]
+  },
+  "general": {
+    "NominalCurrent": 1200.0,
+    "NominalVoltage": 13800.0,
+    "frequency": 60.0,
+    "ipAddress": "10.3.193.101",
+    "port": 0
+  },
+  "network": {
+    "iface": "enp1s0",
+    "ppc": 80
+  },
+  "sampledValue": {
+    "frequency": 60.0,
+    "svId": "TRTC",
+    "vLan": 0,
+    "appId": 0,
+    "noAsdu": 0,
+    "macDest": "01:0C:CD:04:00:00",
+    "confRev": 0
+  },
+  "communication": {
+    "status": false,
+    "name": null,
+    "password": "passwd",
+    "ip": "10.3.193.101",
+    "port": 8080
+  },
+  "sclConf": {
+    "ldDevice": null,
+    "scl": null
+  },
+  "iecConf": {
+    "dataSet": [],
+    "goSendList": [
+      {
+        "macDst": "01:0C:CD:01:00:00",
+        "goId": "GO01",
+        "appId": 16384,
+        "vLanId": 256,
+        "vLanPriority": 4,
+        "minTime": 2,
+        "maxTime": 2000,
+        "cbRef": "GOOSE",
+        "confRef": 1,
+        "dataSetName": "DataSet_0",
+        "dataSet": {
+          "dataSetName": null,
+          "desc": null,
+          "data": null,
+          "treeViewData": []
+        }
+      }
+    ],
+    "iedModel": {
+      "model": null
+    }
+  },
+  "serverCon": {
+    "serverIp": "10.3.193.101",
+    "serverPort": 8080
+  }
+}
