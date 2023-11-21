@@ -1,0 +1,115 @@
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.exe
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.deps.json
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.runtimeconfig.json
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.AssemblyReference.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.GenerateResource.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfo.cs
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CoreCompileInputs.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\refint\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.WindowsForms.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CopyComplete
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\YamlDotNet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Network.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Sequencer.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Properties.Resources.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Comunication.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.SequencerResults.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.exe
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.deps.json
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.runtimeconfig.json
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.pdb
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.WindowsForms.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\YamlDotNet.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.AssemblyReference.cache
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Comunication.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.General.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Network.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Properties.Resources.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Sequencer.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.SequencerResults.resources
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.GenerateResource.cache
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.GeneratedMSBuildEditorConfig.editorconfig
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfo.cs
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CoreCompileInputs.cache
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CopyComplete
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\refint\TestSet.dll
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
+G:\Meu Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.continuous.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.MainForm.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.exe
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.deps.json
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.runtimeconfig.json
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\OxyPlot.WindowsForms.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\YamlDotNet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.AssemblyReference.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Comunication.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.continuous.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.MainForm.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Network.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Properties.Resources.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.Sequencer.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.SequencerResults.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.GenerateResource.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfo.cs
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CoreCompileInputs.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CopyComplete
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\refint\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\obj\Debug\net6.0-windows\TestSet.ImportSclForm.resources
+C:\Users\ALAILTON\My Drive\Faculdade\TCC\Código\Visual Studio\TestSet\TestSet\bin\Debug\net6.0-windows\WindowsInput.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.exe
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.deps.json
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.runtimeconfig.json
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\WindowsInput.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\OxyPlot.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\OxyPlot.WindowsForms.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\YamlDotNet.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.AssemblyReference.cache
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Comunication.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.continuous.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.ImportSclForm.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.MainForm.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Network.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Properties.Resources.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Sequencer.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.SequencerResults.resources
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.GenerateResource.cache
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfo.cs
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CoreCompileInputs.cache
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CopyComplete
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\refint\TestSet.dll
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
+C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll

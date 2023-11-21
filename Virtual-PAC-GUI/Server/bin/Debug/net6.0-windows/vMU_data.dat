@@ -1,0 +1,222 @@
+{
+  "networkConfig": {
+    "svConfig": {
+      "frequency": 60,
+      "svId": "TRTC",
+      "vLan": 256,
+      "appId": 16384,
+      "noAsdu": 1,
+      "macDest": "01-0C-CD-04-00-00",
+      "confRev": 1
+    },
+    "goConfig": {
+      "controlRef": "GOOSE",
+      "goId": "GO01",
+      "vLan": 256,
+      "appId": 16384,
+      "macSrc": "01-0C-CD-01-00-00",
+      "confRev": 0
+    }
+  },
+  "communicationConfig": {
+    "status": false,
+    "name": null,
+    "password": null,
+    "ip": "10.3.193.121",
+    "port": 8081
+  },
+  "continuousConfig": {
+    "data": [
+      {
+        "Mod": 1200.0,
+        "Ang": 0.0
+      },
+      {
+        "Mod": 1200.0,
+        "Ang": -120.0
+      },
+      {
+        "Mod": 1200.0,
+        "Ang": 120.0
+      },
+      {
+        "Mod": 100.0,
+        "Ang": 0.0
+      },
+      {
+        "Mod": 13800.0,
+        "Ang": 0.0
+      },
+      {
+        "Mod": 13800.0,
+        "Ang": 120.0
+      },
+      {
+        "Mod": 13800.0,
+        "Ang": 120.0
+      },
+      {
+        "Mod": 80.0,
+        "Ang": 0.0
+      }
+    ]
+  },
+  "generalConfig": {
+    "ip": "10.3.193.121",
+    "port": 8081
+  },
+  "connectionFlag": false,
+  "sequencesConfig": [
+    {
+      "name": "Sequence 1",
+      "time": 3.0,
+      "data": [
+        {
+          "name": null,
+          "module": 400.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 400.0,
+          "angle": -120.0
+        },
+        {
+          "name": null,
+          "module": 400.0,
+          "angle": 120.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Sequence 2",
+      "time": 2.0,
+      "data": [
+        {
+          "name": null,
+          "module": 1450.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 1450.0,
+          "angle": -120.0
+        },
+        {
+          "name": null,
+          "module": 1450.0,
+          "angle": 120.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Sequence 3",
+      "time": 1.0,
+      "data": [
+        {
+          "name": null,
+          "module": 200.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 200.0,
+          "angle": -120.0
+        },
+        {
+          "name": null,
+          "module": 200.0,
+          "angle": 120.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        },
+        {
+          "name": null,
+          "module": 0.0,
+          "angle": 0.0
+        }
+      ]
+    }
+  ],
+  "testRun": {
+    "startedTime": 0.0,
+    "endedTime": 0.0,
+    "tripTime": 0.0,
+    "supposedTripTime": 0.0,
+    "currentTime": 0.0,
+    "delay": 0.0,
+    "input": null
+  },
+  "serverCon": {
+    "serverIp": "10.3.193.121",
+    "serverPort": 8081
+  }
+}

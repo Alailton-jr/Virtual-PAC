@@ -1,0 +1,236 @@
+{
+  "connectionFlag": false,
+  "wasSent": false,
+  "pioc": {
+    "phase": {
+      "currentType": 1,
+      "timeType": 1,
+      "level": [
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        }
+      ]
+    },
+    "neutral": {
+      "currentType": 1,
+      "timeType": 1,
+      "level": [
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        },
+        {
+          "enabled": true,
+          "pickup": 0.0,
+          "timeDelay": 0.0
+        }
+      ]
+    }
+  },
+  "ptoc": {
+    "phase": {
+      "curves": {
+        "U1": {
+          "A": 0.0226,
+          "B": 0.0104,
+          "C": 0.02
+        },
+        "U2": {
+          "A": 0.18,
+          "B": 5.95,
+          "C": 2.0
+        },
+        "U3": {
+          "A": 0.0963,
+          "B": 3.88,
+          "C": 2.0
+        },
+        "U4": {
+          "A": 0.0352,
+          "B": 5.67,
+          "C": 2.0
+        },
+        "U5": {
+          "A": 0.00262,
+          "B": 0.00342,
+          "C": 0.02
+        },
+        "C1": {
+          "A": 0.0,
+          "B": 0.14,
+          "C": 0.02
+        },
+        "C2": {
+          "A": 0.0,
+          "B": 13.5,
+          "C": 1.0
+        },
+        "C3": {
+          "A": 0.0,
+          "B": 80.0,
+          "C": 2.0
+        },
+        "C4": {
+          "A": 0.0,
+          "B": 120.0,
+          "C": 1.0
+        },
+        "C5": {
+          "A": 0.0,
+          "B": 0.05,
+          "C": 0.04
+        }
+      },
+      "level": [
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        }
+      ]
+    },
+    "neutral": {
+      "curves": {
+        "U1": {
+          "A": 0.0226,
+          "B": 0.0104,
+          "C": 0.02
+        },
+        "U2": {
+          "A": 0.18,
+          "B": 5.95,
+          "C": 2.0
+        },
+        "U3": {
+          "A": 0.0963,
+          "B": 3.88,
+          "C": 2.0
+        },
+        "U4": {
+          "A": 0.0352,
+          "B": 5.67,
+          "C": 2.0
+        },
+        "U5": {
+          "A": 0.00262,
+          "B": 0.00342,
+          "C": 0.02
+        },
+        "C1": {
+          "A": 0.0,
+          "B": 0.14,
+          "C": 0.02
+        },
+        "C2": {
+          "A": 0.0,
+          "B": 13.5,
+          "C": 1.0
+        },
+        "C3": {
+          "A": 0.0,
+          "B": 80.0,
+          "C": 2.0
+        },
+        "C4": {
+          "A": 0.0,
+          "B": 120.0,
+          "C": 1.0
+        },
+        "C5": {
+          "A": 0.0,
+          "B": 0.05,
+          "C": 0.04
+        }
+      },
+      "level": [
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        },
+        {
+          "enabled": false,
+          "pickup": 0.0,
+          "timeDial": 0.0,
+          "Curve": "C1"
+        }
+      ]
+    }
+  },
+  "ptuv": null,
+  "ptov": null,
+  "general": {
+    "NominalCurrent": 10.0,
+    "NominalVoltage": 0.0,
+    "frequency": 60.0,
+    "ipAddress": null,
+    "port": 0
+  },
+  "network": {
+    "iface": "enp1s0",
+    "ppc": 80
+  },
+  "sampledValue": {
+    "frequency": 0.0,
+    "svId": "TRTC",
+    "vLan": 32768,
+    "appId": 16384,
+    "noAsdu": 1,
+    "macDest": "01:0C:CD:04:00:00",
+    "confRev": 1
+  },
+  "communication": {
+    "status": false,
+    "name": "IED01",
+    "password": "passwd",
+    "ip": "192.168.100.30",
+    "port": 8002
+  },
+  "sclConf": {
+    "ldDevice": null,
+    "scl": null
+  },
+  "iecConf": null,
+  "serverCon": {
+    "serverIp": "0.0.0.0",
+    "serverPort": 8000
+  }
+}
