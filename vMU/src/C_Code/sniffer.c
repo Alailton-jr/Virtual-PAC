@@ -23,7 +23,7 @@ const char* goId;
 uint8_t *stopFlag;
 uint8_t logicType;
 uint8_t goInputSize;
-uint8_t frameCaptured[MAX_THREADS][2048];
+uint8_t frameCaptured[NUM_THREADS][2048];
 int32_t idxThreads = 0;
 pthread_mutex_t mutex;
 
@@ -115,7 +115,7 @@ int runSniffer()
                 memcpy(frameCaptured[idxThreads], eth_p->rx_buffer, rx_bytes);
                 thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0]);
                 idxThreads++;
-                if (idxThreads == MAX_THREADS)
+                if (idxThreads == NUM_THREADS)
                     idxThreads = 0;
             }
         }

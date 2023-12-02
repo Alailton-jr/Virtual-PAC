@@ -23,19 +23,16 @@ int main(int argc, char *argv[])
     signal(SIGINT, sigterm_handler);
     signal(SIGTERM, sigterm_handler);
 
-    // Pickup, Ang, Delay, Trip Tag
-    /*
-        Mho -> Adimitância Y
-    */
-
-    // Pickup, rTorq, Trip Tag
+    // Level, Pickup, Angle, Delay, Trip Tag
     if (argc != 6){
         printf("Usage: ./pdir <level> <pickup> <angle> <delay> <trip tag>\n");
         sigterm_handler(1);
     }
+
     struct sched_param paramS;
     paramS.sched_priority = 80;
     sched_setscheduler(0,SCHED_FIFO, &paramS);
+
     printf("Running PDIR Phase with:\n");
     printf("Level: %s\n", argv[1]);
     printf("Pickup: %s\n", argv[2]);
@@ -43,11 +40,11 @@ int main(int argc, char *argv[])
     printf("Delay: %s\n", argv[4]);
     printf("Trip Tag: %s\n", argv[5]);
     
-    char *endptr;
     
     shm_setup_s valuesShm = openSharedMemory("phasor",16 * sizeof(double));
     double* values = (double*) valuesShm.ptr;
 
+    char *endptr;
     char tripName[] = "PDIS_TRIP_0";
     char pickupName[] = "PIOC_PICKUP_0";
     snprintf(tripName,sizeof(tripName) ,"PDIS_TRIP_%d", (int) strtod(argv[1], &endptr));
@@ -85,10 +82,10 @@ int main(int argc, char *argv[])
 
             zLimiar = pickup * cos(angle - z[i+i+1]);
 
-            if (z[i+i] > zLimiar){
+            if (z[i+i] > zLimiar){ // Pickup
                 clock_gettime(CLOCK_MONOTONIC ,&t0);
                 tDelay[i] = (t0.tv_sec - tPickup[i].tv_sec) + (t0.tv_nsec - tPickup[i].tv_nsec) / 1e9;
-                if (tDelay[i] > delay) {
+                if (tDelay[i] > delay) { // Trip
                     tripFlag[i] = 1;
                 }
             }
@@ -101,6 +98,5 @@ int main(int argc, char *argv[])
         tripTag[0] = tripFlag[0] | tripFlag[1] | tripFlag[2];
         wait_rest_of_period(&tsleep);
     }
-
     return 0;
 }

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         Mho -> Adimitância Y
     */
 
-    // Pickup, rTorq, Trip Tag
+    // Leven, Pickup, Delay, Trip Tag
     if (argc != 5){
         printf("Usage: ./pdir <level> <pickup> <delay> <trip tag>\n");
         sigterm_handler(1);
@@ -80,10 +80,10 @@ int main(int argc, char *argv[])
             z[i+i] =  values[i+i+4]/values[i+i];
             z[i+i+1] = values[i+i+5] - values[i+i+1];
             
-            if (z[i+i]*sin(z[i+i+1]) > pickup){
+            if (z[i+i]*sin(z[i+i+1]) > pickup){ // Pickup
                 clock_gettime(CLOCK_MONOTONIC ,&t0);
                 tDelay[i] = (t0.tv_sec - tPickup[i].tv_sec) + (t0.tv_nsec - tPickup[i].tv_nsec) / 1e9;
-                if (tDelay[i] > delay) {
+                if (tDelay[i] > delay) { // Trip
                     tripFlag[i] = 1;
                 }
             }

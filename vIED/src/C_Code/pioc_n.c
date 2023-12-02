@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
             tDelay = (t0.tv_sec - tPickup.tv_sec) + (t0.tv_nsec - tPickup.tv_nsec) / 1e9;
             if (tDelay > delay){
                 tripFlag[i] = 1;
-                // printf("Trip %d, at: %lf\n", i, tDelay);
             }
         }
         else{

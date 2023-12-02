@@ -20,7 +20,8 @@ class GoPublisher:
         self.header += bytes.fromhex(self.macSrc.replace(':','')) #macSrc
         if self.vLanId is not None: #vLan
             self.header += bytes.fromhex('8100')
-            self.header += bytes.fromhex('{:04x}'.format(self.vLanId))
+            vLandBytes = self.vLanId | (self.vLanPriority << 13)
+            self.header += bytes.fromhex('{:04x}'.format(vLandBytes))
         self.header += bytes.fromhex('88b8') #EtherType
         self.header += bytes.fromhex('{:04x}'.format(self.appId))
 
