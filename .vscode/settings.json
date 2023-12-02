@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "shmmemory.h": "c",
+        "fftw3.h": "c"
+    }
+}

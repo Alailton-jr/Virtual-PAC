@@ -1,4 +1,4 @@
-#include "send.h"
+#include "mySocket.h"
 #include "shmMemory.h"
 #include "timers.h"
 #include <sched.h>
@@ -27,11 +27,6 @@ int main(int argc, char *argv[])
     printf("Running Sequencer Replay!\n");
     if (argc != 2)
         return -1;
-
-    //Debug
-    // for (int i = 0; i < argc; i++){
-    //     printf("%s ", argv[i]);
-    // }
 
     signal(SIGTERM, sigterm_handler);
 
@@ -145,8 +140,6 @@ int main(int argc, char *argv[])
     close(buffSizeShm.id);
     close(framesShm.id);
     close(paramShm.id);
-
-
 
     return 0;
 }

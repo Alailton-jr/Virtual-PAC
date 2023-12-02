@@ -1,4 +1,4 @@
-#include "send.h"
+#include "mySocket.h"
 #include "shmMemory.h"
 #include "timers.h"
 #include <sched.h>
@@ -15,7 +15,6 @@ void sigterm_handler(int signum) {
         close(allShm[i]->id);
     exit(0);
 }
-
 
 
 int main(int argc, char *argv[])
@@ -69,19 +68,13 @@ int main(int argc, char *argv[])
     struct period_info pinfo;
     periodic_task_init(&pinfo, param[0]);
     int i = 0;
-    // memcpy(eth.tx_buffer, frames+(i*param[2]), param[2]);
 
     wait_rest_of_period(&pinfo);
-    while (*stop != 1)
-    {
+    while (*stop != 1) {
         tx_bytes = sendmsg(eth.socket, &msg_hdr, 0);
-        // sendFrame(frames+(i*param[2]),param[2], pcap_handle);
-        if (i < param[1])
-            i++;
-        else
-            i = 0;
+        if (i < param[1]) i++;
+        else i = 0;
         iov.iov_base = &frames[i][0];
-        // memcpy(eth.tx_buffer, &frames[i][0], param[2]);
         wait_rest_of_period(&pinfo);
     }
     socketCleanup(&eth);

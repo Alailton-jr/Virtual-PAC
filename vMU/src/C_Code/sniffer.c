@@ -1,5 +1,5 @@
 #include "shmMemory.h"
-#include "send.h"
+#include "mySocket.h"
 #include "threadTask.h"
 #include <fftw3.h>
 #include <time.h>
@@ -9,59 +9,65 @@
 #include <string.h>
 #include <stdint.h>
 
-#define MAX_THREADS 4
-#define MAX_RAW 80
-#define NUM_THREADS 4
-#define TASK_QUEUE_SIZE 5
-ThreadPool pool;
+//--------------- Thread Pool -----------------//
+#define NUM_THREADS 4 // Number of threads in the pool
+#define TASK_QUEUE_SIZE 5 // Max number of tasks in the queue
+ThreadPool pool; // Thread pool
 
+//------------- Pkt Processing ----------------//
+uint8_t macSrc[6]; // MAC address of the source
+const char* goId; // ID of the sampled values
+uint8_t *stopFlag; // Flag to indicate if the values are updated
+uint8_t logicType; // Type of logic to be used
+uint8_t frameCaptured[NUM_THREADS][2048]; // Buffer to store the captured packets
+int32_t idxThreads = 0; // Index of the thread to process the packet
+pthread_mutex_t mutex; // Mutex to protect the raw values
+shm_setup_s stopFlagShm; // Shared memory for stop flag
 
-int idxRaw = 0;
+struct eth_t *eth_p; // Pointer to the ethernet structure
 
-uint8_t macSrc[6];
-const char* goId;
-uint8_t *stopFlag;
-uint8_t logicType;
-uint8_t goInputSize;
-uint8_t frameCaptured[NUM_THREADS][2048];
-int32_t idxThreads = 0;
-pthread_mutex_t mutex;
+/*
+    * Process the packet captured
+    * @param args: pointer to the packet captured
+*/
+void* processPacket(void* args){
 
-int pktProcessed = 0;
-
-struct eth_t *eth_p;
-
-uint64_t t_delay[2]={0};
-struct timespec t0, t1;
-
-void* processPacket(void* args)
-{
     uint8_t* frame = (uint8_t *) args;
 
-    if (memcmp(macSrc, frame, 6) != 0)
-        return NULL;
-
     int32_t i = 0, j=0, noAsdu;
-    if (frame[12] == 0x81 && frame[13] == 0x00)
-        i = 16;
-    else
-        i = 12;
-    if (!(frame[i] == 0x88 && frame[i+1] == 0xb8))
-        return NULL;
 
-    if (frame[i+11] == 0x82)
-        i += 14;
-    else
-        i += 12;
+    // Skip Ethernet and vLAN
+    if (frame[12] == 0x81 && frame[13] == 0x00) i = 16;
+    else i = 12;
 
-    while (frame[i] != 0xab)
-    {
-        if (frame[i] == 0x83){
+    if (!(frame[i] == 0x88 && frame[i+1] == 0xb8)) return NULL; // Check if packet is GOOSE
+
+    // Skip GOOSE header
+    if (frame[i+11] == 0x82) i += 14;
+    else i += 12;
+   
+    while (frame[i] != 0xab) {  // skip all the fields until allData
+        /*
+            * 0x80 -> gocbRef
+            * 0x81 -> timeAllowedtoLive
+            * 0x82 -> datSet Name
+            * 0x83 -> goID
+            * 0x84 -> T
+            * 0x85 -> stNum
+            * 0x86 -> sqNum
+            * 0x87 -> simulation
+            * 0x88 -> confRev
+            * 0x89 -> ndsCom
+            * 0x8a -> numDatSetEntries
+            * 0x8b -> allData
+        */
+        if (frame[i] == 0x83){ // Check if it is the goID
             if (memcmp(goId, &frame[i+2], frame[i+1]) != 0)
                 return NULL;
         }
-        i += frame[i+1] + 2;
+        i += frame[i+1] + 2; // Skip field Tag, Length and Value
     }
+
     uint16_t allDataSize = frame[i+1];
     j = 0; i += 2;
     uint8_t _stopFlag = 0;
@@ -70,24 +76,14 @@ void* processPacket(void* args)
         if (logicType) _stopFlag |= frame[i+2];
         else _stopFlag &= frame[i+2];
     }
-    // if (*stopFlag != _stopFlag) printf("Data Changed on Sniffer");
     *stopFlag = _stopFlag;
-    // if(*stopFlag) printf("Stop Flag: %u\n", *stopFlag);
-
-    clock_gettime(CLOCK_MONOTONIC, &t1);
-    t_delay[0] = t1.tv_sec - t0.tv_sec;
-    if (t1.tv_nsec < t0.tv_nsec){
-        t_delay[0] -= 1;
-        t_delay[1] = 1000000000 - t0.tv_nsec + t1.tv_nsec;
-    }
-    else t_delay[1] = t1.tv_nsec - t0.tv_nsec;
-    printf("Delay: %lfs\n", (double)((double)t_delay[0] + t_delay[1]/1e9));
-    t0 = t1;
-
     return NULL;
 }
 
-int runSniffer()
+/*
+    * Run the sniffer
+*/
+int32_t runSniffer()
 {
     int32_t rx_bytes = 0;
 
@@ -111,8 +107,8 @@ int runSniffer()
     while(1) {
         rx_bytes = recvmsg(eth_p->socket, &msg_hdr, 0);
         if (rx_bytes) {
-            if (memcmp(macSrc, eth_p->rx_buffer, 6) == 0){
-                memcpy(frameCaptured[idxThreads], eth_p->rx_buffer, rx_bytes);
+            if (memcmp(macSrc, eth_p->rx_buffer, 6) == 0){ 
+                memcpy(frameCaptured[idxThreads], eth_p->rx_buffer, rx_bytes); // Copy the packet to the buffer
                 thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0]);
                 idxThreads++;
                 if (idxThreads == NUM_THREADS)
@@ -124,7 +120,10 @@ int runSniffer()
     return 0;
 }
 
-shm_setup_s stopFlagShm;
+/*
+    * Cleanup the sniffer
+    * @param signum: Signal number
+*/
 void cleanup(int signum){
     printf("Leaving Sniffer...\n");
     socketCleanup(eth_p);
@@ -140,10 +139,6 @@ int main(int argc, char *argv[])
         printf("Usage: ./sniffer <mac> <goId> <iface> <logicType>\n");
         return 1;
     }
-    // Just for test, print all argv
-    // for (int i = 0; i < argc; i++){
-    //     printf("%s ", argv[i]);
-    // }
 
     sscanf(argv[1], "%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", macSrc, macSrc+1, macSrc+2, macSrc+3, macSrc+4, macSrc+5);
     goId = argv[2];
@@ -158,13 +153,15 @@ int main(int argc, char *argv[])
     signal(SIGINT, cleanup);
     signal(SIGTERM, cleanup);
 
+    // Create the shared memory for the stop flag
     stopFlagShm = createSharedMemory("stopFlag", sizeof(uint8_t));
     stopFlag = (uint8_t*)  stopFlagShm.ptr;
     if (stopFlag == NULL)
         return -1;
 
-    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex, NULL); // Initialize the mutex
 
+    // Socket setup
     struct eth_t eth;
     eth_p = &eth;
     eth.fanout_grp = 2;
@@ -174,9 +171,8 @@ int main(int argc, char *argv[])
         return -1;
     }
     
-    thread_pool_init(&pool);
-
-    runSniffer();
+    thread_pool_init(&pool); // Initialize the thread pool
+    runSniffer(); // Run the sniffer
 
     cleanup(0);
 
