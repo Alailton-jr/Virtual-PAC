@@ -132,7 +132,8 @@ void* processPacket(void* args){
 
         if (frame[i+1] == 0x82) i += 4;
         else i += 2;
-        while (frame[i] != 0x87) {
+
+        while (frame[i] != 0x87) { // skip all the fields until Sequence of Data
             /*
                 * 0x80 -> svId
                 * 0x81 -> datSet Name
@@ -149,8 +150,7 @@ void* processPacket(void* args){
                 if (memcmp(svId, &frame[i+2], frame[i+1]) != 0)
                     return NULL;
             }
-            // Skip field Tag, Length and Value
-            i += frame[i+1] + 2;
+            i += frame[i+1] + 2; // Skip field Tag, Length and Value
         }
         j = 0;
         pthread_mutex_lock(&mutex); // Lock the raw values
@@ -184,7 +184,7 @@ void* processPacket(void* args){
 /*
     * Run the sniffer
 */
-int runSniffer()
+int32_t runSniffer()
 {
     int32_t rx_bytes = 0;
 
@@ -240,7 +240,7 @@ void cleanup(int signum){
     * @param argc: Number of arguments
     * @param argv: Array of arguments
 */
-int main(int argc, char *argv[])
+int32_t main(int argc, char *argv[])
 {   
     if (argc != 4){
         printf("Usage: ./sniffer <mac> <svId> <iface>\n");
