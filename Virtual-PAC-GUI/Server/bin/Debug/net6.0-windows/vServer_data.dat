@@ -159,8 +159,12 @@
     {
       "type": 0,
       "VmState": 1,
-      "ApiState": 0,
-      "ApiCon": null,
+      "ApiState": 1,
+      "ApiCon": {
+        "serverIp": "10.3.193.101",
+        "serverPort": 8080,
+        "isConnected": true
+      },
       "name": "ied01",
       "ip": "10.3.193.101",
       "processors": 0,
@@ -171,8 +175,12 @@
     {
       "type": 1,
       "VmState": 1,
-      "ApiState": 0,
-      "ApiCon": null,
+      "ApiState": 1,
+      "ApiCon": {
+        "serverIp": "10.3.193.121",
+        "serverPort": 8081,
+        "isConnected": true
+      },
       "name": "mu01",
       "ip": "10.3.193.121",
       "processors": 0,
@@ -189,8 +197,8 @@
     "port": 8082
   },
   "serverCon": {
-    "serverIp": "0.0.0.0",
-    "serverPort": 8000,
+    "serverIp": "10.3.193.10",
+    "serverPort": 8082,
     "isConnected": false
   }
 }

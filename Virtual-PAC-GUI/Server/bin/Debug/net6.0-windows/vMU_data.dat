@@ -28,15 +28,15 @@
   "continuousConfig": {
     "data": [
       {
-        "Mod": 1200.0,
+        "Mod": 800.0,
         "Ang": 0.0
       },
       {
-        "Mod": 1200.0,
+        "Mod": 800.0,
         "Ang": -120.0
       },
       {
-        "Mod": 1200.0,
+        "Mod": 800.0,
         "Ang": 120.0
       },
       {
@@ -69,21 +69,21 @@
   "sequencesConfig": [
     {
       "name": "Sequence 1",
-      "time": 3.0,
+      "time": 1.0,
       "data": [
         {
           "name": null,
-          "module": 400.0,
+          "module": 200.0,
           "angle": 0.0
         },
         {
           "name": null,
-          "module": 400.0,
+          "module": 200.0,
           "angle": -120.0
         },
         {
           "name": null,
-          "module": 400.0,
+          "module": 200.0,
           "angle": 120.0
         },
         {
@@ -93,18 +93,18 @@
         },
         {
           "name": null,
-          "module": 0.0,
+          "module": 13800.0,
           "angle": 0.0
         },
         {
           "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "module": 13800.0,
+          "angle": -120.0
         },
         {
           "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "module": 13800.0,
+          "angle": 120.0
         },
         {
           "name": null,
@@ -118,42 +118,42 @@
       "time": 2.0,
       "data": [
         {
-          "name": null,
-          "module": 1450.0,
+          "name": "Ia",
+          "module": 100.0,
           "angle": 0.0
         },
         {
-          "name": null,
-          "module": 1450.0,
+          "name": "Ib",
+          "module": 100.0,
           "angle": -120.0
         },
         {
-          "name": null,
-          "module": 1450.0,
+          "name": "Ic",
+          "module": 100.0,
           "angle": 120.0
         },
         {
-          "name": null,
+          "name": "In",
           "module": 0.0,
           "angle": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
+          "name": "Va",
+          "module": 13800.0,
           "angle": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
+          "name": "Vb",
+          "module": 13800.0,
           "angle": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
+          "name": "Vc",
+          "module": 13800.0,
           "angle": 0.0
         },
         {
-          "name": null,
+          "name": "Vn",
           "module": 0.0,
           "angle": 0.0
         }
@@ -185,18 +185,18 @@
         },
         {
           "name": null,
-          "module": 0.0,
+          "module": 13800.0,
           "angle": 0.0
         },
         {
           "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "module": 13800.0,
+          "angle": -120.0
         },
         {
           "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "module": 13800.0,
+          "angle": 120.0
         },
         {
           "name": null,
