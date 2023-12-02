@@ -18,23 +18,34 @@
 
 typedef void (*socket_handler)(uint8_t* frame, uint32_t len);
 
+/*
+    * Ethernet socket structure
+    * @param socket: Socket Id
+    * @param bind_addr: Socket address
+*/
 struct eth_t
 {
-    int32_t socket;
-    struct sockaddr_ll bind_addr;
-    int32_t bind_addrSize;
-    int32_t  if_index;
-    uint8_t  if_name[IF_NAMESIZE];
-    uint32_t fanout_grp;
-    uint8_t  *tx_buffer;
-    uint32_t  tx_size;
-    uint8_t  *rx_buffer;
-    uint32_t rx_size;
-
-    uint32_t msgvec_vlen;
+    int32_t socket; // Socket Id
+    struct sockaddr_ll bind_addr; // Socket address
+    int32_t bind_addrSize; // Socket address size
+    int32_t  if_index; // Interface index
+    uint8_t  if_name[IF_NAMESIZE]; // Interface name
+    uint32_t fanout_grp; // Fanout group
+    uint8_t  *tx_buffer; // Tx buffer
+    uint32_t  tx_size; // Tx buffer size
+    uint8_t  *rx_buffer; // Rx buffer
+    uint32_t rx_size; // Rx buffer size
+    uint32_t msgvec_vlen; // msg Vector length
 }typedef eth_t;
 
+/*
+    * Socket setup
+    * @param eth: Ethernet socket structure
+    * @param txSize: Tx buffer size
+    * @param rxSize: Rx buffer size
+*/
 void socketSetup(struct eth_t* eth, uint32_t txSize, uint32_t rxSize){
+
     if (txSize > 0){
         eth->tx_buffer = (uint8_t*) malloc(txSize * sizeof(uint8_t));
         memset(eth->tx_buffer, 0, txSize);
@@ -76,7 +87,7 @@ int32_t createSocket(struct eth_t *eth, char* ifName) {
     eth->bind_addr.sll_protocol = htons(ETH_P_ALL);
     eth->bind_addr.sll_ifindex  = eth->if_index;
 
-
+    // Comented for tests
     // // Bypass the kernel qdisc layer and push frames directly to the driver
     // static const int32_t sock_qdisc_bypass = 1;
     // if (setsockopt(eth->socket, SOL_PACKET, PACKET_QDISC_BYPASS, &sock_qdisc_bypass, sizeof(sock_qdisc_bypass)) == -1) {
