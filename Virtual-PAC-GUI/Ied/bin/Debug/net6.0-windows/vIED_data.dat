@@ -294,7 +294,7 @@
     "status": false,
     "name": "IED01",
     "password": "passwd",
-    "ip": "172.20.129.129",
+    "ip": "10.3.193.101",
     "port": 8080
   },
   "sclConf": {

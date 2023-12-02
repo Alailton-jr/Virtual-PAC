@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         Mho -> Adimitância Y
     */
 
-    // Pickup, rTorq, Trip Tag
+    //  Level, Pickup, Delay, Trip Tag
     if (argc != 5){
         printf("Usage: ./pdir <level> <pickup> <delay> <trip tag>\n");
         sigterm_handler(1);
@@ -42,11 +42,10 @@ int main(int argc, char *argv[])
     printf("Delay: %s\n", argv[3]);
     printf("Trip Tag: %s\n", argv[4]);
     
-    char *endptr;
-    
     shm_setup_s valuesShm = openSharedMemory("phasor",16 * sizeof(double));
     double* values = (double*) valuesShm.ptr;
-
+    
+    char *endptr;
     char tripName[] = "PDIS_TRIP_0";
     char pickupName[] = "PIOC_PICKUP_0";
     snprintf(tripName,sizeof(tripName) ,"PDIS_TRIP_%d", (int) strtod(argv[1], &endptr));
@@ -79,10 +78,10 @@ int main(int argc, char *argv[])
         {
             z[i+i] =  values[i+i+4]/values[i+i];
 
-            if (z[i+i] > pickup){
+            if (z[i+i] > pickup){ // Pickup
                 clock_gettime(CLOCK_MONOTONIC ,&t0);
                 tDelay[i] = (t0.tv_sec - tPickup[i].tv_sec) + (t0.tv_nsec - tPickup[i].tv_nsec) / 1e9;
-                if (tDelay[i] > delay) {
+                if (tDelay[i] > delay) { // Trip
                     tripFlag[i] = 1;
                 }
             }

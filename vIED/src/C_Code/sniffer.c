@@ -11,54 +11,64 @@
 #include <unistd.h>
 #include <sched.h>
 
-#define MAX_THREADS 4
-#define MAX_RAW 80
-#define NUM_DFT_PER_CYCLE 4
-#define NUM_THREADS 4
-#define TASK_QUEUE_SIZE 5
-#define NUM_CHANELS 8
-ThreadPool pool;
+/*
+    Obs: The definitions MAX_RAW and NUM_CHANELS was used considering the 4800Hz Sampled Value rate
+*/
 
-double *values;
-int32_t rawValues[MAX_RAW][8];
-int32_t idxRaw = 0;
-uint8_t updateFlag = 1;
+//--------------- Thread Pool -----------------//
+#define NUM_THREADS 4 // Number of threads in the pool
+#define MAX_RAW 80 // Number of samples per cycle
+#define NUM_DFT_PER_CYCLE 4 // Number of DFTs computation per cycle
+#define TASK_QUEUE_SIZE 5 // Max number of tasks in the queue
+#define NUM_CHANELS 8 // Number of channels
+ThreadPool pool; // Thread pool
 
-uint8_t macSrc[6];
-const char* svId;
+//---------------- Sampled Values --------------//
+double *values; // Shared memory for sampled values
+int32_t rawValues[MAX_RAW][8]; // Raw values from SV Packets
+int32_t idxRaw = 0; // Index of the raw values
+uint8_t macSrc[6]; // MAC address of the source
+const char* svId; // ID of the sampled values
 
-#define SHM_USED 1
-shm_setup_s* allShm[SHM_USED];
+//--------------- Pkt Processing ---------------//
+uint8_t frameCaptured[NUM_THREADS][2048]; // Buffer to store the captured packets
+int idxThreads = 0; // Index of the thread to process the packet
+pthread_mutex_t mutex; // Mutex to protect the raw values
+pthread_t watchDogThread; // Thread to reset the values if no packet is received
+uint8_t updateFlag = 1; // Flag to indicate if the values are updated
 
-uint8_t frameCaptured[MAX_THREADS][2048];
-int idxThreads = 0;
-pthread_mutex_t mutex;
-
-int pktProcessed = 0;
-
-double* dftInput;
-fftw_complex* dftOuput;
-fftw_plan dftPlan;
-
-struct eth_t *eth_p;
-
-pthread_t watchDogThread;
+//------------------ DFT ----------------------//
+int pktProcessed = 0; // Number of packets processed
+double* dftInput; // Input of the DFT
+fftw_complex* dftOuput; // Output of the DFT
+fftw_plan dftPlan; // Plan of the DFT
 
 
-void prepareDFT()
-{
+#define SHM_USED 1 // Number of shared memories used
+shm_setup_s* allShm[SHM_USED]; // Array of shared memories structure used
+struct eth_t *eth_p; // Pointer to the ethernet structure
+
+/*
+    * Prepare the DFT plan and allocate the memory
+*/
+void prepareDFT(){
     dftInput = (double *)fftw_malloc(sizeof(double) * MAX_RAW);
     dftOuput = (fftw_complex *)fftw_malloc(sizeof(fftw_complex) * MAX_RAW);
     dftPlan = fftw_plan_dft_r2c_1d(MAX_RAW, dftInput, dftOuput, FFTW_ESTIMATE);
 }
 
-void deleteDFT()
-{
+/*
+    * Delete the DFT plan and free the memory
+*/
+void deleteDFT(){
     fftw_destroy_plan(dftPlan);
     fftw_free(dftInput);
     fftw_free(dftOuput);
 }
 
+/*
+    * Watchdog task to reset the values if no packet is received
+*/
 void* watchDogTask(){
     while (1){
         if (updateFlag) updateFlag = 0;
@@ -73,18 +83,18 @@ void* watchDogTask(){
     return NULL;
 }
 
+/*
+    * Compute the DFT of the raw values and store in the shared memory
+*/
 void computeDFT() {
     updateFlag = 1;
     for (int j = 0; j < 8; j++) {
-
         int i = idxRaw;
         for(int k=0;k<MAX_RAW;k++){
             dftInput[i] = rawValues[i][j];
             i = (i+1)%MAX_RAW;
         }
-
         fftw_execute(dftPlan);
-
         values[j*2] = sqrt(2*(dftOuput[1][0]*dftOuput[1][0] + dftOuput[1][1]*dftOuput[1][1]))/MAX_RAW;
         values[j*2+1] =  atan2(dftOuput[1][0], dftOuput[1][1]);
     }
@@ -92,58 +102,69 @@ void computeDFT() {
     // printf("\n");
 }
 
+/*
+    * Process the SV packet and discard the others
+    * @param args: Pointer to the packet buffer
+*/
 void* processPacket(void* args){
 
     uint8_t* frame = (uint8_t *) args;
-
-    if (frame[0] == 0x88 && frame[1] == 0xba)
-        return NULL;
     
     int i = 0, j=0, noAsdu;
-    if (frame[12] == 0x81 && frame[13] == 0x00)
-        i = 16;
-    else
-        i = 12;
-    if (!(frame[i] == 0x88 && frame[i+1] == 0xba))
-        return NULL;
 
+    // Skip Ethernet and vLAN
+    if (frame[12] == 0x81 && frame[13] == 0x00)  i = 16;
+    else i = 12;
 
-    if (frame[i+11] == 0x82)
-        i += 17;
-    else
-        i += 15;
+    if (!(frame[i] == 0x88 && frame[i+1] == 0xba)) return NULL; // Check if packet is SV
 
-    noAsdu = frame[i-1];
-    if (frame[i+1] == 0x82) // Seq Asdu
-        i += 4;
-    else
-        i += 2;
-    for (int k = 0; k < noAsdu; k++)
-    {
-        if (frame[i+1] == 0x82) // Asdu Tag
-            i += 4;
-        else
-            i += 2;
-        while (frame[i] != 0x87)
-        {
-            if (frame[i] == 0x80){
+    // Skip SV Header until seqAsdu
+    if (frame[i+11] == 0x82) i += 17;
+    else i += 15;
+
+    noAsdu = frame[i-1]; // Number of ASDUs
+
+    // Skip until first asdu
+    if (frame[i+1] == 0x82) i += 4;
+    else i += 2;
+
+    for (int k = 0; k < noAsdu; k++) { // Decode Each Asdu
+
+        if (frame[i+1] == 0x82) i += 4;
+        else i += 2;
+        while (frame[i] != 0x87) {
+            /*
+                * 0x80 -> svId
+                * 0x81 -> datSet Name
+                * 0x82 -> smpCnt
+                * 0x83 -> confRev
+                * 0x84 -> refrTm
+                * 0x85 -> sympSync
+                * 0x86 -> smpRate
+                * 0x87 -> Sequence of Data
+                * 0x88 -> SmpMod
+                * 0x89 -> gmIdentity
+            */
+            if (frame[i] == 0x80){ // Check if svId is the same
                 if (memcmp(svId, &frame[i+2], frame[i+1]) != 0)
                     return NULL;
             }
+            // Skip field Tag, Length and Value
             i += frame[i+1] + 2;
         }
         j = 0;
-        pthread_mutex_lock(&mutex);
-        while (j < frame[i+1])
+        pthread_mutex_lock(&mutex); // Lock the raw values
+        while (j < frame[i+1]) // Decode the raw values
         {
-            rawValues[idxRaw][j/8] = 0;
-            rawValues[idxRaw][j/8] |= (int)frame[i+2+j] << 24;
-            rawValues[idxRaw][j/8] |= (int)frame[i+3+j] << 16;
-            rawValues[idxRaw][j/8] |= (int)frame[i+4+j] << 8;
-            rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
+            // rawValues[idxRaw][j/8] = 0;
+            // rawValues[idxRaw][j/8] |= (int)frame[i+2+j] << 24;
+            // rawValues[idxRaw][j/8] |= (int)frame[i+3+j] << 16;
+            // rawValues[idxRaw][j/8] |= (int)frame[i+4+j] << 8;
+            // rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
+            rawValues[idxRaw][j/8] = ((int32_t) frame[i+2+j] << 24) | ((int32_t) frame[i+3+j] << 16) | ((int32_t) frame[i+4+j] << 8) | ((int32_t) frame[i+5+j]);
             j += 8;
         }
-        if (idxRaw % (MAX_RAW / NUM_DFT_PER_CYCLE) == 0) {
+        if (idxRaw % (MAX_RAW / NUM_DFT_PER_CYCLE) == 0) { // Compute the DFT
             
             struct timespec t0, t1;
             // clock_gettime(0, &t0);
@@ -151,14 +172,18 @@ void* processPacket(void* args){
             // clock_gettime(0, &t1);
             // printf("Time: %ld us\n", (t1.tv_nsec - t0.tv_nsec)/1000);
         }
-        idxRaw = (idxRaw + 1) % MAX_RAW;
-        pthread_mutex_unlock(&mutex);
+        idxRaw++;
+        if (idxRaw == MAX_RAW) idxRaw = 0;
+        pthread_mutex_unlock(&mutex); // Unlock the raw values
         i += frame[i+1] + 2;
     }
 
     return NULL;
 }
 
+/*
+    * Run the sniffer
+*/
 int runSniffer()
 {
     int32_t rx_bytes = 0;
@@ -168,7 +193,7 @@ int runSniffer()
     memset(&msg_hdr, 0, sizeof(msg_hdr));
     memset(&iov, 0, sizeof(iov));
 
-    msg_hdr.msg_name = &eth_p->bind_addr;
+    msg_hdr.msg_name = &eth_p->bind_addr; 
     msg_hdr.msg_namelen = eth_p->bind_addrSize;
     
     msg_hdr.msg_name = NULL;
@@ -184,10 +209,10 @@ int runSniffer()
         rx_bytes = recvmsg(eth_p->socket, &msg_hdr, 0);
         if (rx_bytes) {
             if (memcmp(macSrc, eth_p->rx_buffer, 6) == 0){
-                memcpy(frameCaptured[idxThreads], eth_p->rx_buffer, rx_bytes);
-                thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0]);
-                idxThreads++;
-                if (idxThreads == MAX_THREADS) idxThreads = 0;
+                memcpy(frameCaptured[idxThreads], eth_p->rx_buffer, rx_bytes); // Copy the packet to the buffer
+                thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0]); // Submit the task to the thread pool
+                idxThreads++; // Increment the index of the thread
+                if (idxThreads == NUM_THREADS) idxThreads = 0; // Reset the index of the thread
             }
         }
     }
@@ -195,6 +220,10 @@ int runSniffer()
     return 0;
 }
 
+/*
+    * Cleanup the sniffer
+    * @param signum: Signal number
+*/
 void cleanup(int signum){
     printf("Leaving Sniffer...\n");
     socketCleanup(eth_p);
@@ -206,6 +235,11 @@ void cleanup(int signum){
     exit(0);
 }
 
+/*
+    * Main function
+    * @param argc: Number of arguments
+    * @param argv: Array of arguments
+*/
 int main(int argc, char *argv[])
 {   
     if (argc != 4){
@@ -224,20 +258,18 @@ int main(int argc, char *argv[])
     printf("    svId: %s\n", svId);
     printf("    Interface: %s\n", argv[3]);
 
-    signal(SIGINT, cleanup);
-    signal(SIGTERM, cleanup);
+    signal(SIGINT, cleanup); // Register the cleanup function
+    signal(SIGTERM, cleanup); // Register the cleanup function
 
+    // Create the shared memory for the sampled values
     shm_setup_s valuesShm = createSharedMemory("phasor",2*NUM_CHANELS * sizeof(double));
     values = (double*) valuesShm.ptr;
-
-
     allShm[0] = &valuesShm;
 
+    prepareDFT(); // Prepare the DFT
+    pthread_mutex_init(&mutex, NULL); // Initialize the mutex
 
-    prepareDFT();
-
-    pthread_mutex_init(&mutex, NULL);
-
+    // Setup the socket
     struct eth_t eth;
     eth_p = &eth;
     eth.fanout_grp = 4;
@@ -248,14 +280,9 @@ int main(int argc, char *argv[])
     }
     
     
-    pthread_create(&watchDogThread, NULL, watchDogTask, NULL);
-    
-
-    thread_pool_init(&pool);
-
-    runSniffer();
-
+    pthread_create(&watchDogThread, NULL, watchDogTask, NULL); // Create the watchdog thread
+    thread_pool_init(&pool); // Initialize the thread pool
+    runSniffer(); // Run the sniffer on the main thread
     cleanup(0);
-
     return 0;
 }

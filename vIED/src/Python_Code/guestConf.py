@@ -34,6 +34,7 @@ def hostUpdate():
                     return 'MU'
             except:
                 return None
+    
     try:
         dmidecode_output = subprocess.check_output(["sudo", "dmidecode", "-t", "1"], text=True)
     except subprocess.CalledProcessError:
@@ -43,14 +44,16 @@ def hostUpdate():
     uuid_pattern = r"UUID:\s+([0-9a-fA-F-]+)"
     match = re.search(uuid_pattern, dmidecode_output)
 
-
     if match:
-        uuid = match.group(1)
-        data = {
-            'ip': getIp(),
-            'type': getVmType()
-        }
-        with open(f'/root/host-shm/vmConfig/{uuid}', 'w') as file:
-            yaml.safe_dump(data, file)
+        try:
+            uuid = match.group(1)
+            data = {
+                'ip': getIp(),
+                'type': getVmType()
+            }
+            with open(f'/root/host-shm/vmConfig/{uuid}', 'w') as file:
+                yaml.safe_dump(data, file)
+        except:
+            print("Error writing to file")
     else:
         print("UUID not found in dmidecode output")

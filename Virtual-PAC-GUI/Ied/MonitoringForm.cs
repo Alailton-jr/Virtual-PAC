@@ -109,6 +109,8 @@ namespace Ied
                 return;
 
             var angRef = values[0][1];
+            try
+            {
 
             for (int i = 0; i < 4; i++)
             {
@@ -138,6 +140,9 @@ namespace Ied
                 }
 
             }
+
+            }
+            catch { monitoring = false; }
         }
 
 

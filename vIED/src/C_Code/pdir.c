@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
         printf("Usage: ./pdir <pickup> <rTorq> <trip Tag>\n");
         sigterm_handler(1);
     }
+
     struct sched_param paramS;
     paramS.sched_priority = 80;
     sched_setscheduler(0,SCHED_FIFO, &paramS);
@@ -38,19 +39,17 @@ int main(int argc, char *argv[])
     printf("    Trip Tag: %s\n", argv[3]);
     
     
-    char *endptr;
     
     shm_setup_s valuesShm = openSharedMemory("phasor",16 * sizeof(double));
     double* values = (double*) valuesShm.ptr;
 
     shm_setup_s tripTagShm = createSharedMemory(argv[4], 4 * sizeof(uint8_t));
-
     uint8_t* tripTag = (uint8_t*) tripTagShm.ptr;   
 
     allShm[0] = &valuesShm;
     allShm[1] = &tripTagShm;
 
-
+    char *endptr;
     double pickup = (double) strtod(argv[1], &endptr);
     double rTorq = (double) strtod(argv[2], &endptr);
     double vAngle = 0;
@@ -73,6 +72,5 @@ int main(int argc, char *argv[])
         }
         wait_rest_of_period(&tsleep);
     }
-
     return 0;
 }

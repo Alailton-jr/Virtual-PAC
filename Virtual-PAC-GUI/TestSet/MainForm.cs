@@ -28,7 +28,7 @@ namespace TestSet
             externLoad = true;
             extIp = ip;
             extPort = port;
-            this.ShowDialog();
+            this.Show();
 
             return true;
         }

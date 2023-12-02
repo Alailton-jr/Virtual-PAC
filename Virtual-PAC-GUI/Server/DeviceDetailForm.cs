@@ -294,9 +294,6 @@ namespace Server
             }
             else if (device.type == DeviceType.mu)
             {
-
-
-
                 CurForm = new TestSet.MainForm();
                 if (!((TestSet.MainForm)CurForm).callForm(device.ip, device.port))
                 {

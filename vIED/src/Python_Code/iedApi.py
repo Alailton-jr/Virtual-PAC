@@ -16,30 +16,51 @@ except:
 values = np.ndarray((16,1),dtype=np.double,buffer=sharedMemory.buf)
 
 def get_ip_address():
+    '''
+        Get the IP address of the machine.
+
+        Returns:
+            str: The IP address.
+    '''
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         sock.connect(("8.8.8.8", 80))
         ip_address = sock.getsockname()[0]
     except socket.error:
         ip_address = '0.0.0.0'
-
     finally:
         sock.close()
     return ip_address
 
 def yamlData(file) -> bool:
+    '''
+        Save the IED configuration to a YAML file locally.
+
+        Args:
+            file (str): The YAML file.
+        Returns:
+            bool: True if the file was saved.
+    '''
     try:
         yamlData = yaml.safe_load(file)
         with open("IedConfig.yaml", "w") as file:
             yaml.safe_dump(yamlData, file)
-        changeIP(yamlData['General Settings']['IpAddress'])
+        changeIP(yamlData['General Settings']['IpAddress']) # Check if IP address needs to be changed on the VM
         print('Yaml Data: ', "Received and saved YAML file.")
         return True
     except Exception as ex:
         print('Yaml Data: ', ex)
         return False
 
-def loadYaml(name):
+def loadYaml(name) -> (dict|None):
+    '''
+        Load a YAML file.
+
+        Args:
+            name (str): The name of the file.
+        Returns:
+            dict: The contents of the file.
+    '''
     try:
         with open(name, 'r') as file:
             return file.read()
@@ -47,11 +68,26 @@ def loadYaml(name):
         return None
 
 def changeIP(ip:str) -> bool:
-    def getIface() -> str:
+    '''
+        Change the IP address of the VM.
+        
+        Args:
+            ip (str): The IP address.
+        Returns:
+            bool: True if the IP address was changed.
+    '''
+    def getIface() -> (str|None):
+        '''
+            Get the interface name of the first non-loopback interface.
+
+            Returns:
+                str: The name of the interface.
+        '''
         for d in psutil.net_if_stats().keys():
             if d != 'lo':
                 return str(d)
         return None
+    
     iface = getIface()
     if iface is None:
         return False
@@ -71,9 +107,15 @@ def changeIP(ip:str) -> bool:
         return False
 
 def restartIED():
+    '''
+        Restart the IED service.
+    '''
     subprocess.run(['systemctl', 'restart', 'vIED'])
 
 def ClientHandler(clientSocket):
+    '''
+        Handle the client connection.
+    '''
     print("Server listening on", server_address)
     try:
         while True:
@@ -111,6 +153,9 @@ def ClientHandler(clientSocket):
         clientSocket.close()
 
 def cleanUp(signum, frame):
+    '''
+        Clean up the shared memory and exit.
+    '''
     resource_tracker.unregister(sharedMemory._name, "shared_memory")
     server_socket.close()
     print("Closing IED API")

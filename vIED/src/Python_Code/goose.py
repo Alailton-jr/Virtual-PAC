@@ -5,23 +5,58 @@ from goPublisher import GoPublisher
 from multiprocessing import shared_memory, resource_tracker
 from time import perf_counter
 
+'''
+    Send a signal to a process.
 
-def getIface():
+    Args:
+        signal (int): The signal to send.
+    Returns:
+        bool: True if the signal was sent.
+'''
+
+def getIface() -> (str|None):
+    '''
+        Get the interface name of the first non-loopback interface.
+
+        Returns:
+            str: The name of the interface.
+    '''
     for interface, addrs in psutil.net_if_addrs().items():
         if interface != 'lo':
             return interface
+    return None
 
-def loadYaml(name) -> dict:
-    with open(name, 'r') as file:
-        return yaml.safe_load(file)
+def loadYaml(name) -> (dict|None):
+    '''
+        Load a YAML file.
 
-def cleanUp(signum, frame):
+        Args:
+            name (str): The name of the file.
+        Returns:
+            dict: The contents of the file.
+    '''
+    try:
+        with open(name, 'r') as file:
+            return yaml.safe_load(file)
+    except:
+        print(f'Error loading {name}')
+        return None
+
+def cleanUp(signum, id):
+    '''
+        Clean up the shared memory and exit.
+
+        Args:
+            signum (int): The signal number.
+            id (id): The current stack frame.
+    '''
     for shm in sharedMemory:
         resource_tracker.unregister(shm._name, 'shared_memory')
     print("Closing Goose Sender")
     exit(0)
 
 if __name__ == '__main__':
+
     signal.signal(signal.SIGINT, cleanUp)
     signal.signal(signal.SIGTERM, cleanUp)
 
@@ -33,18 +68,19 @@ if __name__ == '__main__':
     else:
         goNum = int(sys.argv[1])
 
-    # goNum = 0
+    gooseConf = config['Goose'][goNum] # Get the configuration for the current GOOSE
 
-    gooseConf = config['Goose'][goNum]
+    if gooseConf is None:
+        print(f'No configuration for GOOSE {goNum}')
+        exit(0)
 
-    x = GoPublisher(
+    goPub = GoPublisher(
         AppId= gooseConf['appId'],
         macDst= gooseConf['macDst'],
         vLan= gooseConf['vLanId'],
         vLanPriority= gooseConf['vLanPriority'],
     )
-
-    x.asduSetup(
+    goPub.asduSetup(
         gocbRef= gooseConf['cbRef'],
         timeAllowedtoLive= gooseConf['maxTime']*2,
         datSet= gooseConf['dataSetName'],
@@ -52,13 +88,16 @@ if __name__ == '__main__':
         stNum= 0,
         sqNum= 0,
         simulation= False,
-        confRev= 1,
+        confRev= gooseConf['confRef'],
         goID= gooseConf['goId'],
         ndsCom= False,
         numDatSetEntries= len(gooseConf['dataSet']),
     )
 
     raw_socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(3)) 
+
+    ## Socket Options
+
     # Bypass the kernel qdisc layer and push frames directly to the driver
     # raw_socket.setsockopt(263, 20, 1)
     # Enable Tx ring to skip over malformed frames
@@ -70,7 +109,6 @@ if __name__ == '__main__':
 
     interface = getIface()
     raw_socket.bind((interface, 0))
-
     sharedMemory = []
     data = []
 
@@ -95,9 +133,9 @@ if __name__ == '__main__':
     while True:
         if perf_counter() - t0 > tNext/1000:
             t0 = perf_counter()
-            x.changeAsduParam('stNum',stNum)
-            x.changeAsduParam('sqNum',sqNum)
-            raw_socket.send(x.getFrame(lastChange))
+            goPub.changeAsduParam('stNum',stNum)
+            goPub.changeAsduParam('sqNum',sqNum)
+            raw_socket.send(goPub.getFrame(lastChange))
             sqNum += 1
             tNext *= 2
             if tNext >= tMax:

@@ -8,15 +8,28 @@
 #ifndef SHARED_MEMORY_H  // If not defined
 #define SHARED_MEMORY_H  // Define it
 
+/*
+    * Shared memory setup structure
+    * @param size: Size of the shared memory
+    * @param name: Name of the shared memory
+    * @param id: Id of the shared memory
+    * @param ptr: Pointer to the shared memory
+*/
 struct shm_setup_s{
-    size_t size;
-    const char* name;
-    int id;
-    void* ptr;
-}typedef shm_setup_s;
+    size_t size; // Size of the shared memory
+    const char* name; // Name of the shared memory
+    int id; // Id of the shared memory
+    void* ptr; // Pointer to the shared memory
+}typedef shm_setup_s; 
 
+/*
+    * Create shared memory
+    * @param shm_name: Name of the shared memory
+    * @param size: Size of the shared memory
+*/
 static shm_setup_s createSharedMemory(const char* shm_name, size_t size) {
     int shm_id = shm_open(shm_name, O_CREAT | O_RDWR, 0666);
+
     if (shm_id == -1) {
         perror("shm_open");
         shm_setup_s x = {0, NULL, -1, NULL};
@@ -43,6 +56,11 @@ static shm_setup_s createSharedMemory(const char* shm_name, size_t size) {
     return x;
 }
 
+/*
+    * Open shared memory
+    * @param shm_name: Name of the shared memory
+    * @param size: Size of the shared memory
+*/
 static shm_setup_s openSharedMemory(const char* shm_name, size_t size)
 {
     int shm_id = shm_open(shm_name, O_RDWR, 0666);
@@ -62,14 +80,17 @@ static shm_setup_s openSharedMemory(const char* shm_name, size_t size)
     return x;
 }
 
+/*
+    * Delete shared memory
+    * @param setup: Shared memory setup structure
+*/
 static void deleteSharedMemory(shm_setup_s* setup)
 {
-    // Unmap and unlink the shared memory
-    if (munmap(setup->ptr, setup->size) == -1) {
+    if (munmap(setup->ptr, setup->size) == -1) { // Unmap the shared memory
         perror("munmap");
         return;
     }
-    if (shm_unlink(setup->name) == -1) {
+    if (shm_unlink(setup->name) == -1) { // Delete the shared memory
         perror("shm_unlink");
         return;
     }

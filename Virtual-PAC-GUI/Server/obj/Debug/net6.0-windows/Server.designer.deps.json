@@ -6,42 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "ApiSharp/1.3.3": {
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "7.0.0",
-          "Newtonsoft.Json": "13.0.3"
-        },
-        "runtime": {
-          "lib/netstandard2.1/ApiSharp.dll": {
-            "assemblyVersion": "1.3.3.0",
-            "fileVersion": "1.3.3.0"
-          }
-        }
-      },
-      "Gate.IO.Api/1.3.5": {
-        "dependencies": {
-          "ApiSharp": "1.3.3"
-        },
-        "runtime": {
-          "lib/netstandard2.1/Gate.IO.Api.dll": {
-            "assemblyVersion": "1.3.5.0",
-            "fileVersion": "1.3.5.0"
-          }
-        }
-      },
       "InputSimulator/1.0.4": {
         "runtime": {
           "lib/net20/WindowsInput.dll": {
             "assemblyVersion": "1.0.4.0",
             "fileVersion": "1.0.4.0"
-          }
-        }
-      },
-      "Microsoft.Extensions.Logging.Abstractions/7.0.0": {
-        "runtime": {
-          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "assemblyVersion": "7.0.0.0",
-            "fileVersion": "7.0.22.51805"
           }
         }
       },
@@ -72,44 +41,23 @@
           }
         }
       },
-      "YamlDotNet/13.2.0": {
+      "YamlDotNet/13.7.1": {
         "runtime": {
           "lib/net6.0/YamlDotNet.dll": {
             "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.2.0.0"
+            "fileVersion": "13.7.1.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "ApiSharp/1.3.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-A/529H42OPyhZooFtKBdlqg9jw+KKF3dXZpx1nHVeS+L8gxuzy/Qf7iw8/DGrB2tD+61+WiMdwpHa5vuii+26g==",
-      "path": "apisharp/1.3.3",
-      "hashPath": "apisharp.1.3.3.nupkg.sha512"
-    },
-    "Gate.IO.Api/1.3.5": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5vLv8PZTU/tDfR20HPMgKYrcIA+5wzqwhRlRcrifo98vn+60X4jflmddXbKVet0AFyacSJYhONpIzT2lN5FpcQ==",
-      "path": "gate.io.api/1.3.5",
-      "hashPath": "gate.io.api.1.3.5.nupkg.sha512"
-    },
     "InputSimulator/1.0.4": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-D0LvRCPQMX6/FJHBjng+RO+wRDuHTJrfo7IAc7rmkPvRqchdVGJWg3y70peOtDy3OLNK+HSOwVkH4GiuLnkKgA==",
       "path": "inputsimulator/1.0.4",
       "hashPath": "inputsimulator.1.0.4.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Logging.Abstractions/7.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kmn78+LPVMOWeITUjIlfxUPDsI0R6G0RkeAMBmQxAJ7vBJn4q2dTva7pWi65ceN5vPGjJ9q/Uae2WKgvfktJAw==",
-      "path": "microsoft.extensions.logging.abstractions/7.0.0",
-      "hashPath": "microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.3": {
       "type": "package",
@@ -132,12 +80,12 @@
       "path": "oxyplot.windowsforms/2.1.2",
       "hashPath": "oxyplot.windowsforms.2.1.2.nupkg.sha512"
     },
-    "YamlDotNet/13.2.0": {
+    "YamlDotNet/13.7.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FxEsylcQt59+dhxPTD2I/lNFbnJzb/uvUiDkjUA3J0cNTzBSLep6ZxhE9ma2vJp/QrK09xi0LvP4aEUzl0ggCQ==",
-      "path": "yamldotnet/13.2.0",
-      "hashPath": "yamldotnet.13.2.0.nupkg.sha512"
+      "sha512": "sha512-X4m1PnFcJwvAj1sCDMntg/eZcX96CJLrWMiYnq41KqhFVZPuw63ZTSxIGqgdCwHWHvCAyTxheELC/VDf1HsU2A==",
+      "path": "yamldotnet/13.7.1",
+      "hashPath": "yamldotnet.13.7.1.nupkg.sha512"
     }
   }
 }
