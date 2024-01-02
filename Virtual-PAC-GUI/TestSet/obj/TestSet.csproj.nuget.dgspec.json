@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {}
+    "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {
+    "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+        "projectUniqueName": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
         "projectName": "TestSet",
-        "projectPath": "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+        "projectPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
         "packagesPath": "C:\\Users\\ALAILTON\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\obj\\",
+        "outputPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
