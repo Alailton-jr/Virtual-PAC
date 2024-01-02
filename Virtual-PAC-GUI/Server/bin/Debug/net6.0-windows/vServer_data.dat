@@ -197,8 +197,8 @@
     "port": 8082
   },
   "serverCon": {
-    "serverIp": "10.3.193.10",
-    "serverPort": 8082,
+    "serverIp": "0.0.0.0",
+    "serverPort": 8000,
     "isConnected": false
   }
 }

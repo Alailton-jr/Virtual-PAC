@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NMvILfGh/GWEty6ogB84IbyKj44yvLyQJdUTj4ZoUFhDzjfJRc6/lu7hsCMZTdjae7HnS5hySBrA91GimqBr7A==",
+  "dgSpecHash": "OATjJeQl6JwEaVPvvfnSJGCXNXZTMm1CknfE5IVj0kEa2s3TeSUyh+2IeLsMH1GMl4ytNkatIZEpmSrfJf8gtg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj",
+  "projectFilePath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ALAILTON\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\ALAILTON\\.nuget\\packages\\oxyplot.core\\2.1.2\\oxyplot.core.2.1.2.nupkg.sha512",

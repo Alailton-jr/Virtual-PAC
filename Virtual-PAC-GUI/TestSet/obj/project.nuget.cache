@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jDGkw7a2bgGmsVhAnPIKx8KT0JPsX3ukk3SNCOhSvvbVvMEBbrIEK0HwrE6EJAvVJcBIfatbAarufP6hAZwEFA==",
+  "dgSpecHash": "HUVHql+TLq5X0Zh9/jq81hYPPakVTf/dDFYr/DnjDjBdhGywNeCBRLI92yA//LGMOhCS9L1dbNiFsgs+2gmROA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+  "projectFilePath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ALAILTON\\.nuget\\packages\\inputsimulator\\1.0.4\\inputsimulator.1.0.4.nupkg.sha512",
     "C:\\Users\\ALAILTON\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",

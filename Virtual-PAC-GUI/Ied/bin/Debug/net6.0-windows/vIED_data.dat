@@ -2,7 +2,7 @@
   "wasSent": false,
   "pioc": {
     "phase": {
-      "currentType": 0,
+      "currentType": 1,
       "timeType": 1,
       "level": [
         {
@@ -11,12 +11,12 @@
           "timeDelay": 0.5
         },
         {
-          "enabled": true,
+          "enabled": false,
           "pickup": 3600.0,
           "timeDelay": 0.2
         },
         {
-          "enabled": true,
+          "enabled": false,
           "pickup": 4800.0,
           "timeDelay": 0.05
         }
