@@ -2,5 +2,6 @@
     "files.associations": {
         "shmmemory.h": "c",
         "fftw3.h": "c"
-    }
+    },
+    "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln"
 }
