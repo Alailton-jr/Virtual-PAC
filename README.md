@@ -25,4 +25,4 @@ This project is open-source and is distributed under the terms of the [GNU Gener
 
 ---
 
-**Note:** This work was developed as part of a final year project in electrical engineering at Federal University of Uberlândia (UFU). The project aims to provide an innovative solution for the growing demands in the energy sector, specifically focusing on the evolution of power substations and the integration of Virtual PAC (Proteção, Automação e Controle) systems.
+**Note:** This work was developed as part of a final year project in electrical engineering at Federal University of Uberlândia (UFU). The project aims to provide an innovative solution for the growing demands in the energy sector, specifically focusing on the evolution of power substations and the integration of Virtual PAC (Protection, Automation and Control) systems.
