@@ -1,20 +1,7 @@
 #ifndef MY_SOCKET_H  // If not defined
 #define MY_SOCKET_H  // Define it
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <net/ethernet.h>
-#include <linux/if_packet.h> 
-#include <linux/net_tstamp.h>
-#include <net/if.h>
-#include <ifaddrs.h>          
-#include <arpa/inet.h>        
-#include <linux/sockios.h>
-#include <sys/ioctl.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "QualityMeter_lib.h"
 
 typedef void (*socket_handler)(uint8_t* frame, uint32_t len);
 
@@ -32,7 +19,8 @@ typedef void (*socket_handler)(uint8_t* frame, uint32_t len);
     * @param rx_size: Rx buffer size
     * @param msgvec_vlen: msg Vector length
 */
-typedef struct{
+struct eth_t
+{
     int32_t socket; // Socket Id
     struct sockaddr_ll bind_addr; // Socket address
     int32_t bind_addrSize; // Socket address size
@@ -44,7 +32,7 @@ typedef struct{
     uint8_t  *rx_buffer; // Rx buffer
     uint32_t rx_size; // Rx buffer size
     uint32_t msgvec_vlen; // msg Vector length
-}eth_t;
+}typedef eth_t;
 
 /*
     * Socket setup

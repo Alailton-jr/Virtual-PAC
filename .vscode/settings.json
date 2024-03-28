@@ -1,7 +1,11 @@
 {
     "files.associations": {
+        "*.pyx": "cython",
         "shmmemory.h": "c",
-        "fftw3.h": "c"
+        "fftw3.h": "c",
+        "qualitymeter_lib.h": "c",
+        "threadtask.h": "c",
+        "mysocket.h": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln"
 }
