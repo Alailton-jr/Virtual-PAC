@@ -24,7 +24,7 @@ int32_t idxThreads = 0; // Index of the thread to process the packet
 pthread_mutex_t mutex; // Mutex to protect the raw values
 shm_setup_s stopFlagShm; // Shared memory for stop flag
 
-struct eth_t *eth_p; // Pointer to the ethernet structure
+eth_t *eth_p; // Pointer to the ethernet structure
 
 /*
     * Process the packet captured
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
     pthread_mutex_init(&mutex, NULL); // Initialize the mutex
 
     // Socket setup
-    struct eth_t eth;
+    eth_t eth;
     eth_p = &eth;
     eth.fanout_grp = 2;
     socketSetup(&eth, 0, 2048);

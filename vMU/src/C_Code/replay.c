@@ -7,7 +7,7 @@
 #define ALL_SHM 3
 shm_setup_s* allShm[ALL_SHM];
 
-struct eth_t eth;
+eth_t eth;
 void sigterm_handler(int signum) {
     printf("Replay Leaving...\n");
     socketCleanup(&eth);
@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
     close(stopShm.id);
     close(framesShm.id);
 
+    printf("Replay Leaving...\n");
 
     return 0;
 }

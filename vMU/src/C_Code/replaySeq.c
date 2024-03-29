@@ -7,7 +7,7 @@
 #define ALL_SHM 5
 shm_setup_s* allShm[ALL_SHM];
 
-struct eth_t* eth_p;
+eth_t* eth_p;
 
 void sigterm_handler(int signum) {
     printf("Sequencer Replay Leaving...\n");
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     allShm[3] = &buffSizeShm;
     allShm[4] = &timeShm;
     
-    struct eth_t eth;
+    eth_t eth;
     eth.fanout_grp = 1;
     socketSetup(&eth, param[3], 0);
     if (createSocket(&eth, argv[1]) != 0)

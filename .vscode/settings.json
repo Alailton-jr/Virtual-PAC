@@ -5,7 +5,12 @@
         "fftw3.h": "c",
         "qualitymeter_lib.h": "c",
         "threadtask.h": "c",
-        "mysocket.h": "c"
+        "mysocket.h": "c",
+        "pthread.h": "c",
+        "stat.h": "c",
+        "string.h": "c",
+        "sampledvalue.h": "c",
+        "stdint.h": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln"
 }

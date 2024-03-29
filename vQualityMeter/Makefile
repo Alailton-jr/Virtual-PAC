@@ -41,7 +41,7 @@ SERVICE_NAME = vMU.service
 SYSTEM_SERVICE_PATH = /etc/systemd/system/
 .PHONY: install_service
 install_service:
-	@cp $(CURDIR)/$(SERVICE_NAME) $(SYSTEM_SERVICE_PATH)
+	# @cp $(CURDIR)/$(SERVICE_NAME) $(SYSTEM_SERVICE_PATH)
 	# @systemctl daemon-reload
 
 .PHONY: install
@@ -65,7 +65,7 @@ endif
 	# 	@echo Installing libfftw3-dev... \
 	# 	@sudo $(INSTALL_CMD) install libfftw3-dev; \
 	# fi
-	@echo "libfftw3-dev installed."
+	# @echo "libfftw3-dev installed."
 
 	@ $(PIP) install -r src/requirements.txt
 	@ echo "Python requirements Installed."
@@ -128,7 +128,7 @@ C_Code_Build_Dir = $(CURDIR)/src/C_Build
 Python_Code_Dir = $(CURDIR)/src/Python_Code
 
 
-IGNORED_SRCS = send.c
+IGNORED_SRCS = sampledValue.c
 IGNORED_SRCS_WITH_PATH = $(addprefix $(C_Code_Dir)/, $(IGNORED_SRCS))
 SRCS = $(filter-out $(IGNORED_SRCS_WITH_PATH), $(wildcard $(C_Code_Dir)/*.c))
 EXECUTABLES = $(patsubst $(C_Code_Dir)/%.c,%,$(SRCS))

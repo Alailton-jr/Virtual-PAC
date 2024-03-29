@@ -2,11 +2,9 @@
 #ifndef QUALITY_METER_LIB_H
 #define QUALITY_METER_LIB_H
 
-
 // ThreadTask.h
 #include <pthread.h>
 #include <stdint.h>
-
 
 // mySocket.h
 #include <sys/types.h>
@@ -24,11 +22,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// Sniffer
+// shmMemory.h
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+
+// sniffer.c
 #include <signal.h>
 
+// sampledValue.h
+#define MAX_SAMPLED_VALUES 20
 
 #include "threadTask.h"
 #include "mySocket.h"
+#include "shmMemory.h"
+#include "sampledValue.h"
 
 #endif // QUALITY_METER_LIB_H

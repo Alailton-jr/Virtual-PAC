@@ -52,7 +52,7 @@ typedef struct{
     * @param txSize: Tx buffer size
     * @param rxSize: Rx buffer size
 */
-void socketSetup(struct eth_t* eth, uint32_t txSize, uint32_t rxSize){
+void socketSetup(eth_t* eth, uint32_t txSize, uint32_t rxSize){
 
     if (txSize > 0){
         eth->tx_buffer = (uint8_t*) malloc(txSize * sizeof(uint8_t));
@@ -72,7 +72,7 @@ void socketSetup(struct eth_t* eth, uint32_t txSize, uint32_t rxSize){
     * Socket cleanup
     * @param eth: Ethernet socket structure
 */
-void socketCleanup(struct eth_t* eth){
+void socketCleanup(eth_t* eth){
     if (eth->tx_size){
         free(eth->tx_buffer);
     }
@@ -87,7 +87,7 @@ void socketCleanup(struct eth_t* eth){
     * @param eth: Ethernet socket structure
     * @param ifName: Interface name
 */
-int32_t createSocket(struct eth_t *eth, char* ifName) {
+int32_t createSocket(eth_t *eth, char* ifName) {
 
     // Create a raw socket
     eth->socket = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -104,37 +104,37 @@ int32_t createSocket(struct eth_t *eth, char* ifName) {
     eth->bind_addr.sll_protocol = htons(ETH_P_ALL); // Set the bind address protocol to ETH_P_ALL -> not promiscuous
     eth->bind_addr.sll_ifindex  = eth->if_index; // Set the bind address interface index
 
-    // Bypass the kernel qdisc layer and push frames directly to the driver
-    static const int32_t sock_qdisc_bypass = 1;
-    if (setsockopt(eth->socket, SOL_PACKET, PACKET_QDISC_BYPASS, &sock_qdisc_bypass, sizeof(sock_qdisc_bypass)) == -1) {
-        printf("Can't enable QDISC bypass on socket");
-        return EXIT_FAILURE;
-    }
+    // // Bypass the kernel qdisc layer and push frames directly to the driver
+    // static const int32_t sock_qdisc_bypass = 1;
+    // if (setsockopt(eth->socket, SOL_PACKET, PACKET_QDISC_BYPASS, &sock_qdisc_bypass, sizeof(sock_qdisc_bypass)) == -1) {
+    //     printf("Can't enable QDISC bypass on socket");
+    //     return EXIT_FAILURE;
+    // }
 
-    // Enable Tx ring to skip over malformed frames
-    static const int32_t sock_discard = 1;
-    if (setsockopt(eth->socket, SOL_PACKET, PACKET_LOSS, &sock_discard, sizeof(sock_discard)) == -1) {
-        printf("Can't enable PACKET_LOSS on socket");
-        return EXIT_FAILURE;
-    }
+        // // Enable Tx ring to skip over malformed frames
+        // static const int32_t sock_discard = 1;
+        // if (setsockopt(eth->socket, SOL_PACKET, PACKET_LOSS, &sock_discard, sizeof(sock_discard)) == -1) {
+        //     printf("Can't enable PACKET_LOSS on socket");
+        //     return EXIT_FAILURE;
+        // }
 
 
-    // Set the socket Rx timestamping settings
-    static int32_t timesource = 0;
-    timesource |= SOF_TIMESTAMPING_RX_HARDWARE;    // Set Rx timestamps to hardware
-    timesource |= SOF_TIMESTAMPING_RAW_HARDWARE;   // Use hardware time stamps for reporting
-    if (setsockopt(eth->socket, SOL_PACKET, PACKET_TIMESTAMP, &timesource, sizeof(timesource)) == -1) {
-        printf("Can't set socket Rx timestamp source");
-    }
+    // // Set the socket Rx timestamping settings
+    // static int32_t timesource = 0;
+    // timesource |= SOF_TIMESTAMPING_RX_HARDWARE;    // Set Rx timestamps to hardware
+    // timesource |= SOF_TIMESTAMPING_RAW_HARDWARE;   // Use hardware time stamps for reporting
+    // if (setsockopt(eth->socket, SOL_PACKET, PACKET_TIMESTAMP, &timesource, sizeof(timesource)) == -1) {
+    //     printf("Can't set socket Rx timestamp source");
+    // }
 
-    // Set the socket fanout group settings
-    static const uint16_t fanout_type = PACKET_FANOUT_CPU;
-    static uint32_t fanout_arg;
-    fanout_arg = (eth->fanout_grp | (fanout_type << 16));
-    if (setsockopt(eth->socket, SOL_PACKET, PACKET_FANOUT, &fanout_arg, sizeof(fanout_arg)) < 0) {
-        printf("Can't configure socket fanout");
-        return EXIT_FAILURE;
-    }
+    // // Set the socket fanout group settings
+    // static const uint16_t fanout_type = PACKET_FANOUT_CPU;
+    // static uint32_t fanout_arg;
+    // fanout_arg = (eth->fanout_grp | (fanout_type << 16));
+    // if (setsockopt(eth->socket, SOL_PACKET, PACKET_FANOUT, &fanout_arg, sizeof(fanout_arg)) < 0) {
+    //     printf("Can't configure socket fanout");
+    //     return EXIT_FAILURE;
+    // }
 
     return EXIT_SUCCESS;
 }
