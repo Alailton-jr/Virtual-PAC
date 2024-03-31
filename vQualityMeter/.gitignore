@@ -1,1 +1,4 @@
 vEnv/
+*.csv
+src/C_Build
+src/C_Code/*.csv
