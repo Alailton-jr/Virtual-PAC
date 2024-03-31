@@ -12,7 +12,9 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-I",
-                "/usr/include/python3.11/"
+                "/usr/include/python3.11/",
+                "-lm",
+                "-lfftw3",
             ],
             "options": {
                 "cwd": "${fileDirname}"

@@ -27,7 +27,11 @@ def estimateFrames(sv, netConfig, testConfig):
         num = np.sqrt(2)*value['module'] * \
                 np.sin(value['frequency'] * 2 * np.pi*t +
                 np.radians(value['angle'])
-                )
+                ) + \
+                0.5*np.sqrt(2)*value['module'] * \
+                np.sin(3*value['frequency'] * 2 * np.pi*t +
+                np.radians(value['angle']))
+        
         y.append(num)
 
     sv.asduSetup(

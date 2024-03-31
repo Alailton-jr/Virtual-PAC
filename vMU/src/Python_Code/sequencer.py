@@ -5,6 +5,8 @@ from Control import SvPublisher
 from time import sleep
 from multiprocessing import shared_memory, resource_tracker
 
+import matplotlib.pyplot as plt
+
 
 def loadYaml(name:str):
     with open(name, 'r') as file:
@@ -33,6 +35,19 @@ def estimateSequence(netConfig, testConfig, numPackets):
             y[i,:] = _y
             i += 1
         framesNum.append(y)
+    
+    #plot the sequence as one after the oter
+    # plt.figure()
+    # x1 = framesNum[0][5][:]
+    # x2 = framesNum[1][5][:]
+    # x3 = framesNum[2][5][:]
+    # allSeq = np.concatenate((x1,x2,x3))
+    # print(allSeq.shape)
+    # plt.plot(allSeq[int(4800*0.9): int(4800*1.1)])
+    # plt.savefig('sequences.png')
+    # plt.show()
+    # print('ploted')
+
     frames = []
     smpCnt = 0
     for num in framesNum:
@@ -113,7 +128,7 @@ if __name__=='__main__':
         AppId = netConfig['AppId'],
         macDst = netConfig['macDst'],
         macSrc = get_mac_address(),
-        vLan = netConfig['vlan']
+        vLanId = netConfig['vlan']
     )
     sv.asduSetup(
         svId = netConfig['svId'],

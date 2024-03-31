@@ -1,5 +1,5 @@
 Test:
-- duration: 3
+- duration: 4
   type: Iabc
   values:
   - angle: 0
@@ -16,17 +16,17 @@ Test:
     module: 0
   - angle: 0
     frequency: 60
-    module: 0
+    module: 8000
+  - angle: 0
+    frequency: 60
+    module: 8000
+  - angle: 0
+    frequency: 60
+    module: 8000
   - angle: 0
     frequency: 60
     module: 0
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 2
+- duration: 5
   type: Iabc
   values:
   - angle: 0
@@ -43,17 +43,17 @@ Test:
     module: 0
   - angle: 0
     frequency: 60
-    module: 0
+    module: 8000
+  - angle: 0
+    frequency: 60
+    module: 4000
+  - angle: 0
+    frequency: 60
+    module: 8000
   - angle: 0
     frequency: 60
     module: 0
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 1
+- duration: 4
   type: Iabc
   values:
   - angle: 0
@@ -70,13 +70,13 @@ Test:
     module: 0
   - angle: 0
     frequency: 60
-    module: 0
+    module: 8000
   - angle: 0
     frequency: 60
-    module: 0
+    module: 8000
   - angle: 0
     frequency: 60
-    module: 0
+    module: 8000
   - angle: 0
     frequency: 60
     module: 0

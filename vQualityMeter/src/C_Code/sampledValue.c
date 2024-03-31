@@ -14,9 +14,9 @@ void addSampledValue(int index, uint8_t* svId, uint16_t freq, uint16_t smpRate){
     strcpy(sv[index].svId, "TRTC");
     sv[index].smpRate = 80;
     sv[index].freq = 60;
-    sv[index].arrValue = (int32_t **)malloc(sv[index].freq*sizeof(int32_t*));
+    sv[index].snifferValues = (int32_t **)malloc(sv[index].freq*sizeof(int32_t*));
     for (int i = 0; i < sv[index].freq; i++){
-        sv[index].arrValue[i] = (int32_t *)malloc(sv[index].smpRate*sizeof(int32_t));
+        sv[index].snifferValues[i] = (int32_t *)malloc(sv[index].smpRate*sizeof(int32_t));
     }
     sv[index].idxBuffer = 0;
     sv[index].idxCycle = 0;
@@ -30,8 +30,8 @@ void deleteSampledValue(int index){
     shm_setup_s svMemory = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
     if (svMemory.ptr == NULL) return;
     sampledValue_t *sv = (sampledValue_t *)svMemory.ptr;
-    free(sv[index].arrValue);
-    sv[index].arrValue = NULL;
+    free(sv[index].snifferValues);
+    sv[index].snifferValues = NULL;
 }
 
 void deleteSampledValueMemory(){
@@ -40,8 +40,8 @@ void deleteSampledValueMemory(){
     if (svMemory.ptr == NULL) return;
     sampledValue_t *sv = (sampledValue_t *)svMemory.ptr;
     for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
-        if (sv[i].arrValue == NULL) continue;
-        free(sv[i].arrValue);
+        if (sv[i].snifferValues == NULL) continue;
+        free(sv[i].snifferValues);
     }
     deleteSharedMemory(&svMemory);
 }

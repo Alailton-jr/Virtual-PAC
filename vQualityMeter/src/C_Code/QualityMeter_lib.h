@@ -2,6 +2,8 @@
 #ifndef QUALITY_METER_LIB_H
 #define QUALITY_METER_LIB_H
 
+#define FREQUENCY 60
+
 // ThreadTask.h
 #include <pthread.h>
 #include <stdint.h>
@@ -28,14 +30,30 @@
 #include <sys/stat.h>
 
 // sniffer.c
+typedef struct {
+    double real;
+    double imag;
+} complex;
 #include <signal.h>
 
 // sampledValue.h
 #define MAX_SAMPLED_VALUES 20
+#define NUM_CHANELS 8
+#define MAX_HARMONIC 40
+
+// analyse.c
+#include <math.h>
+#include <fftw3.h>
+#include <time.h>
 
 #include "threadTask.h"
 #include "mySocket.h"
 #include "shmMemory.h"
 #include "sampledValue.h"
+
+
+// Debug Semaphore
+#include <semaphore.h>
+#include <fcntl.h>
 
 #endif // QUALITY_METER_LIB_H

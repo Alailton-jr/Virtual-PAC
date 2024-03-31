@@ -14,8 +14,9 @@
     * @param arg: Argument of the function
 */
 typedef struct {
-    void (*function)(void* arg); // Function to be executed
-    void* arg; // Argument of the function
+    void (*function)(uint8_t* arg1, uint64_t arg2); // Function to be executed
+    uint8_t* arg1; // Argument of the function
+    uint64_t arg2;
 } Task;
 
 /*
@@ -103,7 +104,7 @@ void* thread_worker(void* arg) {
     ThreadPool* pool = (ThreadPool*)arg;
     while (1) {
         Task task = task_queue_pop(pool->task_queue);
-        task.function(task.arg);
+        task.function(task.arg1, task.arg2);
     }
     return NULL;
 }
@@ -126,10 +127,11 @@ void thread_pool_init(ThreadPool* pool) {
     * @param function: Function to be executed
     * @param arg: Argument of the function
 */
-void thread_pool_submit(ThreadPool* pool, void (*function)(void*), void* arg) {
+void thread_pool_submit(ThreadPool* pool, void (*function)(void*), uint8_t* arg1, uint64_t arg2) {
     Task task;
     task.function = function;
-    task.arg = arg;
+    task.arg1 = arg1;
+    task.arg2 = arg2;
     task_queue_push(pool->task_queue, task);
 }
 

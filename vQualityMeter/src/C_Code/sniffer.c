@@ -7,6 +7,7 @@ ThreadPool pool; // Thread pool
 eth_t eth; // Ethernet socket structure
 sampledValue_t* sampledValues; // Array of sampled values
 
+
 // Packet Processing
 int idxThreads = 0;
 uint8_t frameCaptured[NUM_THREADS][2048]; // Buffer to store the captured packets
@@ -22,7 +23,7 @@ void saveArray(sampledValue_t* sv){
     }
     for (int i = 0; i < sv->freq; i++) {
         for (int j = 0; j < sv->smpRate; j++) {
-            fprintf(fp, "%d", sv->arrValue[i][j]);
+            fprintf(fp, "%d", sv->snifferArr[i][j]);
             if (j < sv->smpRate - 1) {
                 fprintf(fp, ",");
             }
@@ -33,9 +34,9 @@ void saveArray(sampledValue_t* sv){
     cleanup(0);
 }
 
-void* processPacket(void* args){
+void* processPacket(uint8_t* frame, uint64_t size){
 
-    uint8_t* frame = (uint8_t *) args;
+    // uint8_t* frame = (uint8_t *) args;
     
     int i = 0;
 
@@ -62,7 +63,7 @@ void* processPacket(void* args){
         if (frame[i+1] == 0x82) i += 4;
         else i += 2;
 
-        while (frame[i] != 0x87) { // skip all the fields until Sequence of Data
+        while (frame[i] != 0x87 && i <= size) { // skip all the fields until Sequence of Data
             /*
                 * 0x80 -> svId
                 * 0x81 -> datSet Name
@@ -77,7 +78,8 @@ void* processPacket(void* args){
             */
             if (frame[i] == 0x80){ // Check if svId is the same
                 for (int idx = 0; idx < MAX_SAMPLED_VALUES; idx++){
-                    if (sampledValues[idx].arrValue != NULL){
+                    if (sampledValues[idx].snifferArr != NULL){
+                        char* debug = sampledValues[idx].svId;
                         if (memcmp(sampledValues[idx].svId, &frame[i+2], frame[i+1]) == 0){
                             svIdx = idx;
                             break;
@@ -90,6 +92,7 @@ void* processPacket(void* args){
         j = 0;
         if (svIdx == -1) return NULL;
         // pthread_mutex_lock(&mutex); // Lock the raw values
+        
         while (j < frame[i+1]) // Decode the raw values
         {
             // rawValues[idxRaw][j/8] = 0;
@@ -98,7 +101,7 @@ void* processPacket(void* args){
             // rawValues[idxRaw][j/8] |= (int)frame[i+4+j] << 8;
             // rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
             // rawValues[idxRaw][j/8] = ((int32_t) frame[i+2+j] << 24) | ((int32_t) frame[i+3+j] << 16) | ((int32_t) frame[i+4+j] << 8) | ((int32_t) frame[i+5+j]);
-            sampledValues[svIdx].arrValue[sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
+            sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
             j += 8;
         }
         sampledValues[svIdx].idxCycle++;
@@ -108,9 +111,11 @@ void* processPacket(void* args){
             if (sampledValues[svIdx].idxBuffer >= sampledValues[svIdx].freq) {
                 sampledValues[svIdx].idxBuffer = 0;
                 sampledValues[svIdx].cycledCaptured++;
+                // printf("1 Second")
                 // saveArray(&sampledValues[svIdx]);
             }
         }
+        
         // if (idxRaw % (MAX_RAW / NUM_DFT_PER_CYCLE) == 0) { // Compute the DFT
         //     struct timespec t0, t1;
         //     // clock_gettime(0, &t0);
@@ -149,7 +154,7 @@ void runSniffer(){
         rx_bytes = recvmsg(eth.socket, &msg_hdr, 0);
         if (rx_bytes) {
             memcpy(frameCaptured[idxThreads], eth.rx_buffer, rx_bytes); // Copy the packet to the buffer
-            thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0]);
+            thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0], rx_bytes);
             idxThreads++;
             if (idxThreads == NUM_THREADS) idxThreads = 0;
         }
@@ -162,6 +167,7 @@ void cleanup(int signum){
     // deleteSharedMemory(&stopFlagShm);
     // pthread_mutex_destroy(&mutex);
     pthread_mutex_destroy(&pool.task_queue->mutex);
+    
     exit(0);
 }
 
@@ -169,6 +175,8 @@ int main(int argc, char *argv[]){
     // pthread_mutex_init(&mutex, NULL);
 
     if (argc != 2) return -1;
+
+    // deleteSampledValueMemory();
 
     printf("Running Sniffer!\n");
 
@@ -189,16 +197,21 @@ int main(int argc, char *argv[]){
     }
 
     // Initialize the Shared Memory
-    shm_setup_s shm_sampledValue = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
-    if (shm_sampledValue.ptr == NULL){
-        shm_sampledValue = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
-    }
-    sampledValues = (sampledValue_t *)shm_sampledValue.ptr;
-    addSampledValue(0, "TRTC", 60, 80);
+    // shm_setup_s shm_sampledValue = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
+    // if (shm_sampledValue.ptr == NULL){
+    //     shm_sampledValue = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
+    // }
+    // sampledValues = (sampledValue_t *)shm_sampledValue.ptr;
+
+    
+    // addSampledValue(0, "TRTC", 60, 80);
+    sampledValues = openSampledValue(1);
 
     // printf("%s \n", sampledValues[0].svId);
-    // printf("%d \n", sampledValues[0].arrValue[0]);
-    // sampledValues[0].arrValue[0] = 0;
+    // printf("%d \n", sampledValues[0].snifferValues[0]);
+    // sampledValues[0].snifferValues[0] = 0;
+
+    // sleep(8);
 
     runSniffer();
 

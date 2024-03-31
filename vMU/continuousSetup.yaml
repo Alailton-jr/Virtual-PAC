@@ -16,13 +16,13 @@ Test:
     module: 100
   - angle: 0
     frequency: 60
-    module: 13800
+    module: 8000
   - angle: 120
     frequency: 60
-    module: 13800
+    module: 8000
   - angle: 120
     frequency: 60
-    module: 13800
+    module: 8000
   - angle: 0
     frequency: 60
     module: 80
