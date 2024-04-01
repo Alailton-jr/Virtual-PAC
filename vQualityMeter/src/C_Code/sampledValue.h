@@ -13,25 +13,25 @@ typedef enum {
 }QualityEventTypes;
 
 typedef struct{
-    QualityEventTypes type;
-    uint8_t* arrValue;
-    uint64_t timeStampIni;
-    uint64_t timeStampEnd;
+    uint32_t topThreshold;
+    uint32_t bottomThreshold;
+    int32_t arr[NUM_CHANELS][MAX_BUFFER_EVENT_SIZE];
+    uint32_t idx[NUM_CHANELS];
+    uint32_t bufferIdx;
+    uint32_t posCycle;
+    uint8_t flag;
+    struct timespec t0;
+    struct timespec t1;
 }QualityEvent_t;
 
 typedef struct {
     double phasor[NUM_CHANELS][MAX_HARMONIC][2];
-    uint8_t sagFlag;
-    uint8_t swellFlag;
-    uint8_t interruptionFlag;
-    uint8_t overVoltageFlag;
-    uint8_t underVoltageFlag;
-    uint8_t transientFlag;
-    double sagThreshold;
-    double swellThreshold;
-    double interruptionThreshold;
-    double overVoltageThreshold;
-    double underVoltageThreshold;
+    QualityEvent_t sag;
+    QualityEvent_t swell;
+    QualityEvent_t interruption;
+    QualityEvent_t overVoltage;
+    QualityEvent_t underVoltage;
+    QualityEvent_t transient;
 }QualityAnalyse_t;
 
 typedef struct{
