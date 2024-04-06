@@ -107,8 +107,7 @@ namespace TestSet
 
     public class Ctl
     {
-
-        public NetworkConfig networkConfig;
+        public NetworkConfig[] networkConfig;
         public CommunicationConfig communicationConfig;
         public ContinuousConfig continuousConfig;
         public GeneralConfig generalConfig;
@@ -116,7 +115,6 @@ namespace TestSet
         public List<SequenceConfig> sequencesConfig;
         public TestRun testRun;
         public SocketConnection serverCon { get; set; }
-
 
         public void saveClass()
         {
