@@ -35,18 +35,6 @@ def estimateSequence(netConfig, testConfig, numPackets):
             y[i,:] = _y
             i += 1
         framesNum.append(y)
-    
-    #plot the sequence as one after the oter
-    # plt.figure()
-    # x1 = framesNum[0][5][:]
-    # x2 = framesNum[1][5][:]
-    # x3 = framesNum[2][5][:]
-    # allSeq = np.concatenate((x1,x2,x3))
-    # print(allSeq.shape)
-    # plt.plot(allSeq[int(4800*0.9): int(4800*1.1)])
-    # plt.savefig('sequences.png')
-    # plt.show()
-    # print('ploted')
 
     frames = []
     smpCnt = 0
@@ -75,7 +63,6 @@ def send_signal_by_name(process_name, signal):
                 psutil.Process(process_pid).send_signal(signal)
             except psutil.NoSuchProcess:
                 print(f"Process '{process_name}' not found.")
-
 
 def cleanUp(signum, frame):
     
@@ -130,6 +117,7 @@ if __name__=='__main__':
         macSrc = get_mac_address(),
         vLanId = netConfig['vlan']
     )
+    
     sv.asduSetup(
         svId = netConfig['svId'],
         confRev =netConfig['confRev'],

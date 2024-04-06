@@ -48,20 +48,34 @@ void* processPacket(uint8_t* frame, uint64_t size){
 
     int j=0, noAsdu, svIdx = -1;
 
+    // 10 + 
+
     // Skip SV Header until seqAsdu
-    if (frame[i+11] == 0x82) i += 17;
-    else i += 15;
+    if (frame[i+11] == 0x82){
+        i += 17;
+    }else if (frame[i+11] == 0x81){
+        i += 16;
+    }else{
+        i += 15;
+    }
 
     noAsdu = frame[i-1]; // Number of ASDUs
 
     // Skip until first asdu
-    if (frame[i+1] == 0x82) i += 4;
-    else i += 2;
+    if (frame[i+1] == 0x82) {
+        i += 4;
+    } else if(frame[i+1] == 0x81){
+        i += 3;
+    } else {
+        i += 2;
+    }
 
     for (int k = 0; k < noAsdu; k++) { // Decode Each Asdu
 
-        if (frame[i+1] == 0x82) i += 4;
-        else i += 2;
+        if (frame[i+1] == 0x82) 
+            i += 4;
+        else 
+            i += 2;
 
         while (frame[i] != 0x87 && i <= size) { // skip all the fields until Sequence of Data
             /*
@@ -108,10 +122,9 @@ void* processPacket(uint8_t* frame, uint64_t size){
         if (sampledValues[svIdx].idxCycle >= sampledValues[svIdx].smpRate) {
             sampledValues[svIdx].idxCycle = 0;
             sampledValues[svIdx].idxBuffer++;
+            sampledValues[svIdx].cycledCaptured++;
             if (sampledValues[svIdx].idxBuffer >= sampledValues[svIdx].freq) {
                 sampledValues[svIdx].idxBuffer = 0;
-                sampledValues[svIdx].cycledCaptured++;
-                // printf("1 Second")
                 // saveArray(&sampledValues[svIdx]);
             }
         }

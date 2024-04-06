@@ -16,6 +16,10 @@ class SvPublisher:
         self.vLanPriority = vLanPriority
         self.setHeader()
     
+        self.smpCountPos = 0
+        self.alldataPos = 0
+        self.asduLength = 0
+
     def setHeader(self,):
         self.header = bytes()
         self.header += bytes.fromhex(self.macDst.replace(':','').replace('-','')) #macDst
@@ -63,7 +67,11 @@ class SvPublisher:
         self.savPdu['noASDU'] = len(values)
         _savPdu = encoder.encode(self.savPdu)
         length = len(_savPdu) + 10
-        return self.header + int.to_bytes(length, byteorder='big', length=2) + int.to_bytes(0,byteorder='big',length=4) + _savPdu
+        frame = self.header + int.to_bytes(length, byteorder='big', length=2) + int.to_bytes(0,byteorder='big',length=4) + _savPdu
+        self.asduLength = len(encoder.encode(self.savPdu['seqASDU'][0]))
+        self.smpCountPos = frame.find(encoder.encode(self.savPdu['seqASDU'][0]['smpCnt'])) + 2
+        self.alldataPos = frame.find(encoder.encode(self.savPdu['seqASDU'][0]['seqData'])) + 2
+        return frame
 
 
 #region Protocol

@@ -1,21 +1,27 @@
 #include "QualityMeter_lib.h"
 
 
-#define MAX_SAG_SIZE 80*60*5
+// #define MAX_SAG_SIZE 80*60*5
 #define TEMP_BUFFER_SIZE 5
+#define TEMP_BUFFER_RMS_SIZE 100
 
 sampledValue_t* sv;
-uint16_t windowSize = 20;
+uint16_t windowSize = 40;
 fftw_plan *plan[MAX_SAMPLED_VALUES];
 
 int32_t tempBufferArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_SIZE][8][256]; // TODO Dynamic buffer size
 int32_t tempBufferTrigger[MAX_SAMPLED_VALUES];
 uint32_t tempBufferIdx[MAX_SAMPLED_VALUES];
 
+double tempBufferRMSArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_RMS_SIZE][8];
+uint32_t tempBufferRMSIdx[MAX_SAMPLED_VALUES];
+
+char curDir[1024];
+
 void saveArr(double *arr, int64_t size, char *name){
     FILE *fp = fopen(name, "w");
     if (fp == NULL) {
-        printf("Error opening file.\n");
+        perror("Error opening file");
         return;
     }
     for (int i = 0; i < size; i++) {
@@ -27,67 +33,164 @@ void saveArr(double *arr, int64_t size, char *name){
     fclose(fp);
 }
 
-void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
-    int found = 0, channel;
-    QualityEvent_t *sag = &sv->analyseData.sag;
+void saveEvent(QualityEvent_t *event, int16_t channel, int16_t smpRate, char *name){
+    FILE *fp = fopen(name, "w");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+    for (int i = 0; i < channel; i++) {
+        for (int j = 0; j < smpRate; j++) {
+            fprintf(fp, "%lf", event->arr[i][j]);
+            if (j < smpRate - 1) {
+                fprintf(fp, ",");
+            }
+        }
+        fprintf(fp, "\n");
+    }
+    fclose(fp);
+}
+
+void swellAnalise(sampledValue_t *sv, uint16_t svIdx){
+
+    int found = 0;
+    QualityEvent_t *swell = &sv->analyseData.swell;
 
     // 0-3: Current; 4-7: Voltage
     for (int channel = 4; channel < sv->numChanels-1; channel++){
-        if (sv->analyseData.phasor[channel][1][0] < sag->topThreshold){
+        if ( sv->analyseData.phasor[channel][1][0] > swell->bottomThreshold ){
             found = 1;
-            if(!sag->flag){
-                sag->flag = 1;
-                sag->posCycle = 0;
-                clock_gettime(0, &sag->t0);
+            if(!swell->flag){
+                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]); // Debug
+                swell->flag = 1;
+                swell->posCycle = 0;
+                clock_gettime(0, &swell->t0);
                 for (channel = 0; channel<sv->numChanels; channel++){
-                    sag->idx[channel] = 0;
-                    for(int idxBuffer = 1; idxBuffer < TEMP_BUFFER_SIZE+1; idxBuffer++){
-                        if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
-                            break;
-                        }
-                        memcpy(&sag->arr[channel][sag->idx[channel]], tempBufferArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel], sv->smpRate);
-                        sag->idx[channel] += sv->smpRate;
+                    swell->idx[channel] = 0;
+                    for (int idxBuffer = 1; idxBuffer < TEMP_BUFFER_RMS_SIZE+1; idxBuffer++){
+                        if (swell->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                        swell->arr[channel][swell->idx[channel]] = tempBufferRMSArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel];
+                        swell->idx[channel]++;
                     }
                 }
-                sag->bufferIdx = tempBufferIdx[svIdx];
             }else{
-                if (sag->bufferIdx != tempBufferIdx[svIdx]){
-                    for (channel = 0; channel < sv->numChanels; channel++){
-                        if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
-                            break;
-                        }
-                        memcpy(&sag->arr[channel][sag->idx[channel]], tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel], sv->smpRate);
-                        sag->idx[channel] += sv->smpRate;
+                for (channel = 0; channel < sv->numChanels; channel++){
+                    if (swell->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                    else{
+                        swell->arr[channel][swell->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                        swell->idx[channel]++;
                     }
+
                 }
             }
             break;
         }
     }
-    
-    if (sag->flag){
+    if (swell->flag){
         if(!found){
-            if (sag->bufferIdx != tempBufferIdx[svIdx]){
-                if (sag->posCycle < TEMP_BUFFER_SIZE){
-                    for (channel = 0; channel < sv->numChanels; channel++){
-                        if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
+            if (swell->bufferIdx != tempBufferIdx[svIdx]){
+                if (swell->posCycle < TEMP_BUFFER_RMS_SIZE){
+                    for (int channel = 0; channel < sv->numChanels; channel++){
+                        if (swell->idx[channel] > MAX_BUFFER_EVENT_SIZE) 
                             break;
+                        else{
+                            swell->arr[channel][swell->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                            swell->idx[channel]++;
                         }
-                        memcpy(&sag->arr[channel][sag->idx[channel]], tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel], sv->smpRate);
-                        sag->idx[channel] += sv->smpRate;
                     }
-                    sag->posCycle++;
+                    swell->posCycle++;
                 }else{
-                    sag->flag = 0;
-                    clock_gettime(0, &sag->t1);
-                    double time = (sag->t1.tv_sec - sag->t0.tv_sec) + (sag->t1.tv_nsec - sag->t0.tv_nsec) / 1e9;
-                    printf("Sag time: %lf\n", time);
-                    saveArr(sag->arr[5], sag->idx[5], "sag.csv");
+                    swell->flag = 0;
+                    clock_gettime(0, &swell->t1);
+                    double time_val = (swell->t1.tv_sec - swell->t0.tv_sec) + (swell->t1.tv_nsec - swell->t0.tv_nsec) / 1e9;
+                    printf("Swell time: %lf\n", time_val); // Debug
+                    struct tm *local_time;
+                    time_t current_time;
+                    current_time = time(NULL);
+                    local_time = localtime(&current_time);
+                    char fileName [256];
+                    sprintf(fileName, "files/%s_swell_%04d-%02d-%02d_%02d-%02d-%02d.csv", sv->svId,
+                        local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
+                        local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
+                    saveEvent(swell, sv->numChanels, swell->idx[0], fileName);
                 }
             }
         }
     }
 
+}
+
+void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
+    int found = 0;
+    QualityEvent_t *sag = &sv->analyseData.sag;
+
+    // 0-3: Current; 4-7: Voltage
+    for (int channel = 4; channel < sv->numChanels-1; channel++){
+        if (sv->analyseData.phasor[channel][1][0] < sag->topThreshold &&
+            sv->analyseData.phasor[channel][1][0] > sag->bottomThreshold){
+            found = 1;
+            if(!sag->flag){
+                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]); // Debug
+                sag->flag = 1;
+                sag->posCycle = 0;
+                clock_gettime(0, &sag->t0);
+                for (channel = 0; channel<sv->numChanels; channel++){
+                    sag->idx[channel] = 0;
+                    for (int idxBuffer = 1; idxBuffer < TEMP_BUFFER_RMS_SIZE+1; idxBuffer++){
+                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel];
+                        sag->idx[channel]++;
+                    }
+                }
+            }else{
+                for (channel = 0; channel < sv->numChanels; channel++){
+                    if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                    else{
+                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                        sag->idx[channel]++;
+                    }
+
+                }
+            }
+            break;
+        }
+    }
+    if (sag->flag){
+        if(!found){
+            if (sag->bufferIdx != tempBufferIdx[svIdx]){
+                if (sag->posCycle < TEMP_BUFFER_RMS_SIZE){
+                    for (int channel = 0; channel < sv->numChanels; channel++){
+                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) 
+                            break;
+                        else{
+                            sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                            sag->idx[channel]++;
+                        }
+                    }
+                    sag->posCycle++;
+                }else{
+                    sag->flag = 0;
+                    clock_gettime(0, &sag->t1);
+                    double time_val = (sag->t1.tv_sec - sag->t0.tv_sec) + (sag->t1.tv_nsec - sag->t0.tv_nsec) / 1e9;
+                    printf("Sag time: %lf\n", time_val); // Debug
+                    struct tm *local_time;
+                    time_t current_time;
+                    current_time = time(NULL);
+                    local_time = localtime(&current_time);
+                    char fileName [256];
+                    sprintf(fileName, "%s/files/%s_sag_%04d-%02d-%02d_%02d-%02d-%02d.csv", curDir, sv->svId,
+                        local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
+                        local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
+                    saveEvent(sag, sv->numChanels, sag->idx[0], fileName);
+                }
+            }
+        }
+    }
+
+}
+
+void transientAnalise(sampledValue_t *sv, uint16_t svIdx){
+    
 }
 
 void runAnalyse(){
@@ -103,9 +206,11 @@ void runAnalyse(){
     for (i = 0; i < MAX_SAMPLED_VALUES; i++){
         tempBufferTrigger[i] = -1;
         tempBufferIdx[i] = 0;
+
+        tempBufferRMSIdx[i] = 0;
     }
 
-    double sagArr[8][MAX_SAG_SIZE];
+    // double sagArr[8][MAX_BUFFER_EVENT_SIZE];
     uint32_t sagIdx[8];
     int32_t posSagCycle[8];
 
@@ -125,48 +230,41 @@ void runAnalyse(){
     }
 
     int32_t stop = 0;
-    FILE *fp = fopen("output.csv", "w");
 
-    while(stop<1000){
+    while(1){
         stop++;
         for (svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
             if (!sv[svIdx].initialized) continue;
 
-            while (1){
-                if (sv[svIdx].cycledCaptured <= 5) continue;
-                if (sv[svIdx].idxProcessedBuffer > sv[svIdx].idxBuffer){
-                    if (!(sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer + 60)) continue;
-                }else{
-                    if (!(sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer)) continue;
-                }
-                break;
+            // while (1){
+            if (sv[svIdx].cycledCaptured <= TEMP_BUFFER_RMS_SIZE/windowSize) continue;
+            if (sv[svIdx].idxProcessedBuffer > sv[svIdx].idxBuffer){
+                if (sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer + sv[svIdx].freq)
+                    continue;
+            }else{
+                if (sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer) continue;
             }
 
             for (channel = 0; channel < sv[svIdx].numChanels;channel++){
                 k = 0;
                 for (i = 0; i < cycleAnalised; i++){
-                    idx = (sv[svIdx].idxProcessedBuffer + i) % sv[svIdx].freq;
+                    idx = sv[svIdx].idxProcessedBuffer + i; //sv[svIdx].freq;
+                    if (idx >= sv[svIdx].freq) idx = 0;
                     idy = sv[svIdx].idxProcessedCycle;
                     for (j = 0; j < sv[svIdx].smpRate; j++){
                         idy++;
                         if (idy >= sv[svIdx].smpRate){
                             idx++;
                             if (idx >= sv[svIdx].freq) idx = 0;
-                            idy -= sv[svIdx].smpRate;
+                            idy = 0;
                         }
                         input[svIdx][channel][k][0] = sv[svIdx].analyseArr[channel][idx][idy];
                         input[svIdx][channel][k][1] = 0.0;
                         k++;
-                        if (channel == 0){ // Debug Save
-                            fprintf(fp, "%d", sv[svIdx].analyseArr[channel][idx][idy]);
-                            if (j < sv[svIdx].smpRate - 1){
-                                fprintf(fp, ",");
-                            }else{
-                                fprintf(fp, "\n");
-                            }
-                        }
                     }
                 }
+                fftw_execute(plan[svIdx][channel]);
+
                 if (tempBufferTrigger[svIdx] == -1){
                         tempBufferTrigger[svIdx] = idx;
                     }
@@ -179,28 +277,32 @@ void runAnalyse(){
                         tempBufferIdx[svIdx] = 0;
                     }
                 }
-                fftw_execute(plan[svIdx][channel]);
             }
-            idy += windowSize;
-            if (idy >= sv[svIdx].smpRate){
-                idx++;
-                if (idx >= sv[svIdx].freq) idx = 0;
-                idy -= sv[svIdx].smpRate;
+
+            sv[svIdx].idxProcessedCycle += windowSize;
+            if (sv[svIdx].idxProcessedCycle >= sv[svIdx].smpRate){
+                sv[svIdx].idxProcessedCycle -= sv[svIdx].smpRate;
+                sv[svIdx].idxProcessedBuffer++;
+                if (sv[svIdx].idxProcessedBuffer >= sv[svIdx].freq){
+                    sv[svIdx].idxProcessedBuffer = 0;
+                }
             }
-            sv[svIdx].idxProcessedBuffer = idx;
-            sv[svIdx].idxProcessedCycle = idy;
 
             for (channel = 0; channel < sv[svIdx].numChanels; channel++){
                 for (i = 0; i < MAX_HARMONIC; i++){
                     sv[svIdx].analyseData.phasor[channel][i][0] = sqrt(output[svIdx][channel][i][0] * output[svIdx][channel][i][0] + output[svIdx][channel][i][1] * output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
                     sv[svIdx].analyseData.phasor[channel][i][1] = atan2(output[svIdx][channel][i][1], output[svIdx][channel][i][0]);
                 }
+                tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor[channel][1][0];
+            }
+            tempBufferRMSIdx[svIdx]++;
+            if (tempBufferRMSIdx[svIdx] > TEMP_BUFFER_RMS_SIZE){
+                tempBufferRMSIdx[svIdx] = 0;
             }
             sagAnalise(&sv[svIdx], svIdx);
+            swellAnalise(&sv[svIdx], svIdx);
         }
     }
-
-    fclose(fp);
 
     for (svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
         if (!sv[svIdx].initialized) continue;
@@ -217,13 +319,119 @@ void runAnalyse(){
 
 }
 
-sem_t *semaphore;
-
 int main(){
+    char filePath[512];
+    readlink("/proc/self/exe", filePath, sizeof(filePath) - 1);
+    strcpy(curDir, dirname(filePath));
 
     sv = openSampledValue(0);
     runAnalyse();
 
     printf("ended\n");
     return 0;
+}
+
+
+
+
+
+
+
+
+
+void sagAnalise_Old(sampledValue_t *sv, uint16_t svIdx){
+    int found = 0;
+    QualityEvent_t *sag = &sv->analyseData.sag;
+
+    // 0-3: Current; 4-7: Voltage
+    for (int channel = 4; channel < sv->numChanels-1; channel++){
+        if (sv->analyseData.phasor[channel][1][0] < sag->topThreshold){
+            found = 1;
+            if(!sag->flag){
+                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]);
+                sag->flag = 1;
+                sag->posCycle = 0;
+                clock_gettime(0, &sag->t0);
+                for (channel = 0; channel<sv->numChanels; channel++){
+                    sag->idx[channel] = 0;
+                    // for(int idxBuffer = 1; idxBuffer < TEMP_BUFFER_SIZE+1; idxBuffer++){
+                    //     if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
+                    //         break;
+                    //     }
+                    //     for (int idx = 0; idx < sv->smpRate; idx++){
+                    //         sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel][idx];
+                    //         sag->idx[channel]++;
+                    //     }
+                    // }
+                    for (int idxBuffer = 1; idxBuffer < TEMP_BUFFER_RMS_SIZE+1; idxBuffer++){
+                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel];
+                        sag->idx[channel]++;
+                    }
+                }
+                // sag->bufferIdx = tempBufferRMSIdx[svIdx];
+            }else{
+                // if (sag->bufferIdx != tempBufferIdx[svIdx]){
+                for (channel = 0; channel < sv->numChanels; channel++){
+                    // if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
+                    //     break;
+                    // }
+                    // for (int idx = 0; idx < sv->smpRate; idx++){
+                    //     sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][idx];
+                    //     sag->idx[channel]++;
+                    // }
+                    if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
+                    else{
+                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                        sag->idx[channel]++;
+                    }
+
+                }
+                // sag->bufferIdx = tempBufferIdx;
+            }
+            break;
+        }
+    }
+    
+    if (sag->flag){
+        if(!found){
+            if (sag->bufferIdx != tempBufferIdx[svIdx]){
+                if (sag->posCycle < TEMP_BUFFER_RMS_SIZE){
+                    // for (channel = 0; channel < sv->numChanels; channel++){
+                    //     if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
+                    //         break;
+                    //     }
+                    //     for (int idx = 0; idx < sv->smpRate; idx++){
+                    //         sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][idx];
+                    //         sag->idx[channel]++;
+                    //     }
+                    // }
+                    // sag->bufferIdx = tempBufferIdx;
+                    for (int channel = 0; channel < sv->numChanels; channel++){
+                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) 
+                            break;
+                        else{
+                            sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
+                            sag->idx[channel]++;
+                        }
+                    }
+                    sag->posCycle++;
+                }else{
+                    sag->flag = 0;
+                    clock_gettime(0, &sag->t1);
+                    double time_val = (sag->t1.tv_sec - sag->t0.tv_sec) + (sag->t1.tv_nsec - sag->t0.tv_nsec) / 1e9;
+                    printf("Sag time: %lf\n", time_val);
+                    struct tm *local_time;
+                    time_t current_time;
+                    current_time = time(NULL);
+                    local_time = localtime(&current_time);
+                    char fileName [256];
+                    sprintf(fileName, "%s_%04d-%02d-%02d_%02d-%02d-%02d.csv", sv->svId,
+                        local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
+                        local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
+                    saveEvent(sag, sv->numChanels, sag->idx[0], fileName);
+                }
+            }
+        }
+    }
 }

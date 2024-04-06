@@ -1,6 +1,13 @@
 #ifndef SHARED_MEMORY_H  // If not defined
 #define SHARED_MEMORY_H  // Define it
 
+// Commands to check shm
+//  ipcs -m
+// sysctl kernel.shmmax
+// sysctl kernel.shmall
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

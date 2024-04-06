@@ -35,6 +35,7 @@ SHEBANG = \#!$(VENV)/bin/python3
 .PHONY: python_shebang
 python_shebang:
 	@find $(Python_Code_Dir) -type f -name "*.py" -exec sed -i "1s@.*@$(SHEBANG)@" {} \;
+	@find $(Python_C_Build_Dir) -type f -name "*.py" -exec sed -i "1s@.*@$(SHEBANG)@" {} \;
 	@find $(CURDIR) -type f -name "*.py" -exec sed -i "1s@.*@$(SHEBANG)@" {} \;
 
 SERVICE_NAME = vMU.service
@@ -121,30 +122,35 @@ disable_service:
 	fi
 
 CC = gcc
-LDFLAGS = -lpthread
-CFLAGS = -Wno-incompatible-pointer-types
+LDFLAGS = -lpthread -lpython3.11
+CFLAGS = -Wno-incompatible-pointer-types -Wformat
+INCLUDES = #$(shell python3-config --includes) Wasn't needed
 C_Code_Dir = $(CURDIR)/src/C_Code
 C_Code_Build_Dir = $(CURDIR)/src/C_Build
 Python_Code_Dir = $(CURDIR)/src/Python_Code
+Python_C_Build_Dir = $(CURDIR)/src/Python_C_Build
 
 
-IGNORED_SRCS = send.c
+IGNORED_SRCS = send.c pyShmMemory.c
 IGNORED_SRCS_WITH_PATH = $(addprefix $(C_Code_Dir)/, $(IGNORED_SRCS))
 SRCS = $(filter-out $(IGNORED_SRCS_WITH_PATH), $(wildcard $(C_Code_Dir)/*.c))
 EXECUTABLES = $(patsubst $(C_Code_Dir)/%.c,%,$(SRCS))
 PYTHON_FILES := $(wildcard $(Python_Code_Dir)/*.py)
+PYTHON_C_FILES := $(wildcard $(Python_C_Build_Dir)/*.py)
 
 .PHONY: build
 build: $(C_Code_Build_Dir) $(EXECUTABLES)
-	@chmod +x $(PYTHON_FILES)
+	@chmod +x $(PYTHON_FILES) $(PYTHON_C_FILES)
 	@echo "C Code compiled ended."
+	@echo "Running python Setup for C-API"
+	@$(Python_C_Build_Dir)/setup.py
 
 $(C_Code_Build_Dir):
 	@mkdir $(C_Code_Build_Dir)
 
 %: $(C_Code_Dir)/%.c
 	@echo "Compiling $@..."
-	@$(CC) $(CFLAGS) -o $(C_Code_Build_Dir)/$@ $< $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(C_Code_Build_Dir)/$@ $< $(LDFLAGS)
 	@chmod +x $(C_Code_Build_Dir)/$@
 	
 

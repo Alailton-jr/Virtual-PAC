@@ -15,13 +15,13 @@ typedef enum {
 typedef struct{
     uint32_t topThreshold;
     uint32_t bottomThreshold;
-    int32_t arr[NUM_CHANELS][MAX_BUFFER_EVENT_SIZE];
     uint32_t idx[NUM_CHANELS];
     uint32_t bufferIdx;
     uint32_t posCycle;
     uint8_t flag;
     struct timespec t0;
     struct timespec t1;
+    double arr[NUM_CHANELS][MAX_BUFFER_EVENT_SIZE];
 }QualityEvent_t;
 
 typedef struct {

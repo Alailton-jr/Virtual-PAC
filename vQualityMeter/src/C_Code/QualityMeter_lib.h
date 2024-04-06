@@ -40,12 +40,13 @@ typedef struct {
 #define MAX_SAMPLED_VALUES 20
 #define NUM_CHANELS 8
 #define MAX_HARMONIC 40
-#define MAX_BUFFER_EVENT_SIZE 80*60*5
+#define MAX_BUFFER_EVENT_SIZE 80*5*10
 
 // analyse.c
 #include <math.h>
 #include <fftw3.h>
 #include <time.h>
+#include <libgen.h>
 
 #include "threadTask.h"
 #include "mySocket.h"
