@@ -11,7 +11,7 @@ os.chdir(workDir)
 
 C_buildPath = os.path.join(workDir, 'src', 'C_Build')
 Python_buildPath = os.path.join(workDir, 'src', 'Python_Code')
-Python_Executable = '/root/vMU/vEnv/bin/python3'
+Python_Executable = os.path.join(workDir, r'vEnv/bin/python3')
 
 try:
     controllerShm = shared_memory.SharedMemory(name='controller', create=False, size=4)
@@ -50,7 +50,6 @@ class vMU_Brain:
         self.tests = {}
         self.sniffer = {}
         self.api = {}
-        self.runSniffer()
         time.sleep(0.5)
         self.runAPI()
 

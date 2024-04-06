@@ -158,3 +158,4 @@ $(C_Code_Build_Dir):
 clean:
 	@echo "Cleaning..."
 	@rm -rf $(C_Code_Build_Dir)/*
+	@rm -R $(VENV)

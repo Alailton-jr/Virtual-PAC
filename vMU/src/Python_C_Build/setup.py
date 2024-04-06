@@ -4,9 +4,10 @@ def runBuild():
     from distutils.core import setup, Extension
     import numpy as np
     from os import path, listdir, getcwd
-    from shutil import move
+    from shutil import move, rmtree
 
     c_folder = path.abspath(path.join(path.dirname(__file__), '..', 'C_Code'))
+    removeDir = path.abspath(path.join(path.dirname(__file__), '..', '..', 'build'))
     build_folder = path.abspath(path.join(path.dirname(__file__)))
 
     args = ['-Wno-unused-function']
@@ -34,5 +35,6 @@ def runBuild():
     for _file in files:
         if _file.endswith('.so'):
             move(_file, path.join(build_folder, _file))
+    rmtree(removeDir)
 
 runBuild()
