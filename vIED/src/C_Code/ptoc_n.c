@@ -10,7 +10,7 @@
 #define SHM_USED 4
 shm_setup_s* allShm[SHM_USED];
 
-void sigterm_handler(int signum) {
+void cleanup(int signum) {
     printf("PTOC Neutral Leaving...\n");
     for(int i = 0;i<SHM_USED-1;i++)
         close(allShm[i]->id);
@@ -21,8 +21,8 @@ void sigterm_handler(int signum) {
 int main(int argc, char *argv[])
 {
 
-    signal(SIGINT, sigterm_handler);
-    signal(SIGTERM, sigterm_handler);
+    signal(SIGINT, cleanup);
+    signal(SIGTERM, cleanup);
 
     if (argc != 8){
         printf("Usage: ./ptoc_p <relay number> <pickup> <td> <a> <b> <c>\n");

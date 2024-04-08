@@ -22,7 +22,7 @@ typedef struct{
     uint16_t n_channels;
     uint16_t n_asdu;
     uint8_t isLoop;
-}replayData_t;
+}transientData_t;
 
 
 

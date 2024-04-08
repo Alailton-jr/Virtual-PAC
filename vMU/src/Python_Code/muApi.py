@@ -3,6 +3,7 @@
 
 import signal, socket, threading, json, yaml, psutil, numpy as np, queue, time, sys, subprocess
 from multiprocessing import shared_memory, resource_tracker
+import os
 
 #region Controller Commands
 try:
@@ -11,13 +12,18 @@ except:
     controllerShm = shared_memory.SharedMemory(name='controller', create=True, size=4)
 controller = np.ndarray((1,), dtype=np.uint32, buffer=controllerShm.buf)
 
+workDir = os.path.dirname(os.path.abspath(__file__))
+filesDir = os.path.join(workDir, '..', '..')
+
 NOTHING = 0x00
 START_CONTINUOUS = 0x01
 STOP_CONTINUOUS = 0x02
 UPDATE_CONTINUOUS = 0x03
 START_SEQUENCER = 0x04
 STOP_SEQUENCER = 0x05
-RESTART_NETWORK = 0x07
+START_TRANSIENT = 0x06
+STOP_TRANSIENT = 0x07
+RESTART_NETWORK = 0x08
 controller[0] = NOTHING
 #endregion
 
@@ -31,6 +37,7 @@ def main():
     print(f'Starting MU API at: IP {ipAddress}/8081')
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # lsof -i -n # to check the port kill <pid>
     server_address = (get_ip_address(), 8081)  # Use your desired server address and port
     server_socket.bind(server_address)
     server_socket.listen(5)
@@ -100,7 +107,30 @@ def ClientHandler(clientSocket):
                     clientSocket.sendall(json.dumps(values).encode())
                 #endregion
 
-                #NetWork
+                #region Transient
+                elif entry == 'setupTransient':
+                    if setupTransient(info['data']):
+                        clientSocket.sendall("okay".encode())
+                    else:
+                        clientSocket.sendall("error".encode())
+                elif entry == 'receiveTransientFiles':
+                    clientSocket.sendall("okay".encode())
+                    if receiveTransientFiles(clientSocket):
+                        clientSocket.sendall("okay".encode())
+                    else:
+                        clientSocket.sendall("error".encode())
+                elif entry == 'startTransient':
+                    startTransient()
+                    clientSocket.sendall("okay".encode())
+                elif entry == 'stopTransient':
+                    stopTransient()
+                    clientSocket.sendall("okay".encode())
+                elif entry == 'getTransientResult':
+                    pass
+
+                #endregion
+
+                #region NetWork
                 elif entry == 'setupNetwork':
                     if setupNetwork(info['data']):
                         clientSocket.sendall("okay".encode())
@@ -110,9 +140,10 @@ def ClientHandler(clientSocket):
                     with open("networkSetup.yaml", "r") as file:
                         values = yaml.safe_load(file)
                     clientSocket.sendall(json.dumps(values).encode())
-
+                #endregion
+                
                 #default
-                elif entry == 'TestConnect':
+                elif entry == 'TestConnection':
                     clientSocket.sendall("okay".encode())
                 else:
                     clientSocket.sendall("error".encode())
@@ -233,7 +264,7 @@ def setupContinuous(file:str):
     '''
     try:
         yamlData = yaml.safe_load(file)
-        with open("continuousSetup.yaml", "w") as file:
+        with open(os.path.join(filesDir, "continuousSetup.yaml"), "w") as file:
             yaml.safe_dump(yamlData, file)
         print('Yaml Data: ', "Received and saved YAML file.")
         return True
@@ -299,7 +330,7 @@ def setupSequencer(file:str):
     '''
     try:
         yamlData = yaml.safe_load(file)
-        with open("sequencerSetup.yaml", "w") as file:
+        with open(os.path.join(filesDir, "sequencerSetup.yaml"), "w") as file:
             yaml.safe_dump(yamlData, file)
         print('Yaml Data: ', "Received and saved YAML file.")
         return True
@@ -368,6 +399,77 @@ except:
     stopFlag = np.ndarray((1,), dtype=np.int8, buffer=sequencerStopSharedMemory.buf)
 #endregion
 
+
+#region Transient
+
+transientFilePath = os.path.join(workDir, 'transientFiles')
+
+def setupTransient(file:str):
+    '''
+        Update the transient setup file.
+
+        Args:
+            file (str): The yaml file.
+        Returns:
+            bool: True if the file was updated.
+    '''
+    try:
+        yamlData = yaml.safe_load(file)
+        with open(os.path.join(filesDir, "transientSetup.yaml"), "w") as file:
+            yaml.safe_dump(yamlData, file)
+        print('Yaml Data: ', "Received and saved YAML file.")
+        return True
+    except Exception as ex:
+        print('Yaml Data: ', ex)
+        return False
+
+def receiveTransientFiles(clientSocket) -> bool:
+    try:
+        # Receive file name length
+        debugBytes = clientSocket.recv(4)
+        file_name_length = int.from_bytes(debugBytes, byteorder='little')
+
+        # Receive file name
+        file_name = clientSocket.recv(file_name_length).decode('utf-8')
+
+        # Receive file length
+        file_length = int.from_bytes(clientSocket.recv(8), byteorder='little')
+
+        # Receive file data
+        with open(os.path.join(transientFilePath, file_name), 'wb') as file:
+            remaining_bytes = file_length
+            while remaining_bytes > 0:
+                data = clientSocket.recv(4096)
+                file.write(data)
+                remaining_bytes -= len(data)
+        print(f"Received file: {file_name}")
+        return True
+    except Exception as ex:
+        print('Yaml Data: ', ex)
+        return False
+
+def startTransient() -> bool:
+    '''
+        Send a command to the Controller to start the transient Test.
+
+        Returns:
+            bool: True if the signal was sent.
+    '''
+    controller[0] = START_TRANSIENT
+    return sendSignal(signal.SIGUSR1)
+
+def stopTransient() -> bool:
+    '''
+        Send a command to the Controller to stop the transient Test.
+
+        Returns:
+            bool: True if the signal was sent.
+    '''
+    controller[0] = STOP_TRANSIENT
+    return sendSignal(signal.SIGUSR1)
+
+#endregion
+
 def get_ip_address():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -394,9 +496,7 @@ def cleanUp(signal1 , signal2):
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, cleanUp)
     signal.signal(signal.SIGTERM, cleanUp)
-    if len(sys.argv) < 2:
-        print('Missing controller pid!')
-        exit(1)
-    controller_pid = int(sys.argv[1])
+    if len(sys.argv) >= 2:
+        controller_pid = int(sys.argv[1])
     main()
 

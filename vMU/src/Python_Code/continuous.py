@@ -1,21 +1,23 @@
 #!/root/Virtual-PAC/vMU/vEnv/bin/python3
 
-import numpy as np, yaml, psutil
+import numpy as np, psutil, signal, os, sys
 from Control import SvPublisher
 from time import sleep
 from multiprocessing import shared_memory
-import subprocess, signal, os
+from util import loadYaml, get_mac_address, getIface, send_signal_by_name
 
-import uuid
 
-def loadYaml(name):
-    with open(name, 'r') as file:
-        return yaml.safe_load(file)
+# SharedMemory from C-API 
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Add the path to the C_Build folder
+from Python_C_Build import shm_sequenceReplay
 
-def get_mac_address():
-    mac = uuid.getnode()
-    formatted_mac = ':'.join(('%012X' % mac)[i:i+2] for i in range(0, 12, 2))
-    return formatted_mac
+fileFolder = os.path.dirname(os.path.realpath(__file__))
+setupFolder = os.path.join(fileFolder, '..', '..', 'continuousSetup.yaml')
+replayFile = os.path.join(fileFolder, '..', 'C_Build', 'continuousReplay')
+commands = []
+
+onlyUpdate = False
 
 def estimateFrames(sv, netConfig, testConfig):
     pps = int(testConfig['pps'])
@@ -98,20 +100,42 @@ def updateData(signum, frame):
             _frames.append(frames[i][j])
     buffer[:] = _frames[:]
 
-def getIface() -> str:
-    for d in psutil.net_if_stats().keys():
-        if d != 'lo':
-            return str(d)
-    return None
+def prepareFrames(config:dict) -> list[str]:
+    memNames = []
+    nSV = config['numSV']
+    for i in range(nSV):
+        netConfig = config['Network'][i]['SvNetwork']
+
+        smpRate = netConfig['smpRate']
+        freq = netConfig['frequency']
+        n_asdu = netConfig['noAsdu']
+
+        t = np.arange(0, 1/freq, smpRate)
+        
+
 
 
 if __name__=='__main__':
+
     print('Running continuous setup!')
+
     signal.signal(signal.SIGINT, cleanUp)
     signal.signal(signal.SIGTERM, cleanUp)
-    signal.signal(signal.SIGINT, cleanUp)
 
-    signal.signal(signal.SIGUSR1, updateData)
+    if not os.path.exists(setupFolder):
+        print(f'No sequencer setup file found at {setupFolder}')
+
+    if len(sys.argv) > 1:
+        onlyUpdate = True
+
+    config = loadYaml(setupFolder)
+    memNames = prepareFrames(config)
+
+    if not onlyUpdate:
+        startReplay(memNames)
+
+    exit(0)
+
 
     command = f'src/C_Build/replay {getIface()}'
 

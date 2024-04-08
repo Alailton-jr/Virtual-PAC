@@ -32,9 +32,9 @@ int main(int argc, char *argv[]){
     sched_setscheduler(0,SCHED_FIFO, &paramS);
 
     // Open the shared memory for the struct data
-    allShm[0] = openSharedMemory(argv[1],sizeof(replayData_t));
+    allShm[0] = openSharedMemory(argv[1],sizeof(transientData_t));
     if (allShm[0].ptr == NULL) return -1;
-    replayData_t* data = (replayData_t*) allShm[0].ptr;
+    transientData_t* data = (transientData_t*) allShm[0].ptr;
 
     //Open Array and frame shared memory
     allShm[1] = openSharedMemory(data->arrShmName, data->arrLength*sizeof(int32_t));
@@ -68,7 +68,6 @@ int main(int argc, char *argv[]){
     periodic_task_init(&pinfo, data->interGap);
     
     // Main loop
-    wait_rest_of_period(&pinfo);
     uint64_t i = 0;
     uint16_t smpCount = 0, i_asdu, tempSmpCount, channel;
     uint8_t debug = 0;
@@ -90,8 +89,8 @@ int main(int argc, char *argv[]){
             smpCount++;
             if (smpCount >= data->maxSmpCount) smpCount = 0;
         }
-        tx_bytes = sendmsg(eth.socket, &msg_hdr, 0);
         wait_rest_of_period(&pinfo);
+        tx_bytes = sendmsg(eth.socket, &msg_hdr, 0);
     }
     cleanUp(0);
 

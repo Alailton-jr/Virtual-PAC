@@ -14,6 +14,8 @@ uint8_t frameCaptured[NUM_THREADS][2048]; // Buffer to store the captured packet
 
 void cleanup(int signum);
 
+// FILE *fp;
+
 void saveArray(sampledValue_t* sv){
     printf("Saving Array\n");
     FILE *fp = fopen("Data.csv", "w");
@@ -116,6 +118,8 @@ void* processPacket(uint8_t* frame, uint64_t size){
             // rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
             // rawValues[idxRaw][j/8] = ((int32_t) frame[i+2+j] << 24) | ((int32_t) frame[i+3+j] << 16) | ((int32_t) frame[i+4+j] << 8) | ((int32_t) frame[i+5+j]);
             sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
+            // if (j/8 == 4) 
+                // fprintf(fp, "%d, ", sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle]);
             j += 8;
         }
         sampledValues[svIdx].idxCycle++;
@@ -145,6 +149,9 @@ void* processPacket(uint8_t* frame, uint64_t size){
 }
 
 void runSniffer(){
+
+    // fp = fopen("snifferData.csv", "w");
+
     int32_t rx_bytes = 0;
     struct msghdr msg_hdr;
     struct iovec iov;

@@ -11,7 +11,7 @@
 #define SHM_USED 4
 shm_setup_s* allShm[SHM_USED];
 
-void sigterm_handler(int signum) {
+void cleanup(int signum) {
     printf("PIOC Neutral Leaving...\n");
     for(int i = 0;i<SHM_USED-1;i++)
         close(allShm[i]->id);
@@ -22,12 +22,12 @@ void sigterm_handler(int signum) {
 int main(int argc, char *argv[])
 {
 
-    signal(SIGINT, sigterm_handler);
-    signal(SIGTERM, sigterm_handler);
+    signal(SIGINT, cleanup);
+    signal(SIGTERM, cleanup);
 
     if (argc != 5){
         printf("Usage: ./pioc_n <relay number> <pickup> <td>\n");
-        sigterm_handler(1);
+        cleanup(1);
     }
 
     struct sched_param paramS;

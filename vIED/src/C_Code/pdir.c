@@ -10,7 +10,7 @@
 #define SHM_USED 2
 shm_setup_s* allShm[SHM_USED];
 
-void sigterm_handler(int signum) {
+void cleanup(int signum) {
     printf("PDIR Phase Leaving...\n");
     close(allShm[0]->id);
     for (int i = 1;i<SHM_USED;i++) deleteSharedMemory(allShm[i]);
@@ -20,13 +20,13 @@ void sigterm_handler(int signum) {
 int main(int argc, char *argv[])
 {
 
-    signal(SIGINT, sigterm_handler);
-    signal(SIGTERM, sigterm_handler);
+    signal(SIGINT, cleanup);
+    signal(SIGTERM, cleanup);
 
     // Pickup, rTorq, Trip Tag
     if (argc != 5){
         printf("Usage: ./pdir <pickup> <rTorq> <trip Tag>\n");
-        sigterm_handler(1);
+        cleanup(1);
     }
 
     struct sched_param paramS;

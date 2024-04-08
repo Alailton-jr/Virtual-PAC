@@ -23,7 +23,10 @@
         "python.h": "c",
         "transientreplay.h": "c",
         "compare": "c",
-        "cstdint": "c"
+        "cstdint": "c",
+        "sequencereplay.h": "c",
+        "random": "c",
+        "limits": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln"
 }

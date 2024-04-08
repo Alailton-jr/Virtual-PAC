@@ -1,0 +1,31 @@
+Channels:
+- - - 4
+    - 5
+Files:
+- simulation_01.out
+GOOSE STOP: 0
+Network:
+- GoNetwork:
+    appId: 4800
+    confRev: 1
+    controlRef: GOOSE
+    dataSize: 0
+    goId: GOOSE_0
+    macSrc: 01:0C:CD:04:00:00
+    vLan: 100
+  SvNetwork:
+    AppId: 4800
+    confRev: 1
+    frequency: 60
+    macDst: 01:0C:CD:01:00:00
+    macSrc: null
+    noAsdu: 1
+    pps: 4800
+    smpRate: 80
+    smpSync: 0
+    svId: TRTC
+    vLanID: 100
+    vLanPriority: 4
+Number of Channels:
+- 8
+Number of Files: 1

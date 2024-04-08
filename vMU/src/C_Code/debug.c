@@ -3,10 +3,15 @@
 #include <stdint.h>
 
 #include "shmMemory.h"
+#include "sequenceReplay.h"
 
 int main(){
 
-    shm_setup_s sm = openSharedMemory("transientReplay_Array_1", 57600*sizeof(int32_t));
+    shm_setup_s stData = openSharedMemory("sequenceReplay_1", sizeof(sequenceData_t));
+    sequenceData_t* data = (sequenceData_t*) stData.ptr;
+
+
+    shm_setup_s sm = openSharedMemory("sequenceReplay_1_arr", data->arrLength * sizeof(int32_t));
     if (sm.ptr == NULL){
         printf("Error opening shared memory\n");
         return -1;

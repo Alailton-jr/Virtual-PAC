@@ -6,7 +6,7 @@
 #define TEMP_BUFFER_RMS_SIZE 100
 
 sampledValue_t* sv;
-uint16_t windowSize = 40;
+uint16_t windowSize = 80/4;
 fftw_plan *plan[MAX_SAMPLED_VALUES];
 
 int32_t tempBufferArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_SIZE][8][256]; // TODO Dynamic buffer size
@@ -80,7 +80,6 @@ void swellAnalise(sampledValue_t *sv, uint16_t svIdx){
                         swell->arr[channel][swell->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
                         swell->idx[channel]++;
                     }
-
                 }
             }
             break;
@@ -158,7 +157,7 @@ void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
     if (sag->flag){
         if(!found){
             if (sag->bufferIdx != tempBufferIdx[svIdx]){
-                if (sag->posCycle < TEMP_BUFFER_RMS_SIZE){
+                if (sag->posCycle < TEMP_BUFFER_RMS_SIZE*3){
                     for (int channel = 0; channel < sv->numChanels; channel++){
                         if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) 
                             break;
@@ -181,6 +180,7 @@ void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
                     sprintf(fileName, "%s/files/%s_sag_%04d-%02d-%02d_%02d-%02d-%02d.csv", curDir, sv->svId,
                         local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
                         local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
+                    if (time_val > 0.01)
                     saveEvent(sag, sv->numChanels, sag->idx[0], fileName);
                 }
             }
@@ -193,11 +193,13 @@ void transientAnalise(sampledValue_t *sv, uint16_t svIdx){
     
 }
 
+
 void runAnalyse(){
     int i, j, k, idx, idy, _idx, kj;
     uint8_t found;
     int svIdx, channel;
     int cycleAnalised = 1;
+    int idxBuffer, smpGap = 2;
 
     int64_t sum;
     fftw_complex **input[MAX_SAMPLED_VALUES];
@@ -210,7 +212,6 @@ void runAnalyse(){
         tempBufferRMSIdx[i] = 0;
     }
 
-    // double sagArr[8][MAX_BUFFER_EVENT_SIZE];
     uint32_t sagIdx[8];
     int32_t posSagCycle[8];
 
@@ -230,23 +231,20 @@ void runAnalyse(){
     }
 
     int32_t stop = 0;
+    
 
     while(1){
         stop++;
         for (svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
             if (!sv[svIdx].initialized) continue;
 
-            // while (1){
-            if (sv[svIdx].cycledCaptured <= TEMP_BUFFER_RMS_SIZE/windowSize) continue;
-            if (sv[svIdx].idxProcessedBuffer > sv[svIdx].idxBuffer){
-                if (sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer + sv[svIdx].freq)
-                    continue;
-            }else{
-                if (sv[svIdx].idxProcessedBuffer + cycleAnalised > sv[svIdx].idxBuffer) continue;
-            }
+            idxBuffer = sv[svIdx].idxBuffer - smpGap;
+            if (idxBuffer < 0) idxBuffer = sv[svIdx].freq + idxBuffer;
+            if (sv[svIdx].idxProcessedBuffer == idxBuffer) continue;
 
             for (channel = 0; channel < sv[svIdx].numChanels;channel++){
                 k = 0;
+
                 for (i = 0; i < cycleAnalised; i++){
                     idx = sv[svIdx].idxProcessedBuffer + i; //sv[svIdx].freq;
                     if (idx >= sv[svIdx].freq) idx = 0;
@@ -260,11 +258,13 @@ void runAnalyse(){
                         }
                         input[svIdx][channel][k][0] = sv[svIdx].analyseArr[channel][idx][idy];
                         input[svIdx][channel][k][1] = 0.0;
+                        
                         k++;
                     }
                 }
-                fftw_execute(plan[svIdx][channel]);
 
+                fftw_execute(plan[svIdx][channel]);
+                
                 if (tempBufferTrigger[svIdx] == -1){
                         tempBufferTrigger[svIdx] = idx;
                     }
@@ -294,13 +294,23 @@ void runAnalyse(){
                     sv[svIdx].analyseData.phasor[channel][i][1] = atan2(output[svIdx][channel][i][1], output[svIdx][channel][i][0]);
                 }
                 tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor[channel][1][0];
+                
             }
             tempBufferRMSIdx[svIdx]++;
             if (tempBufferRMSIdx[svIdx] > TEMP_BUFFER_RMS_SIZE){
                 tempBufferRMSIdx[svIdx] = 0;
             }
+
             sagAnalise(&sv[svIdx], svIdx);
             swellAnalise(&sv[svIdx], svIdx);
+        
+            // for(int fileIdx = 0; fileIdx<windowSize;fileIdx++){
+            //     int _fileIdx = sv[svIdx].smpRate - windowSize + fileIdx;
+            //     fprintf(fp, "%d,", (int)input[svIdx][4][_fileIdx][0]);
+            // }
+            // fprintf(fp, "%lf,", sv[svIdx].analyseData.phasor[4][1][0]);
+            // fprintf(fp, "%lf, ", sv[svIdx].rms[4]);
+
         }
     }
 
@@ -319,12 +329,26 @@ void runAnalyse(){
 
 }
 
+FILE *fp;
+void cleanUp(int signal){
+    fclose(fp);
+    printf("clean up\n");
+    exit(0);
+}
+
 int main(){
+
+    fp = fopen("data.csv", "w");
+
+    signal(SIGINT, cleanUp);
+    signal(SIGTERM, cleanUp);
+
     char filePath[512];
     readlink("/proc/self/exe", filePath, sizeof(filePath) - 1);
     strcpy(curDir, dirname(filePath));
 
     sv = openSampledValue(0);
+    // debug();
     runAnalyse();
 
     printf("ended\n");

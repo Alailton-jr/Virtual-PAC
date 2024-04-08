@@ -1,136 +1,119 @@
+Network:
+- GoNetwork:
+    appId: 4800
+    confRev: 1
+    controlRef: GOOSE
+    dataSize: 0
+    goId: GOOSE_0
+    macSrc: 01:0C:CD:04:00:00
+    vLan: 100
+  SvNetwork:
+    AppId: 4800
+    confRev: 1
+    frequency: 60
+    macDst: 01:0C:CD:01:00:00
+    macSrc: null
+    noAsdu: 2
+    pps: 4800
+    smpRate: 80
+    smpSync: 0
+    svId: TRTC
+    vLanID: 100
+    vLanPriority: 4
 Test:
-- duration: 4
-  type: Iabc
-  values:
-  - angle: 0
-    frequency: 60
-    module: 400
-  - angle: -120
-    frequency: 60
-    module: 400
-  - angle: 120
-    frequency: 60
-    module: 400
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 5
-  type: Iabc
-  values:
-  - angle: 0
-    frequency: 60
-    module: 1450
-  - angle: -120
-    frequency: 60
-    module: 1450
-  - angle: 120
-    frequency: 60
-    module: 1450
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 4000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 4
-  type: Iabc
-  values:
-  - angle: 0
-    frequency: 60
-    module: 200
-  - angle: -120
-    frequency: 60
-    module: 200
-  - angle: 120
-    frequency: 60
-    module: 200
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 4
-  type: Iabc
-  values:
-  - angle: 0
-    frequency: 60
-    module: 200
-  - angle: -120
-    frequency: 60
-    module: 200
-  - angle: 120
-    frequency: 60
-    module: 200
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 15000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 0
-- duration: 4
-  type: Iabc
-  values:
-  - angle: 0
-    frequency: 60
-    module: 200
-  - angle: -120
-    frequency: 60
-    module: 200
-  - angle: 120
-    frequency: 60
-    module: 200
-  - angle: 0
-    frequency: 60
-    module: 0
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 0
-    frequency: 60
-    module: 0
+- - duration: 3
+    type: Iabc
+    values:
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 8000
+    - angle: -120
+      module: 8000
+    - angle: 120
+      module: 8000
+    - angle: 0
+      module: 0
+  - duration: 2
+    type: Iabc
+    values:
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 4000
+    - angle: -120
+      module: 4000
+    - angle: 120
+      module: 4000
+    - angle: 0
+      module: 0
+  - duration: 3
+    type: Iabc
+    values:
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 8000
+    - angle: -120
+      module: 8000
+    - angle: 120
+      module: 8000
+    - angle: 0
+      module: 0
+  - duration: 2
+    type: Iabc
+    values:
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 11000
+    - angle: -120
+      module: 11000
+    - angle: 120
+      module: 11000
+    - angle: 0
+      module: 0
+  - duration: 3
+    type: Iabc
+    values:
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 0
+    - angle: 0
+      module: 8000
+    - angle: -120
+      module: 8000
+    - angle: 120
+      module: 8000
+    - angle: 0
+      module: 0
+numSV: 1

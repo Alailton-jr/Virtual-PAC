@@ -41,13 +41,14 @@ typedef struct{
     uint8_t initialized;
     int32_t *snifferArr[NUM_CHANELS][FREQUENCY];
     int32_t *analyseArr[NUM_CHANELS][FREQUENCY];
+    double rms[NUM_CHANELS];
     QualityAnalyse_t analyseData;
     uint8_t numChanels;
-    uint32_t idxCycle;
-    uint32_t idxBuffer;
-    uint32_t idxProcessedBuffer;
-    uint32_t idxProcessedCycle;
-    uint64_t cycledCaptured;
+    int32_t idxCycle;
+    int32_t idxBuffer;
+    int32_t idxProcessedBuffer;
+    int32_t idxProcessedCycle;
+    int64_t cycledCaptured;
 }sampledValue_t;
 
 void deleteSampledValue(int index);

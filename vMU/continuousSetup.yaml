@@ -1,28 +1,79 @@
+Network:
+- GoNetwork:
+    appId: 4800
+    confRev: 1
+    controlRef: GOOSE
+    dataSize: 0
+    goId: GOOSE_0
+    macSrc: 01:0C:CD:04:00:00
+    vLan: 100
+  SvNetwork:
+    AppId: 4800
+    confRev: 1
+    frequency: 60
+    macDst: 01:0C:CD:01:00:00
+    macSrc: null
+    noAsdu: 1
+    pps: 4800
+    smpRate: 80
+    smpSync: 0
+    svId: TRTC
+    vLanID: 100
+    vLanPriority: 4
+- GoNetwork:
+    appId: 4800
+    confRev: 1
+    controlRef: GOOSE
+    dataSize: 0
+    goId: GOOSE_1
+    macSrc: 01:0C:CD:04:00:01
+    vLan: 100
+  SvNetwork:
+    AppId: 4800
+    confRev: 1
+    frequency: 60
+    macDst: 01:0C:CD:01:00:01
+    macSrc: null
+    noAsdu: 1
+    pps: 4800
+    smpRate: 80
+    smpSync: 0
+    svId: SV_1
+    vLanID: 100
+    vLanPriority: 4
 Test:
-  pps: 4800
-  type: Iabc
-  values:
+- values:
   - angle: 0
-    frequency: 60
-    module: 1900
-  - angle: 120
-    frequency: 60
-    module: 1900
-  - angle: 120
-    frequency: 60
-    module: 1900
+    module: 0
   - angle: 0
-    frequency: 60
-    module: 100
+    module: 0
   - angle: 0
-    frequency: 60
-    module: 8000
-  - angle: 120
-    frequency: 60
-    module: 8000
-  - angle: 120
-    frequency: 60
-    module: 8000
+    module: 0
   - angle: 0
-    frequency: 60
-    module: 80
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+- values:
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+numSV: 2

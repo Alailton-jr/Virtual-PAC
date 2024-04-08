@@ -8,7 +8,7 @@
 shm_setup_s* allShm[ALL_SHM];
 
 eth_t eth;
-void sigterm_handler(int signum) {
+void cleanup(int signum) {
     printf("Replay Leaving...\n");
     socketCleanup(&eth);
     for(int i = 0;i<ALL_SHM; i++)
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     if (argc != 2)
         return -1;
 
-    signal(SIGTERM, sigterm_handler);
+    signal(SIGTERM, cleanup);
 
     struct sched_param paramS;
     paramS.sched_priority = 80;

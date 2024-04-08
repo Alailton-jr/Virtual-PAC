@@ -14,6 +14,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <string.h>
 
 /*
     * Shared memory setup structure
@@ -24,7 +25,7 @@
 */
 struct shm_setup_s{
     size_t size; // Size of the shared memory
-    const char* name; // Name of the shared memory
+    char name[256]; // Name of the shared memory
     int id; // Id of the shared memory
     void* ptr; // Pointer to the shared memory
 }typedef shm_setup_s; 
@@ -39,7 +40,11 @@ static shm_setup_s createSharedMemory(const char* shm_name, size_t size) {
 
     if (shm_id == -1) {
         perror("shm_open");
-        shm_setup_s x = {0, NULL, -1, NULL};
+        shm_setup_s x;
+        x.size = size;
+        strcpy(x.name, shm_name);
+        x.id = shm_id;
+        x.ptr = NULL;
         return x;
     }
 
@@ -47,7 +52,11 @@ static shm_setup_s createSharedMemory(const char* shm_name, size_t size) {
     if (ftruncate(shm_id, size) == -1) {
         perror("ftruncate");
         shm_unlink(shm_name); // Clean up if ftruncate fails
-        shm_setup_s x = {0, NULL, -1, NULL};
+        shm_setup_s x;
+        x.size = size;
+        strcpy(x.name, shm_name);
+        x.id = shm_id;
+        x.ptr = NULL;
         return x;
     }
 
@@ -55,11 +64,19 @@ static shm_setup_s createSharedMemory(const char* shm_name, size_t size) {
     if (shm_ptr == MAP_FAILED) {
         perror("mmap");
         shm_unlink(shm_name); // Clean up if mmap fails
-        shm_setup_s x = {0, NULL, -1, NULL};
+        shm_setup_s x;
+        x.size = size;
+        strcpy(x.name, shm_name);
+        x.id = shm_id;
+        x.ptr = NULL;
         return x;
     }
 
-    shm_setup_s x = {size, shm_name, shm_id, shm_ptr};
+    shm_setup_s x;
+    x.size = size;
+    strcpy(x.name, shm_name);
+    x.id = shm_id;
+    x.ptr = shm_ptr;
     return x;
 }
 
@@ -73,17 +90,29 @@ static shm_setup_s openSharedMemory(const char* shm_name, size_t size)
     int shm_id = shm_open(shm_name, O_RDWR, 0666);
     if (shm_id == -1) {
         perror("shm_open");
-        shm_setup_s x = {0, NULL, -1, NULL};
+        shm_setup_s x;
+        x.size = size;
+        strcpy(x.name, shm_name);
+        x.id = shm_id;
+        x.ptr = NULL;
         return x;
     }
     void* shm_ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_id, 0);
     if (shm_ptr == MAP_FAILED) {
         perror("mmap");
-        shm_setup_s x = {0, NULL, -1, NULL};
+        shm_setup_s x;
+        x.size = size;
+        strcpy(x.name, shm_name);
+        x.id = shm_id;
+        x.ptr = NULL;
         return x;
     }
 
-    shm_setup_s x = {size, shm_name, shm_id, shm_ptr};
+    shm_setup_s x;
+    x.size = size;
+    strcpy(x.name, shm_name);
+    x.id = shm_id;
+    x.ptr = shm_ptr;
     return x;
 }
 
@@ -97,6 +126,7 @@ static void deleteSharedMemory(shm_setup_s* setup)
         perror("munmap");
         return;
     }
+    close(setup->id); // Close the shared memory
     if (shm_unlink(setup->name) == -1) { // Delete the shared memory
         perror("shm_unlink");
         return;
