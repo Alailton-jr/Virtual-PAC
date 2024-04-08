@@ -44,19 +44,19 @@ Network:
 Test:
 - values:
   - angle: 0
-    module: 0
+    module: 4800
+  - angle: -120
+    module: 4800
+  - angle: 120
+    module: 4800
   - angle: 0
     module: 0
   - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
+    module: 4800
+  - angle: -120
+    module: 4800
+  - angle: 120
+    module: 4800
   - angle: 0
     module: 0
 - values:
@@ -76,4 +76,4 @@ Test:
     module: 0
   - angle: 0
     module: 0
-numSV: 2
+numSV: 1

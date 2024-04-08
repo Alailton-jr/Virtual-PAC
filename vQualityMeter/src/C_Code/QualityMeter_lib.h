@@ -52,6 +52,7 @@ typedef struct {
 #include "mySocket.h"
 #include "shmMemory.h"
 #include "sampledValue.h"
+#include "wavelet.h"
 
 
 // Debug Semaphore

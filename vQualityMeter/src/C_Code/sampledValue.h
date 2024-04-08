@@ -26,6 +26,8 @@ typedef struct{
 
 typedef struct {
     double phasor[NUM_CHANELS][MAX_HARMONIC][2];
+    double symetrical[2][3][2];
+    double unbalance[2];
     QualityEvent_t sag;
     QualityEvent_t swell;
     QualityEvent_t interruption;
@@ -79,7 +81,7 @@ sampledValue_t* openSampledValue(int sniffer){
     return svMemory.ptr;
 }
 
-void addSampledValue(int index, uint8_t* svId, uint16_t freq, uint16_t smpRate, QualityAnalyse_t *analyseData){
+void addSampledValue(int index, sampledValue_t *_sv){
     shm_setup_s svMemory, bufferMemory, cycleMemoryMem;
 
     svMemory = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
@@ -93,17 +95,7 @@ void addSampledValue(int index, uint8_t* svId, uint16_t freq, uint16_t smpRate, 
     //Delete old ...
     deleteSampledValue(index);
 
-    strcpy(sv[index].svId, svId);
-    sv[index].smpRate = smpRate;
-    sv[index].freq = freq;
-    sv[index].idxBuffer = 0;
-    sv[index].idxCycle = 0;
-    sv[index].idxProcessedCycle = 0;
-    sv[index].idxProcessedBuffer = 0;
-    sv[index].cycledCaptured = 0;
-    sv[index].initialized = 1;
-    sv[index].numChanels = 8;
-    memcpy(&sv[index].analyseData, analyseData, sizeof(QualityAnalyse_t));
+    memcpy(&sv[index], _sv, sizeof(sampledValue_t));
 
     char memName[256];
     for (int i = 0;i < sv[index].numChanels; i++){

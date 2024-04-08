@@ -28,7 +28,13 @@
         "random": "c",
         "limits": "c",
         "continuousreplay.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "socket.h": "c",
+        "if_packet.h": "c",
+        "wavelet.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln",
     "C_Cpp.intelliSenseEngineFallback": "enabled"

@@ -12,6 +12,7 @@ int main(int argc, uint8_t* argv[]){
 
     if (argc > 1) return 0;
 
+
     printf("Sampled Valued Added\n");
 
     QualityAnalyse_t qa;
@@ -31,8 +32,24 @@ int main(int argc, uint8_t* argv[]){
 
     qa.underVoltage.topThreshold = 0.9*8000;
     qa.underVoltage.bottomThreshold = 0.5*8000;
-    
-    addSampledValue(0, "TRTC", 60, 80, &qa);
+
+    sampledValue_t sv;
+    memset(&sv, 0, sizeof(sampledValue_t));
+    strcpy(sv.svId, "TRTC");
+    sv.numChanels = 8;
+    sv.smpRate = 80;
+    sv.freq = 60;
+    sv.idxBuffer = 0;
+    sv.idxCycle = 0;
+    sv.idxProcessedCycle = 0;
+    sv.idxProcessedBuffer = 0;
+    sv.cycledCaptured = 0;
+    sv.initialized = 1;
+    sv.numChanels = 8;
+    sv.analyseData = qa;
+
+
+    addSampledValue(0, &sv);
 
     return 0;
 }

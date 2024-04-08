@@ -1,13 +1,17 @@
 #include "QualityMeter_lib.h"
 
-
 // #define MAX_SAG_SIZE 80*60*5
 #define TEMP_BUFFER_SIZE 5
 #define TEMP_BUFFER_RMS_SIZE 100
 
 sampledValue_t* sv;
 uint16_t windowSize = 80/4;
-fftw_plan *plan[MAX_SAMPLED_VALUES];
+
+double symCompMatrix[3][3][2] = {
+    {{1,0}, {-0.5, 0.86602540378}, {-0.5, -0.86602540378}},
+    {{1,0}, {-0.5, -0.86602540378}, {-0.5, 0.86602540378}},
+    {{1,0}, {1,0}, {1,0}},
+};
 
 int32_t tempBufferArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_SIZE][8][256]; // TODO Dynamic buffer size
 int32_t tempBufferTrigger[MAX_SAMPLED_VALUES];
@@ -16,7 +20,16 @@ uint32_t tempBufferIdx[MAX_SAMPLED_VALUES];
 double tempBufferRMSArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_RMS_SIZE][8];
 uint32_t tempBufferRMSIdx[MAX_SAMPLED_VALUES];
 
-char curDir[1024];
+fftw_plan *fft_plan[MAX_SAMPLED_VALUES];
+fftw_complex **fft_input[MAX_SAMPLED_VALUES];
+fftw_complex **fft_output[MAX_SAMPLED_VALUES];
+
+dwt_plan *wt_plan[MAX_SAMPLED_VALUES];
+double **wt_input[MAX_SAMPLED_VALUES];
+double **wt_output_cA[MAX_SAMPLED_VALUES];
+double **wt_output_cD[MAX_SAMPLED_VALUES];
+
+char curDir[512];
 
 void saveArr(double *arr, int64_t size, char *name){
     FILE *fp = fopen(name, "w");
@@ -190,9 +203,27 @@ void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
 }
 
 void transientAnalise(sampledValue_t *sv, uint16_t svIdx){
-    
+    return;
 }
 
+int count = 0;
+void threePhaseToSymComp(sampledValue_t *sv){
+    count++;
+    for (int i = 0; i < 3; i++) {
+        sv->analyseData.symetrical[0][i][0] = 0;
+        sv->analyseData.symetrical[0][i][1] = 0;
+        for (int k = 0; k < 3; k++){
+            sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][k][0] * sv->analyseData.phasor[0+k][1][0] - symCompMatrix[i][k][1] * sv->analyseData.phasor[0+k][1][1];
+
+            sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][k][0] * sv->analyseData.phasor[0+k][1][1] + symCompMatrix[i][k][1] * sv->analyseData.phasor[0+k][1][0];
+        }
+    }
+    if (count>= 1000){
+        printf("Ia: %lf, Ib: %lf, Ic: %lf\n", sv->analyseData.phasor[0][1][0], sv->analyseData.phasor[1][1][0], sv->analyseData.phasor[2][1][0]);
+        // printf("V0: %lf, V1: %lf, V2: %lf\n", sv->analyseData.symetrical[0][0][0], sv->analyseData.symetrical[0][1][0], sv->analyseData.symetrical[0][2][0]);
+        count = 0;
+    }
+}
 
 void runAnalyse(){
     int i, j, k, idx, idy, _idx, kj;
@@ -200,11 +231,9 @@ void runAnalyse(){
     int svIdx, channel;
     int cycleAnalised = 1;
     int idxBuffer, smpGap = 2;
+    
 
     int64_t sum;
-    fftw_complex **input[MAX_SAMPLED_VALUES];
-    fftw_complex **output[MAX_SAMPLED_VALUES];
-
     for (i = 0; i < MAX_SAMPLED_VALUES; i++){
         tempBufferTrigger[i] = -1;
         tempBufferIdx[i] = 0;
@@ -215,18 +244,32 @@ void runAnalyse(){
     uint32_t sagIdx[8];
     int32_t posSagCycle[8];
 
+    int debug = 0;
+    uint32_t wt_pos[MAX_SAMPLED_VALUES][8];
+
     //Debug
     struct timespec t0, t1;
 
     for (svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
         if (!sv[svIdx].initialized) continue;
-        input[svIdx] = (fftw_complex**) malloc(sv[svIdx].numChanels * sizeof(fftw_complex*));
-        output[svIdx] = (fftw_complex**) malloc(sv[svIdx].numChanels * sizeof(fftw_complex*));
-        plan[svIdx] = (fftw_plan*) malloc(sv[svIdx].numChanels * sizeof(fftw_plan));
+        fft_plan[svIdx] = (fftw_plan*) malloc(sv[svIdx].numChanels * sizeof(fftw_plan));
+        fft_input[svIdx] = (fftw_complex**) malloc(sv[svIdx].numChanels * sizeof(fftw_complex*));
+        fft_output[svIdx] = (fftw_complex**) malloc(sv[svIdx].numChanels * sizeof(fftw_complex*));
+        
+        wt_plan[svIdx] = (dwt_plan*) malloc(sv[svIdx].numChanels * sizeof(dwt_plan));
+        wt_input[svIdx] = (double**) malloc(sv[svIdx].numChanels * sizeof(double*));
+        wt_output_cA[svIdx] = (double**) malloc(sv[svIdx].numChanels * sizeof(double*));
+        wt_output_cD[svIdx] = (double**) malloc(sv[svIdx].numChanels * sizeof(double*));
+
         for (channel = 0; channel < sv[svIdx].numChanels; channel++){
-            input[svIdx][channel] = (fftw_complex*) fftw_malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(fftw_complex));
-            output[svIdx][channel] = (fftw_complex*) fftw_malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(fftw_complex));
-            plan[svIdx][channel] = fftw_plan_dft_1d(cycleAnalised * sv[svIdx].smpRate, input[svIdx][channel], output[svIdx][channel], FFTW_FORWARD, FFTW_ESTIMATE);
+            fft_input[svIdx][channel] = (fftw_complex*) fftw_malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(fftw_complex));
+            fft_output[svIdx][channel] = (fftw_complex*) fftw_malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(fftw_complex));
+            fft_plan[svIdx][channel] = fftw_plan_dft_1d(cycleAnalised * sv[svIdx].smpRate, fft_input[svIdx][channel], fft_output[svIdx][channel], FFTW_FORWARD, FFTW_ESTIMATE);
+
+            wt_input[svIdx][channel] = (double*) malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(double));
+            wt_output_cA[svIdx][channel] = (double*) malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(double));
+            wt_output_cD[svIdx][channel] = (double*) malloc(cycleAnalised * sv[svIdx].smpRate * sizeof(double));
+            wt_plan[svIdx][channel] = wt_dwt_plan_1d(cycleAnalised * sv[svIdx].smpRate, "db4", wt_input[svIdx][channel],wt_output_cA[svIdx][channel], wt_output_cD[svIdx][channel]);
         }
     }
 
@@ -256,21 +299,24 @@ void runAnalyse(){
                             if (idx >= sv[svIdx].freq) idx = 0;
                             idy = 0;
                         }
-                        input[svIdx][channel][k][0] = sv[svIdx].analyseArr[channel][idx][idy];
-                        input[svIdx][channel][k][1] = 0.0;
+                        fft_input[svIdx][channel][k][0] = sv[svIdx].analyseArr[channel][idx][idy];
+                        fft_input[svIdx][channel][k][1] = 0.0;
+
+                        wt_input[svIdx][channel][k] = sv[svIdx].analyseArr[channel][idx][idy];
                         
                         k++;
                     }
                 }
 
-                fftw_execute(plan[svIdx][channel]);
+                fftw_execute(fft_plan[svIdx][channel]);
+                wt_excecute(wt_plan[svIdx][channel]);
                 
                 if (tempBufferTrigger[svIdx] == -1){
                         tempBufferTrigger[svIdx] = idx;
                     }
                 if (tempBufferTrigger[svIdx] == idx){
                     for(i = 0; i<k; i++){
-                        tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][i] = input[svIdx][channel][i][0];
+                        tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][i] = fft_input[svIdx][channel][i][0];
                     }
                     tempBufferIdx[svIdx]++;
                     if (tempBufferIdx[svIdx] == 5){
@@ -290,26 +336,28 @@ void runAnalyse(){
 
             for (channel = 0; channel < sv[svIdx].numChanels; channel++){
                 for (i = 0; i < MAX_HARMONIC; i++){
-                    sv[svIdx].analyseData.phasor[channel][i][0] = sqrt(output[svIdx][channel][i][0] * output[svIdx][channel][i][0] + output[svIdx][channel][i][1] * output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
-                    sv[svIdx].analyseData.phasor[channel][i][1] = atan2(output[svIdx][channel][i][1], output[svIdx][channel][i][0]);
+                    sv[svIdx].analyseData.phasor[channel][i][0] = sqrt(fft_output[svIdx][channel][i][0] * fft_output[svIdx][channel][i][0] + fft_output[svIdx][channel][i][1] * fft_output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
+                    sv[svIdx].analyseData.phasor[channel][i][1] = atan2(fft_output[svIdx][channel][i][1], fft_output[svIdx][channel][i][0]);
                 }
                 tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor[channel][1][0];
-                
+
+                if (!debug)
+                for (i=sv[svIdx].smpRate*0.4; i<sv[svIdx].smpRate*0.6; i++){
+                    if (wt_output_cD[svIdx][channel][i] > 1){
+                        debug = 1;
+                        saveArr(wt_output_cD[svIdx][channel], sv[svIdx].smpRate, "wt_output.csv");
+                        saveArr(wt_input[svIdx][channel], sv[svIdx].smpRate, "wt_input.csv");
+                    }
+                }
             }
             tempBufferRMSIdx[svIdx]++;
             if (tempBufferRMSIdx[svIdx] > TEMP_BUFFER_RMS_SIZE){
                 tempBufferRMSIdx[svIdx] = 0;
             }
 
+            threePhaseToSymComp(&sv[svIdx]);
             sagAnalise(&sv[svIdx], svIdx);
             swellAnalise(&sv[svIdx], svIdx);
-        
-            // for(int fileIdx = 0; fileIdx<windowSize;fileIdx++){
-            //     int _fileIdx = sv[svIdx].smpRate - windowSize + fileIdx;
-            //     fprintf(fp, "%d,", (int)input[svIdx][4][_fileIdx][0]);
-            // }
-            // fprintf(fp, "%lf,", sv[svIdx].analyseData.phasor[4][1][0]);
-            // fprintf(fp, "%lf, ", sv[svIdx].rms[4]);
 
         }
     }
@@ -317,20 +365,31 @@ void runAnalyse(){
     for (svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
         if (!sv[svIdx].initialized) continue;
         for (channel = 0; channel < sv[svIdx].numChanels; channel++){
-            fftw_destroy_plan(plan[svIdx][channel]);
-            fftw_free(input[svIdx][channel]);
-            fftw_free(output[svIdx][channel]);
+            fftw_destroy_plan(fft_plan[svIdx][channel]);
+            fftw_free(fft_input[svIdx][channel]);
+            fftw_free(fft_output[svIdx][channel]);
 
         }
-        free(input[svIdx]);
-        free(output[svIdx]);
-        free(plan[svIdx]);
+        free(fft_input[svIdx]);
+        free(fft_output[svIdx]);
+        free(fft_plan[svIdx]);
     }
 
 }
 
 FILE *fp;
 void cleanUp(int signal){
+    for (int svIdx = 0; svIdx < MAX_SAMPLED_VALUES; svIdx++){
+        if (!sv[svIdx].initialized) continue;
+        for (int channel = 0; channel < sv[svIdx].numChanels; channel++){
+            free(fft_input[svIdx][channel]);
+            free(fft_output[svIdx][channel]);
+            fftw_destroy_plan(fft_plan[svIdx][channel]);
+        }
+        free(fft_input[svIdx]);
+        free(fft_output[svIdx]);
+        free(fft_plan[svIdx]);
+    }
     fclose(fp);
     printf("clean up\n");
     exit(0);
@@ -354,10 +413,6 @@ int main(){
     printf("ended\n");
     return 0;
 }
-
-
-
-
 
 
 

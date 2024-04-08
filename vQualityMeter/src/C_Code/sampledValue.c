@@ -4,7 +4,7 @@
 
 // gcc -shared -o QualityMeter_lib.so -fPIC -I /usr/include/python3.11/ vQualityMeter/src/C_Code/sampledValue.c
 
-void addSampledValue(int index, uint8_t* svId, uint16_t freq, uint16_t smpRate){
+void addSampledValue(int index, uint8_t* svId){
     shm_setup_s svMemory = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
     if (svMemory.ptr == NULL){
         shm_setup_s svMemory = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
