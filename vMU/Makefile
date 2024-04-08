@@ -56,16 +56,16 @@ endif
 
 	@echo "Installing dependencies..."
 
-	@if @ ! command -v gcc 2>/dev/null; then \
-		@ echo Installing gcc... \
-		@ sudo $(INSTALL_CMD) install gcc; \
+	@if ! command -v gcc 2>/dev/null; then \
+		echo Installing gcc... \
+		sudo $(INSTALL_CMD) install gcc; \
 	fi
 	@echo "gcc installed."
 
-	# @if ! dpkg -l | grep libfftw3-dev  >/dev/null; then \
-	# 	@echo Installing libfftw3-dev... \
-	# 	@sudo $(INSTALL_CMD) install libfftw3-dev; \
-	# fi
+	@if ! dpkg -l | grep libfftw3-dev  >/dev/null; then \
+		echo Installing libfftw3-dev... \
+		sudo $(INSTALL_CMD) install libfftw3-dev; \
+	fi
 	@echo "libfftw3-dev installed."
 
 	@ $(PIP) install -r src/requirements.txt

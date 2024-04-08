@@ -2,6 +2,7 @@
 
 import subprocess, os, signal, time, socket, threading, json, psutil, yaml, numpy as np, src.Python_Code.muApi as muApi
 from multiprocessing import shared_memory
+from src.Python_Code.util import getIface
 
 
 # Service Directory
@@ -19,11 +20,6 @@ except:
     controllerShm = shared_memory.SharedMemory(name='controller', create=True, size=4)
 controller = np.ndarray((1,), dtype=np.uint32, buffer=controllerShm.buf)
 
-def getIface():
-    for d in psutil.net_if_stats().keys():
-        if d != 'lo':
-            return str(d)
-    return None
 
 def preload():
     import src.Python_Code.guestConf as guest
@@ -37,7 +33,6 @@ def preload():
 
 def cleanUp():
     controllerShm.unlink()
-    
     res = subprocess.run(['make', '-f', 'Makefile', 'clean'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if res.returncode != 0:
         print(res.stderr)
@@ -81,7 +76,10 @@ class vMU_Brain:
             self.api['running'] = False
 
     def API_Handler(self, signal1, signal2):
-        if controller[0] == muApi.START_CONTINUOUS:
+        if controller[0] == muApi.STOP_ALL_TESTS:
+            self.stopAll()
+            controller[0] = muApi.NOTHING
+        elif controller[0] == muApi.START_CONTINUOUS:
             self.runContinuous()
             controller[0] = muApi.NOTHING
         elif controller[0] == muApi.STOP_CONTINUOUS:
@@ -108,12 +106,6 @@ class vMU_Brain:
         self.send_signal_by_name(self.api['command'], psutil.signal.SIGUSR2)
 
     def runTransient(self):
-        if 'continuous' in self.tests:
-            if self.tests['continuous']['running']:
-                self.stopContinuous()
-        if 'sequencer' in self.tests:
-            if self.tests['sequencer']['running']:
-                self.stopSequencer()
         if 'transient' in self.tests:
             if self.tests['transient']['running']:
                 self.stopTransient()
@@ -129,15 +121,9 @@ class vMU_Brain:
         self.send_signal_by_name(self.tests['transient']['command'], psutil.signal.SIGTERM)
 
     def runSequencer(self):
-        if 'continuous' in self.tests:
-            if self.tests['continuous']['running']:
-                self.stopContinuous()
         if 'sequencer' in self.tests:
             if self.tests['sequencer']['running']:
                 self.stopSequencer()
-        if 'transient' in self.tests:
-            if self.tests['transient']['running']:
-                self.stopTransient()
         self.tests['sequencer'] = {}
         self.tests['sequencer']['command'] = f'{Python_Executable} {Python_buildPath}/sequencer.py'
         self.tests['sequencer']['process'] = subprocess.Popen(self.tests['sequencer']['command'], shell=True)
@@ -150,12 +136,6 @@ class vMU_Brain:
         self.send_signal_by_name(self.tests['sequencer']['command'], psutil.signal.SIGTERM)
 
     def runContinuous(self):
-        if 'transient' in self.tests:
-            if self.tests['transient']['running']:
-                self.stopTransient()
-        if 'sequencer' in self.tests:
-            if self.tests['sequencer']['running']:
-                self.stopSequencer()
         if 'continuous' in self.tests:
             if self.tests['continuous']['running']:
                 print('Continuous already running')

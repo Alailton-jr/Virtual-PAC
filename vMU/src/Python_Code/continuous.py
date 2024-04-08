@@ -1,6 +1,6 @@
 #!/root/Virtual-PAC/vMU/vEnv/bin/python3
 
-import numpy as np, psutil, signal, os, sys
+import numpy as np, psutil, signal, os, sys, subprocess
 from Control import SvPublisher
 from time import sleep
 from multiprocessing import shared_memory
@@ -10,7 +10,7 @@ from util import loadYaml, get_mac_address, getIface, send_signal_by_name
 # SharedMemory from C-API 
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Add the path to the C_Build folder
-from Python_C_Build import shm_sequenceReplay
+from Python_C_Build import shm_continuousReplay, clearShmMemory
 
 fileFolder = os.path.dirname(os.path.realpath(__file__))
 setupFolder = os.path.join(fileFolder, '..', '..', 'continuousSetup.yaml')
@@ -19,88 +19,13 @@ commands = []
 
 onlyUpdate = False
 
-def estimateFrames(sv, netConfig, testConfig):
-    pps = int(testConfig['pps'])
-    noAsdu = int(netConfig['noAsdu'])
-    frames = []
-    t = np.linspace(0, 1, pps)
-    y = []
-    for value in testConfig['values']:
-        num = np.sqrt(2)*value['module'] * \
-                np.sin(value['frequency'] * 2 * np.pi*t +
-                np.radians(value['angle'])
-                ) + \
-                0.5*np.sqrt(2)*value['module'] * \
-                np.sin(3*value['frequency'] * 2 * np.pi*t +
-                np.radians(value['angle']))
-        
-        y.append(num)
-
-    sv.asduSetup(
-        svId = netConfig['svId'],
-        confRev = netConfig['confRev'],
-        smpSynch = netConfig['smpSync'],
-    )
-    i = 0
-    smpCnt = 0
-    while i < len(t):
-        chanels = []
-        for j in range(noAsdu):
-            chanels.append([[y[x][i+j], '0'] for x in range(len(y))])
-        if smpCnt == pps:
-            smpCnt = 0
-        else:
-            smpCnt += 1*noAsdu
-        frames.append(sv.getFrame(chanels,i))
-        i += 1*noAsdu
-    return frames
-
-def runContinous():
-    config = loadYaml(r'continuousSetup.yaml')
-    netConfig = loadYaml(r'networkSetup.yaml')['SvNetwork']
-    testConfig = config['Test']
-    
-    sv = SvPublisher(
-        AppId = netConfig['AppId'],
-        macDst = netConfig['macDst'],
-        macSrc = get_mac_address(),
-        vLanId = netConfig['vlan']
-    )
-
-    return estimateFrames(sv, netConfig, testConfig)
-
-def send_signal_by_name(process_name, signal):
-    for process in psutil.process_iter(['pid', 'name']):
-        cmd = ' '.join(psutil.Process(process.info['pid']).cmdline())
-        if cmd == process_name:
-            process_pid = process.info['pid']
-            try:
-                psutil.Process(process_pid).send_signal(signal)
-            except psutil.NoSuchProcess:
-                print(f"Process '{process_name}' not found.")
-
-def cleanUp(signum, frame):
-    if replayProcess is not None:
-        send_signal_by_name(command, psutil.signal.SIGTERM)
-        os.kill(replayProcess.pid, signal.SIGTERM)
-
-    paramMemory.unlink()
-    framesMemory.unlink()
-    stopMemory.unlink()
-
-    print("Closing continuous Setup...")
-    exit(0)
-
 def updateData(signum, frame):
-    print("Updating continuous Setup...")
-    frames = runContinous()
-    _frames = []
-    for i in range(param[1]):
-        for j in range(param[2]):
-            _frames.append(frames[i][j])
-    buffer[:] = _frames[:]
+    global config
+    config = loadYaml(setupFolder)
+    prepareFrames(config, True)
+    
 
-def prepareFrames(config:dict) -> list[str]:
+def prepareFrames(config:dict, update = False) -> list[str]:
     memNames = []
     nSV = config['numSV']
     for i in range(nSV):
@@ -109,11 +34,70 @@ def prepareFrames(config:dict) -> list[str]:
         smpRate = netConfig['smpRate']
         freq = netConfig['frequency']
         n_asdu = netConfig['noAsdu']
+        n_channels = 8
+        t = np.linspace(0, 1/freq, smpRate)
+        data = np.zeros((n_channels,t.shape[0]))
+        confValues = config['Test'][i]['values']
+        for j in range(n_channels):
+            data[j,:] = confValues[j]['module'] * np.sqrt(2) * np.sin(2*np.pi*freq*t + confValues[j]['angle'])
+            if not update:
+                data[j,:] = 100+j
+            
+        # base frame
+        sv = SvPublisher(
+            AppId = netConfig['AppId'],
+            macDst = netConfig['macDst'],
+            macSrc = get_mac_address(),
+            vLanId = netConfig['vLanID'],
+            vLanPriority= netConfig['vLanPriority']
+        )
+        sv.asduSetup(
+            svId = netConfig['svId'],
+            confRev =netConfig['confRev'],
+            smpSynch = netConfig['smpSync'],
+        )
+        frameBase = bytearray(sv.getFrame([[[10, '0']]* 8]*n_asdu, 0))
 
-        t = np.arange(0, 1/freq, smpRate)
-        
+        arr = data.flatten(order='C').astype(np.int32)
 
+        if not update:
+            clearShmMemory(f"continuousReplay_{i+1}")
+            
+        shm_continuousReplay(
+            arr,
+            sv.smpCountPos,
+            sv.asduLength,
+            sv.alldataPos,
+            int(1e9/freq/smpRate*n_asdu),
+            smpRate,
+            freq,
+            n_channels,
+            n_asdu,
+            f"continuousReplay_{i+1}",
+            f"continuousReplay_{i+1}_arr",
+            f"continuousFrame_{i+1}_frame",
+            frameBase
+        )
+        memNames.append(f"continuousReplay_{i+1}")
+        break
+    return memNames
 
+def startReplay(memNames):
+    process = []
+    for name in memNames:
+        command = f'{replayFile} {name}  {getIface()}'
+        process.append(subprocess.Popen(command, shell=True))
+        commands.append(command)
+    sleep(5)
+    prepareFrames(config, True)
+    for p in process:
+        p.wait()
+
+def cleanUp(signum, frame):
+    print("Closing continuous Setup...")
+    for command in commands:
+        send_signal_by_name(command, psutil.signal.SIGTERM)
+    exit(0)
 
 if __name__=='__main__':
 
@@ -121,6 +105,7 @@ if __name__=='__main__':
 
     signal.signal(signal.SIGINT, cleanUp)
     signal.signal(signal.SIGTERM, cleanUp)
+    signal.signal(signal.SIGUSR1, updateData)
 
     if not os.path.exists(setupFolder):
         print(f'No sequencer setup file found at {setupFolder}')
