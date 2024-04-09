@@ -150,8 +150,6 @@ void* processPacket(uint8_t* frame, uint64_t size){
 
 void runSniffer(){
 
-    // fp = fopen("snifferData.csv", "w");
-
     int32_t rx_bytes = 0;
     struct msghdr msg_hdr;
     struct iovec iov;
@@ -184,9 +182,7 @@ void runSniffer(){
 void cleanup(int signum){
     printf("Leaving Sniffer...\n");
     socketCleanup(&eth);
-    // deleteSharedMemory(&stopFlagShm);
-    // pthread_mutex_destroy(&mutex);
-    pthread_mutex_destroy(&pool.task_queue->mutex);
+    thread_pool_destroy(&pool);
     
     exit(0);
 }
@@ -205,14 +201,14 @@ int main(int argc, char *argv[]){
     signal(SIGTERM, cleanup);
 
     // Initialize the Thread Pool
-    thread_pool_init(&pool);
+    thread_pool_init(&pool, 4,5);
 
     // Initialize the Ethernet Socket
     eth.fanout_grp = 2;
     socketSetup(&eth, 0, 2048); // Tx size = 0; Rx Size = 2048
     if (createSocket(&eth, argv[1]) != 0){
         printf("Error creating socket\n");
-        pthread_mutex_destroy(&pool.task_queue->mutex);
+        thread_pool_destroy(&pool);
         return -1;
     }
 

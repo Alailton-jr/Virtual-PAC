@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/python3.11",
-                "/usr/include"
+                "/usr/include",
             ],
             "defines": []
         }
