@@ -151,7 +151,8 @@ namespace TestSet
             InputSimulator inputSimulator = new InputSimulator();
 
             // Start a background thread to listen for the Space key
-            Application.Idle += (sender, e) => {
+            Application.Idle += (sender, e) =>
+            {
                 if (inputSimulator.InputDeviceState.IsKeyDown(VirtualKeyCode.SPACE))
                 {
                     CaptureActiveWindow();
@@ -237,6 +238,12 @@ namespace TestSet
             }
         }
 
+        private void BtnTransient_Click(object sender, EventArgs e)
+        {
+            openChildForm(new TransientForm());
+            LbCurrentPanel.Text = "Transient";
+        }
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
@@ -280,6 +287,6 @@ namespace TestSet
             }
         }
 
-
+        
     }
 }
