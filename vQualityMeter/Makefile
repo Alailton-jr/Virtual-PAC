@@ -128,7 +128,7 @@ C_Code_Build_Dir = $(CURDIR)/src/C_Build
 Python_Code_Dir = $(CURDIR)/src/Python_Code
 
 
-IGNORED_SRCS = sampledValue.c
+IGNORED_SRCS = sampledValue.c pyFunctions.c
 IGNORED_SRCS_WITH_PATH = $(addprefix $(C_Code_Dir)/, $(IGNORED_SRCS))
 SRCS = $(filter-out $(IGNORED_SRCS_WITH_PATH), $(wildcard $(C_Code_Dir)/*.c))
 EXECUTABLES = $(patsubst $(C_Code_Dir)/%.c,%,$(SRCS))

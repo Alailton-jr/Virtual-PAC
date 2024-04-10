@@ -1,8 +1,8 @@
 #!/root/Virtual-PAC/vMU/vEnv/bin/python3
 
-from yaml import safe_load
+from yaml import safe_load, socket
+import uuid, psutil, os
 from time import sleep
-import uuid, psutil, os, socket
 
 def loadYaml(name:str):
     with open(name, 'r') as file:
@@ -26,6 +26,7 @@ def get_ip_address():
         ip_address = sock.getsockname()[0]
     except socket.error:
         ip_address = '0.0.0.0'
+
     finally:
         sock.close()
     return ip_address

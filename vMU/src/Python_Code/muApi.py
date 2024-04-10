@@ -4,6 +4,7 @@
 import signal, socket, threading, json, yaml, psutil, numpy as np, queue, time, sys, subprocess
 from multiprocessing import shared_memory, resource_tracker
 import os
+from util import get_ip_address
 
 #region Controller Commands
 try:
@@ -38,7 +39,6 @@ def main():
     print(f'Starting MU API at: IP {ipAddress}/8081')
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    # lsof -i -n # to check the port kill <pid>
     server_address = (get_ip_address(), 8081)  # Use your desired server address and port
     server_socket.bind(server_address)
     server_socket.listen(5)
@@ -473,18 +473,6 @@ def stopTransient() -> bool:
     return sendSignal(signal.SIGUSR1)
 
 #endregion
-
-def get_ip_address():
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        sock.connect(("8.8.8.8", 80))
-        ip_address = sock.getsockname()[0]
-    except socket.error:
-        ip_address = '0.0.0.0'
-
-    finally:
-        sock.close()
-    return ip_address
 
 def cleanUp(signal1 , signal2):
     #Do not Delete Memory
