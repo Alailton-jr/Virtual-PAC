@@ -151,7 +151,21 @@ namespace TestSet
                     this.testRun = tempData.testRun;
                     this.serverCon = tempData.serverCon;
                     this.generalConfig = tempData.generalConfig;
+                    this.serverCon = tempData.serverCon;
+                    this.transientConfig = tempData.transientConfig;
                     this.numSV = tempData.numSV;
+
+                    if (this.transientConfig != null)
+                    foreach(var config in this.transientConfig)
+                    {
+                        if (!String.IsNullOrEmpty(config.fileName))
+                        {
+                            if(!config.LoadDataFromFile(config.fileName))
+                            {
+                                config.fileName = "";
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -781,6 +795,7 @@ namespace TestSet
 
     public class TransientConfig
     {
+        [JsonIgnore]
         public List<List<double>> data { get; set; }
         public string fileName { get; set; }
         public int nData { get; set; }
@@ -799,6 +814,49 @@ namespace TestSet
         {
             for (int i = 0; i < 8; i++)
                 this.setup[i] = -1;
+        }
+    
+        public bool LoadDataFromFile(string filePath)
+        {
+            data = new List<List<double>>();
+            try
+            {
+                using StreamReader sr = new StreamReader(filePath);
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] columns = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (columns.Length > 0)
+                        data.Add(columns.Select(x => double.Parse(x)).ToList());
+                }
+                if (data.Count >= 0)
+                {
+                    if (data.Count > data[0].Count)
+                    {
+                        List<List<double>> newData = new List<List<double>>();
+                        for (int i = 0; i < data[0].Count; i++)
+                        {
+                            List<double> newLine = new List<double>();
+                            for (int j = 0; j < data.Count; j++)
+                            {
+                                newLine.Add(data[j][i]);
+                            }
+                            newData.Add(newLine);
+                        }
+                        data = newData;
+                    }
+                }
+
+                this.data = data;
+                this.fileName = filePath;
+                this.nData = data.Count - 1;
+                this.resetSetup();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

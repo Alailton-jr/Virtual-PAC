@@ -330,64 +330,21 @@ namespace TestSet
 
         }
 
-
-
         private void BtnLoadFile_Click(object sender, EventArgs e)
         {
 
             openFileDialog1.Filter = "PsCAD Output (*.out)|*.out|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             openFileDialog1.RestoreDirectory = true;
-            string filePath = "";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                filePath = openFileDialog1.FileName;
-            }
+            if (!(openFileDialog1.ShowDialog() == DialogResult.OK))
+                return;
             else
             {
-                return;
-            }
-
-            List<List<double>> data = new List<List<double>>();
-            try
-            {
-                using StreamReader sr = new StreamReader(filePath);
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    string[] columns = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (columns.Length > 0)
-                        data.Add(columns.Select(x => double.Parse(x)).ToList());
-                }
-                if (data.Count >= 0)
-                {
-                    if (data.Count > data[0].Count)
-                    {
-                        List<List<double>> newData = new List<List<double>>();
-                        for (int i = 0; i < data[0].Count; i++)
-                        {
-                            List<double> newLine = new List<double>();
-                            for (int j = 0; j < data.Count; j++)
-                            {
-                                newLine.Add(data[j][i]);
-                            }
-                            newData.Add(newLine);
-                        }
-                        data = newData;
-                    }
-                }
-
-                main.transientConfig[curSV].data = data;
-                main.transientConfig[curSV].fileName = filePath;
-                main.transientConfig[curSV].nData = data.Count - 1;
-                main.transientConfig[curSV].resetSetup();
+                string filePath = openFileDialog1.FileName;
+                if (!config.LoadDataFromFile(filePath)) MessageBox.Show("Error: Could not read file from disk. Original error: ");
                 UpdateFields();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-            }
-
+            
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
