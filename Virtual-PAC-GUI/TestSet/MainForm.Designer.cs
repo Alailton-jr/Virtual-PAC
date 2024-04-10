@@ -33,6 +33,7 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             fileToolStripMenuItem = new ToolStripMenuItem();
             PnSideMenu = new Panel();
+            BtnTransient = new Button();
             BtnSequencer = new Button();
             BtnContinous = new Button();
             BtnNetwork = new Button();
@@ -50,7 +51,6 @@
             BtnMinimize = new Button();
             BtnExit = new Button();
             LbCurrentPanel = new Label();
-            BtnTransient = new Button();
             contextMenuStrip1.SuspendLayout();
             PnSideMenu.SuspendLayout();
             panel2.SuspendLayout();
@@ -92,6 +92,24 @@
             PnSideMenu.Name = "PnSideMenu";
             PnSideMenu.Size = new Size(184, 681);
             PnSideMenu.TabIndex = 1;
+            // 
+            // BtnTransient
+            // 
+            BtnTransient.Dock = DockStyle.Top;
+            BtnTransient.FlatAppearance.BorderSize = 0;
+            BtnTransient.FlatStyle = FlatStyle.Flat;
+            BtnTransient.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            BtnTransient.ForeColor = Color.Lavender;
+            BtnTransient.Image = (Image)resources.GetObject("BtnTransient.Image");
+            BtnTransient.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnTransient.Location = new Point(0, 483);
+            BtnTransient.Margin = new Padding(3, 2, 3, 2);
+            BtnTransient.Name = "BtnTransient";
+            BtnTransient.Size = new Size(184, 82);
+            BtnTransient.TabIndex = 8;
+            BtnTransient.Text = "     Transient";
+            BtnTransient.UseVisualStyleBackColor = true;
+            BtnTransient.Click += BtnTransient_Click;
             // 
             // BtnSequencer
             // 
@@ -318,24 +336,6 @@
             LbCurrentPanel.TabIndex = 0;
             LbCurrentPanel.Text = "Home";
             LbCurrentPanel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // BtnTransient
-            // 
-            BtnTransient.Dock = DockStyle.Top;
-            BtnTransient.FlatAppearance.BorderSize = 0;
-            BtnTransient.FlatStyle = FlatStyle.Flat;
-            BtnTransient.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnTransient.ForeColor = Color.Lavender;
-            BtnTransient.Image = (Image)resources.GetObject("BtnTransient.Image");
-            BtnTransient.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnTransient.Location = new Point(0, 483);
-            BtnTransient.Margin = new Padding(3, 2, 3, 2);
-            BtnTransient.Name = "BtnTransient";
-            BtnTransient.Size = new Size(184, 82);
-            BtnTransient.TabIndex = 8;
-            BtnTransient.Text = "     Transient";
-            BtnTransient.UseVisualStyleBackColor = true;
-            BtnTransient.Click += BtnTransient_Click;
             // 
             // MainForm
             // 

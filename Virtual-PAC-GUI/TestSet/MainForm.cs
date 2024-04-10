@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,6 +20,7 @@ namespace TestSet
 
         public static Ctl main;
         public static System.Windows.Forms.Timer timerConnection = new System.Windows.Forms.Timer();
+
 
         public bool externLoad = false;
         private string extIp;
@@ -133,6 +135,8 @@ namespace TestSet
 
         public MainForm()
         {
+            CultureInfo culture = new CultureInfo("en-US");
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             InitializeComponent();
 
             PicBoxLogo.SizeMode = PictureBoxSizeMode.CenterImage;

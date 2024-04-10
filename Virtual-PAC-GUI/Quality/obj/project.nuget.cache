@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "lk/aOo+5PwjRBs4yjNRJne7dqqhsNmqb5oY5mGVStcntscDjuXmALPqDUnr1VYyZTn+C+FiRXN37GLsCwSKOTg==",
+  "dgSpecHash": "iO0FYZa6Sa3YtJB7OeIuaMd6irwrBgeSCkvfNt+WQYfXx/kj3cE6yGF2O4VkWl0gqZn55S3UvKti+H4BzzsL1w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alailton\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Alailton\\.nuget\\packages\\yamldotnet\\13.7.1\\yamldotnet.13.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

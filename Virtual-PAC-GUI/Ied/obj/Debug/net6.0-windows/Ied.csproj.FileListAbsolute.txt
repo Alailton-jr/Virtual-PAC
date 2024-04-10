@@ -142,7 +142,6 @@ C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.AssemblyInfoInputs.cache
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.AssemblyInfo.cs
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.csproj.CoreCompileInputs.cache
-C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.csproj.CopyComplete
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.dll
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\refint\Ied.dll
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.pdb
@@ -190,3 +189,5 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\De
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.pdb
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.genruntimeconfig.cache
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\ref\Ied.dll
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.sourcelink.json
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.csproj.Up2Date

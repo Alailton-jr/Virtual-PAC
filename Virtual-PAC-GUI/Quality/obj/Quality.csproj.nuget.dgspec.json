@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj": {}
+    "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj": {
+    "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
+        "projectUniqueName": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
         "projectName": "Quality",
-        "projectPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
-        "packagesPath": "C:\\Users\\alail\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\obj\\",
+        "projectPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Quality.csproj",
+        "packagesPath": "C:\\Users\\Alailton\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alail\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Alailton\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,6 +44,16 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "YamlDotNet": {
+              "target": "Package",
+              "version": "[13.7.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

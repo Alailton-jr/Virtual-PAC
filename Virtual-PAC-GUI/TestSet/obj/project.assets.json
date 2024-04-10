@@ -230,19 +230,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\alail\\.nuget\\packages\\": {}
+    "C:\\Users\\Alailton\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+      "projectUniqueName": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
       "projectName": "TestSet",
-      "projectPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
-      "packagesPath": "C:\\Users\\alail\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\obj\\",
+      "projectPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+      "packagesPath": "C:\\Users\\Alailton\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\alail\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Alailton\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -305,24 +305,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.28, 6.0.28]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.28, 6.0.28]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.28, 6.0.28]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.28, 6.0.28]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"

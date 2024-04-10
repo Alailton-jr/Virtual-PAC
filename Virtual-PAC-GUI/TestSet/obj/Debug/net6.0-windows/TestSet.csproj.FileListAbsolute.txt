@@ -107,7 +107,6 @@ C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfo.cs
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CoreCompileInputs.cache
-C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.CopyComplete
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.dll
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\refint\TestSet.dll
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
@@ -146,3 +145,7 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.sourcelink.json
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.Up2Date

@@ -230,7 +230,6 @@ namespace TestSet
                 Network = new YamlNetwork.YamlRoot[this.numSV],
                 numSV = this.numSV
             };
-
             for (int nSV = 0; nSV < this.numSV; nSV++)
             {
                 rootObject.Test[nSV] = new YamlSequencer.TestSequence[sequencesConfig[nSV].Count];
@@ -598,7 +597,6 @@ namespace TestSet
             else
                 return null;
         }
-
     }
 
     public class TestRun
