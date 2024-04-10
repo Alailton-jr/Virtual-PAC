@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,163 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static TestSet.MainForm;
+using static TestSet.NetworkConfig;
 
 namespace TestSet
 {
     public partial class continuous : Form
     {
-        public ContinuousConfig config;
+        private ContinuousConfig config;
+        private int curSV;
+        private List<Button> buttonList;
+        private bool running;
+
         public continuous()
         {
             InitializeComponent();
         }
-        public bool running;
-
+    
         private void continuous_Load(object sender, EventArgs e)
         {
-            config = main.continuousConfig;
+            curSV = 0;
+            buttonList = new List<Button>();
+
+            if (main.continuousConfig == null)
+                main.continuousConfig = new List<ContinuousConfig>() { new ContinuousConfig()};
+            while (main.continuousConfig.Count < main.numSV)
+                main.continuousConfig.Add(new ContinuousConfig());
+
+            if (main.networkConfig == null)
+                main.networkConfig = new List<NetworkConfig> { new NetworkConfig(0) };
+            while (main.networkConfig.Count < main.numSV)
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
+
+            if (main.sequencesConfig == null)
+                main.sequencesConfig = new List<List<SequenceConfig>>() { SequenceConfig.defaultSequences() };
+            while (main.sequencesConfig.Count < main.numSV)
+                main.sequencesConfig.Add(SequenceConfig.defaultSequences());
+
+            config = main.continuousConfig[curSV];
+
             BtnUpdate.Enabled = false;
             running = false;
 
+            AddChangeKey();
+            addSVButtons();
+            updateValues();
+            loadTable();
+
+        }
+
+        private void addSVButtons()
+        {
+            buttonList.Clear();
+            TPnSV.Controls.Clear();
+            for (int i = 0; i < main.numSV; i++)
+            {
+                Button newButton = new Button();
+                newButton.Tag = i;
+                newButton.Text = main.networkConfig[i].svConfig.svId;
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                newButton.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+
+                Button deletButton = new Button();
+                deletButton.Tag = i;
+                deletButton.Text = "X"; // Add a image Here
+                deletButton.Click += deleteSVPanel;
+                deletButton.Dock = DockStyle.Right;
+                deletButton.Size = new Size(28, 20);
+
+
+                panel.Controls.Add(new Panel() { Dock = DockStyle.Right, Width = 0 });
+                panel.Controls.Add(deletButton);
+                panel.Controls.Add(newButton);
+
+                TPnSV.Controls.Add(panel, i % 5, i > 4 ? 1 : 0);
+
+                buttonList.Add(newButton);
+                newButton.BringToFront();
+
+                if (i == curSV)
+                {
+                    newButton.ForeColor = Color.BlueViolet;
+                }
+                else
+                {
+                    newButton.ForeColor = Color.Lavender;
+                }
+
+            }
+            if (main.numSV < 10)
+            {
+                Button newButton = new Button();
+                newButton.Tag = -1;
+                newButton.Text = "+"; // Add a image Here
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+                TPnSV.Controls.Add(panel, main.numSV % 5, main.numSV > 4 ? 1 : 0);
+                buttonList.Add(newButton);
+            }
+        }
+
+        private void deleteSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0 && main.networkConfig.Count > 1)
+            {
+                main.networkConfig.RemoveAt(idx);
+                main.continuousConfig.RemoveAt(idx);
+
+                main.numSV--;
+                if (curSV >= main.numSV)
+                {
+                    curSV = main.numSV - 1;
+                    config = main.continuousConfig[curSV];
+                    updateValues();
+                }
+                addSVButtons();
+            }
+        }
+
+        private void changeSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0)
+            {
+                buttonList[curSV].ForeColor = Color.Lavender;
+                curSV = idx;
+                buttonList[curSV].ForeColor = Color.BlueViolet;
+
+                config = main.continuousConfig[curSV];
+                updateValues();
+            }
+            else
+            {
+                main.continuousConfig.Add(new ContinuousConfig());
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
+
+                main.numSV++;
+                curSV = main.numSV - 1;
+                config = main.continuousConfig[curSV];
+                updateValues();
+                addSVButtons();
+            }
+        }
+
+        private void AddChangeKey()
+        {
             TbIaMod.Validated += valueChanged;
             TbIbMod.Validated += valueChanged;
             TbIcMod.Validated += valueChanged;
@@ -63,10 +203,6 @@ namespace TestSet
             TbVbAng.KeyPress += valueChangedKey;
             TbVcAng.KeyPress += valueChangedKey;
             TbVnAng.KeyPress += valueChangedKey;
-
-            updateValues();
-            loadTable();
-
         }
 
         private void loadTable()
@@ -265,6 +401,7 @@ namespace TestSet
             validateValues();
             updateValues();
         }
+        
         private void valueChangedKey(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -367,7 +504,8 @@ namespace TestSet
                 BtnStart.Text = "Iniciar";
                 BtnUpdate.Enabled = false;
                 DgvPub.Enabled = false;
-                getValuesThread.Join();
+                //if (getValuesThread != null)
+                    //getValuesThread.Join();
 
                 // Send Stop continuous
                 main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
@@ -377,19 +515,8 @@ namespace TestSet
             else
             {
                 // Send Yaml Continuos File
-                var yamlFile = main.CreateYamlNetwork();
-                if (yamlFile != null)
-                {
-                    main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
-                    string res = main.serverCon.SendData("setupNetwork", yamlFile);
-                    if (res == null || res == "error")
-                    {
-                        MessageBox.Show("It Wasn't possible to connected to vMU!");
-                        return;
-                    }
-                }
 
-                yamlFile = main.CreateYamlContinuous();
+                var yamlFile = main.CreateYamlContinuous();
                 if (yamlFile != null)
                 {
                     main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
@@ -409,8 +536,8 @@ namespace TestSet
                         }
                         else
                         {
-                            getValuesThread = new Thread(getValues);
-                            getValuesThread.Start();
+                            //getValuesThread = new Thread(getValues);
+                            //getValuesThread.Start();
                         }
                     }
                 }
@@ -437,33 +564,33 @@ namespace TestSet
             }
         }
 
-        private Thread getValuesThread;
-        private void getValues()
-        {
-            while (running)
-            {
-                try
-                {
-                    main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
-                    string res = main.serverCon.SendData("continousValues", "All");
-                    if (res != null && res != "error")
-                    {
-                        var values = JsonConvert.DeserializeObject<List<List<double>>>(res);
-                        if (values == null)
-                            return;
+        //private Thread getValuesThread;
+        
+        //private void getValues()
+        //{
+        //    while (running)
+        //    {
+        //        try
+        //        {
+        //            main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
+        //            string res = main.serverCon.SendData("continousValues", "All");
+        //            if (res != null && res != "error")
+        //            {
+        //                var values = JsonConvert.DeserializeObject<List<List<double>>>(res);
+        //                if (values == null)
+        //                    return;
 
-                        if (running) DgvPub.Invoke(new Action(() => updateTable(values)));
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                
-                Thread.Sleep(1000);
-            }
-
-        }
+        //                if (running) DgvPub.Invoke(new Action(() => updateTable(values)));
+        //            }
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //        }
+        //        Thread.Sleep(1000);
+        //    }
+        //}
+        
         private void UpdateUiControls(bool enable)
         {
             if (BtnStart.InvokeRequired || BtnUpdate.InvokeRequired || DgvPub.InvokeRequired)
@@ -489,8 +616,11 @@ namespace TestSet
         private void continuous_FormClosing(object sender, FormClosingEventArgs e)
         {
             running = false;
-            main.serverCon.ConnectionLost -= ConnectionStopHandler;
-            main.serverCon.closeConnection();
+            if (main.serverCon != null)
+            {
+                main.serverCon.ConnectionLost -= ConnectionStopHandler;
+                main.serverCon.closeConnection();
+            }
         }
     }
 }

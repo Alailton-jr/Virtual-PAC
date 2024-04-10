@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
             groupBox1 = new GroupBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
             panel3 = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
             CmsVoltage = new ContextMenuStrip(components);
@@ -77,11 +78,17 @@
             Column1 = new DataGridViewTextBoxColumn();
             panel5 = new Panel();
             groupBox3 = new GroupBox();
-            BtnUpdate = new Button();
+            tableLayoutPanel4 = new TableLayoutPanel();
             BtnStart = new Button();
+            BtnUpdate = new Button();
             timerPub = new System.Windows.Forms.Timer(components);
+            PnSv = new Panel();
+            panel6 = new Panel();
+            label13 = new Label();
+            TPnSV = new TableLayoutPanel();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
             panel3.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             CmsVoltage.SuspendLayout();
@@ -92,23 +99,25 @@
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DgvPub).BeginInit();
             groupBox3.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            PnSv.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.Controls.Add(groupBox1);
             panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
+            panel1.Location = new Point(0, 91);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(9, 30, 9, 0);
-            panel1.Size = new Size(441, 505);
+            panel1.Size = new Size(441, 523);
             panel1.TabIndex = 0;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(panel3);
-            groupBox1.Controls.Add(panel2);
+            groupBox1.Controls.Add(tableLayoutPanel3);
             groupBox1.Dock = DockStyle.Top;
             groupBox1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox1.ForeColor = Color.Lavender;
@@ -116,20 +125,35 @@
             groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(9, 8, 9, 8);
-            groupBox1.Size = new Size(423, 401);
+            groupBox1.Size = new Size(423, 453);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Medidas";
             // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Controls.Add(panel3, 0, 1);
+            tableLayoutPanel3.Controls.Add(panel2, 0, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(9, 33);
+            tableLayoutPanel3.Margin = new Padding(0);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 2;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Size = new Size(405, 412);
+            tableLayoutPanel3.TabIndex = 2;
+            // 
             // panel3
             // 
             panel3.Controls.Add(tableLayoutPanel2);
-            panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(9, 211);
+            panel3.Location = new Point(3, 208);
             panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Padding = new Padding(18, 15, 18, 15);
-            panel3.Size = new Size(405, 174);
+            panel3.Padding = new Padding(14, 15, 14, 15);
+            panel3.Size = new Size(399, 174);
             panel3.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -155,7 +179,7 @@
             tableLayoutPanel2.Controls.Add(label11, 1, 0);
             tableLayoutPanel2.Controls.Add(label12, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Top;
-            tableLayoutPanel2.Location = new Point(18, 15);
+            tableLayoutPanel2.Location = new Point(14, 15);
             tableLayoutPanel2.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 6;
@@ -167,7 +191,7 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-            tableLayoutPanel2.Size = new Size(369, 148);
+            tableLayoutPanel2.Size = new Size(371, 148);
             tableLayoutPanel2.TabIndex = 5;
             // 
             // CmsVoltage
@@ -403,18 +427,17 @@
             label12.Name = "label12";
             label12.Size = new Size(85, 25);
             label12.TabIndex = 19;
-            label12.Text = "Angulo";
+            label12.Text = "Ângulo";
             label12.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
             panel2.Controls.Add(tableLayoutPanel1);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(9, 33);
+            panel2.Location = new Point(3, 2);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Padding = new Padding(18, 15, 18, 15);
-            panel2.Size = new Size(405, 178);
+            panel2.Padding = new Padding(14, 15, 14, 15);
+            panel2.Size = new Size(399, 178);
             panel2.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -441,7 +464,7 @@
             tableLayoutPanel1.Controls.Add(label5, 1, 0);
             tableLayoutPanel1.Controls.Add(label6, 2, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(18, 15);
+            tableLayoutPanel1.Location = new Point(14, 15);
             tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 6;
@@ -453,7 +476,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-            tableLayoutPanel1.Size = new Size(369, 148);
+            tableLayoutPanel1.Size = new Size(371, 148);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // CmsCurrent
@@ -689,7 +712,7 @@
             label6.Name = "label6";
             label6.Size = new Size(85, 25);
             label6.TabIndex = 19;
-            label6.Text = "Angulo";
+            label6.Text = "Ângulo";
             label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -698,11 +721,11 @@
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(groupBox3);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(441, 0);
+            panel4.Location = new Point(441, 91);
             panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(9, 30, 9, 0);
-            panel4.Size = new Size(479, 505);
+            panel4.Size = new Size(631, 523);
             panel4.TabIndex = 3;
             // 
             // groupBox2
@@ -715,7 +738,7 @@
             groupBox2.Margin = new Padding(3, 2, 3, 2);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(9, 8, 9, 8);
-            groupBox2.Size = new Size(461, 287);
+            groupBox2.Size = new Size(613, 287);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
             groupBox2.Text = "Publicando";
@@ -731,7 +754,7 @@
             DgvPub.Name = "DgvPub";
             DgvPub.RowHeadersWidth = 51;
             DgvPub.RowTemplate.Height = 29;
-            DgvPub.Size = new Size(443, 226);
+            DgvPub.Size = new Size(595, 226);
             DgvPub.TabIndex = 6;
             // 
             // Column1
@@ -747,13 +770,12 @@
             panel5.Location = new Point(9, 152);
             panel5.Margin = new Padding(3, 2, 3, 2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(461, 44);
+            panel5.Size = new Size(613, 44);
             panel5.TabIndex = 5;
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(BtnUpdate);
-            groupBox3.Controls.Add(BtnStart);
+            groupBox3.Controls.Add(tableLayoutPanel4);
             groupBox3.Dock = DockStyle.Top;
             groupBox3.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox3.ForeColor = Color.Lavender;
@@ -761,55 +783,121 @@
             groupBox3.Margin = new Padding(9, 8, 9, 8);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(461, 122);
+            groupBox3.Size = new Size(613, 122);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "Controle";
             // 
-            // BtnUpdate
+            // tableLayoutPanel4
             // 
-            BtnUpdate.Dock = DockStyle.Top;
-            BtnUpdate.FlatAppearance.BorderSize = 0;
-            BtnUpdate.FlatStyle = FlatStyle.Flat;
-            BtnUpdate.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            BtnUpdate.ForeColor = Color.GhostWhite;
-            BtnUpdate.Location = new Point(3, 66);
-            BtnUpdate.Margin = new Padding(3, 2, 3, 2);
-            BtnUpdate.Name = "BtnUpdate";
-            BtnUpdate.Size = new Size(455, 39);
-            BtnUpdate.TabIndex = 4;
-            BtnUpdate.Text = "Atualizar Valores";
-            BtnUpdate.UseVisualStyleBackColor = true;
-            BtnUpdate.Click += BtnUpdate_Click;
+            tableLayoutPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel4.ColumnCount = 5;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.6074F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 175F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38.120945F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 175F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.2716522F));
+            tableLayoutPanel4.Controls.Add(BtnStart, 1, 0);
+            tableLayoutPanel4.Controls.Add(BtnUpdate, 3, 0);
+            tableLayoutPanel4.Location = new Point(3, 50);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.Size = new Size(607, 54);
+            tableLayoutPanel4.TabIndex = 5;
             // 
             // BtnStart
             // 
-            BtnStart.Dock = DockStyle.Top;
             BtnStart.FlatAppearance.BorderSize = 0;
-            BtnStart.FlatStyle = FlatStyle.Flat;
+            BtnStart.FlatStyle = FlatStyle.Popup;
             BtnStart.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             BtnStart.ForeColor = Color.GhostWhite;
-            BtnStart.Location = new Point(3, 27);
+            BtnStart.Location = new Point(76, 2);
             BtnStart.Margin = new Padding(3, 2, 3, 2);
             BtnStart.Name = "BtnStart";
-            BtnStart.Size = new Size(455, 39);
+            BtnStart.Size = new Size(169, 39);
             BtnStart.TabIndex = 3;
             BtnStart.Text = "Iniciar";
             BtnStart.UseVisualStyleBackColor = true;
             BtnStart.Click += BtnStart_Click;
             // 
+            // BtnUpdate
+            // 
+            BtnUpdate.FlatAppearance.BorderSize = 0;
+            BtnUpdate.FlatStyle = FlatStyle.Popup;
+            BtnUpdate.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            BtnUpdate.ForeColor = Color.GhostWhite;
+            BtnUpdate.Location = new Point(348, 2);
+            BtnUpdate.Margin = new Padding(3, 2, 3, 2);
+            BtnUpdate.Name = "BtnUpdate";
+            BtnUpdate.Size = new Size(169, 39);
+            BtnUpdate.TabIndex = 4;
+            BtnUpdate.Text = "Atualizar Valores";
+            BtnUpdate.UseVisualStyleBackColor = true;
+            BtnUpdate.Click += BtnUpdate_Click;
+            // 
             // timerPub
             // 
             timerPub.Interval = 1500;
+            // 
+            // PnSv
+            // 
+            PnSv.Controls.Add(panel6);
+            PnSv.Controls.Add(TPnSV);
+            PnSv.Dock = DockStyle.Top;
+            PnSv.Location = new Point(0, 0);
+            PnSv.Name = "PnSv";
+            PnSv.Size = new Size(1072, 91);
+            PnSv.TabIndex = 11;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(label13);
+            panel6.Location = new Point(97, 12);
+            panel6.Margin = new Padding(20, 3, 20, 3);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(102, 61);
+            panel6.TabIndex = 11;
+            // 
+            // label13
+            // 
+            label13.BackColor = Color.FromArgb(31, 45, 56);
+            label13.Dock = DockStyle.Fill;
+            label13.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label13.Location = new Point(0, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(102, 61);
+            label13.TabIndex = 10;
+            label13.Text = "Sampled\r\nValue\r\nChannel\r\n";
+            label13.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TPnSV
+            // 
+            TPnSV.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TPnSV.BackColor = Color.FromArgb(31, 45, 56);
+            TPnSV.ColumnCount = 5;
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.Location = new Point(201, 12);
+            TPnSV.Name = "TPnSV";
+            TPnSV.RowCount = 2;
+            TPnSV.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            TPnSV.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            TPnSV.Size = new Size(774, 61);
+            TPnSV.TabIndex = 0;
             // 
             // continuous
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 58, 73);
-            ClientSize = new Size(920, 505);
+            ClientSize = new Size(1072, 614);
             Controls.Add(panel4);
             Controls.Add(panel1);
+            Controls.Add(PnSv);
             ForeColor = Color.Lavender;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
@@ -819,6 +907,7 @@
             Load += continuous_Load;
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
+            tableLayoutPanel3.ResumeLayout(false);
             panel3.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
@@ -831,6 +920,9 @@
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DgvPub).EndInit();
             groupBox3.ResumeLayout(false);
+            tableLayoutPanel4.ResumeLayout(false);
+            PnSv.ResumeLayout(false);
+            panel6.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -903,5 +995,11 @@
         private ToolStripMenuItem positivaToolStripMenuItem;
         private ToolStripMenuItem negativaToolStripMenuItem;
         private DataGridViewTextBoxColumn Column1;
+        private Panel PnSv;
+        private Panel panel6;
+        private Label label13;
+        private TableLayoutPanel TPnSV;
+        private TableLayoutPanel tableLayoutPanel3;
+        private TableLayoutPanel tableLayoutPanel4;
     }
 }
