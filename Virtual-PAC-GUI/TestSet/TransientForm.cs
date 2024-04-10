@@ -72,13 +72,6 @@ namespace TestSet
                 ChkVc,
                 ChkVn
             };
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-=======
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
             addSVButtons();
             UpdateFields();
         }

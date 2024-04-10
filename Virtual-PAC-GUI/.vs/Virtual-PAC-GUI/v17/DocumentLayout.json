@@ -3,30 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\",
   "Documents": [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\sequencer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-=======
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-=======
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
     },
     {
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\sequencerresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\sequencerresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\sequencerresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -41,15 +31,7 @@
       "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-=======
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-=======
-      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
       "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\continuous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -60,105 +42,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Sequencer.cs",
               "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Sequencer.cs",
               "RelativeDocumentMoniker": "TestSet\\Sequencer.cs",
               "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Sequencer.cs",
               "RelativeToolTip": "TestSet\\Sequencer.cs",
-              "ViewState": "AQIAAI0CAAAAAAAAAAAQwKMCAABDAAAA",
+              "ViewState": "AQIAAIYCAAAAAAAAAAAkwKMCAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T11:29:58.132Z",
-=======
-=======
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-              "DocumentIndex": 1,
-              "Title": "Classes.cs",
-              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Classes.cs",
-              "RelativeDocumentMoniker": "TestSet\\Classes.cs",
-              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Classes.cs",
-              "RelativeToolTip": "TestSet\\Classes.cs",
-              "ViewState": "AQIAAGkBAAAAAAAAAAAAAFUBAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T10:00:48.971Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T11:29:58.132Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "continuous.cs",
-              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs",
-              "RelativeDocumentMoniker": "TestSet\\continuous.cs",
-              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs",
-              "RelativeToolTip": "TestSet\\continuous.cs",
-              "ViewState": "AQIAACkAAAAAAAAAAAAQwDkAAAAYAAAA",
-<<<<<<< HEAD
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T09:59:58.686Z",
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Sequencer.cs [Design]",
               "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Sequencer.cs",
               "RelativeDocumentMoniker": "TestSet\\Sequencer.cs",
               "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Sequencer.cs [Design]",
               "RelativeToolTip": "TestSet\\Sequencer.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T11:29:56.911Z",
-              "EditorCaption": " [Design]"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2024-04-10T11:29:56.911Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "SequencerResults.cs [Design]",
               "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\SequencerResults.cs",
               "RelativeDocumentMoniker": "TestSet\\SequencerResults.cs",
               "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\SequencerResults.cs [Design]",
               "RelativeToolTip": "TestSet\\SequencerResults.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T11:29:56.447Z",
-=======
-              "DocumentIndex": 2,
-              "Title": "continuous.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs",
-              "RelativeDocumentMoniker": "TestSet\\continuous.cs",
-              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs [Design]",
-              "RelativeToolTip": "TestSet\\continuous.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T09:59:54.317Z",
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
-              "EditorCaption": " [Design]"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2024-04-10T11:29:56.447Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "TransientForm.cs",
               "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
               "RelativeDocumentMoniker": "TestSet\\TransientForm.cs",
               "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
               "RelativeToolTip": "TestSet\\TransientForm.cs",
-              "ViewState": "AQIAAIUAAAAAAAAAAAAUwL4AAAAhAAAA",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAE4AAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-10T00:02:56.712Z",
-=======
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T09:59:58.686Z",
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
               "DocumentIndex": 4,
               "Title": "TransientForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
@@ -202,17 +136,6 @@
               "RelativeToolTip": "TestSet\\continuous.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-08T09:59:54.317Z"
-=======
-              "DocumentIndex": 2,
-              "Title": "continuous.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs",
-              "RelativeDocumentMoniker": "TestSet\\continuous.cs",
-              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\continuous.cs [Design]",
-              "RelativeToolTip": "TestSet\\continuous.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-08T09:59:54.317Z",
-              "EditorCaption": " [Design]"
->>>>>>> efc38f827596a767cee7b3178c6b95d6942e04b8
             }
           ]
         }
