@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,31 +21,144 @@ namespace TestSet
         private NetworkConfig.GOConfig goConfig;
         private NetworkConfig.SVConfig svConfig;
         private int curSV;
+        private List<Button> buttonList;
 
         public Network()
         {
             InitializeComponent();
+
+            buttonList = new List<Button>();
+
             curSV = 0;
 
+            if (main.continuousConfig == null)
+                main.continuousConfig = new List<ContinuousConfig>() { new ContinuousConfig() };
+            while (main.continuousConfig.Count < main.numSV)
+                main.continuousConfig.Add(new ContinuousConfig());
+
             if (main.networkConfig == null)
-                main.networkConfig = 
+                main.networkConfig = new List<NetworkConfig> { new NetworkConfig(0) };
+            while (main.networkConfig.Count < main.numSV)
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
 
-            if (main.networkConfig[curSV].goConfig == null) main.networkConfig.goConfig = new NetworkConfig.GOConfig();
-            if (main.networkConfig[curSV].svConfig == null) main.networkConfig.svConfig = new NetworkConfig.SVConfig();
-            goConfig = main.networkConfig.goConfig;
-            svConfig = main.networkConfig.svConfig;
+            if (main.sequencesConfig == null)
+                main.sequencesConfig = new List<List<SequenceConfig>>() { SequenceConfig.defaultSequences() };
+            while (main.sequencesConfig.Count < main.numSV)
+                main.sequencesConfig.Add(SequenceConfig.defaultSequences());
 
-            if (main.generalConfig == null)
-            {
-                main.generalConfig = new GeneralConfig()
-                {
-                    ip = main.communicationConfig.ip,
-                    port = main.communicationConfig.port
-                };
-            }
+            goConfig = main.networkConfig[curSV].goConfig;
+            svConfig = main.networkConfig[curSV].svConfig;
 
             UpdateTextBox();
+            addSVButtons();
+        }
 
+        private void addSVButtons()
+        {
+            buttonList.Clear();
+            TPnSV.Controls.Clear();
+            for (int i = 0; i < main.numSV; i++)
+            {
+                Button newButton = new Button();
+                newButton.Tag = i;
+                newButton.Text = main.networkConfig[i].svConfig.svId;
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                newButton.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+
+                Button deletButton = new Button();
+                deletButton.Tag = i;
+                deletButton.Text = "X"; // Add a image Here
+                deletButton.Click += deleteSVPanel;
+                deletButton.Dock = DockStyle.Right;
+                deletButton.Size = new Size(28, 20);
+
+
+                panel.Controls.Add(new Panel() { Dock = DockStyle.Right, Width = 0 });
+                panel.Controls.Add(deletButton);
+                panel.Controls.Add(newButton);
+
+                TPnSV.Controls.Add(panel, i % 5, i > 4 ? 1 : 0);
+
+                buttonList.Add(newButton);
+                newButton.BringToFront();
+
+                if (i == curSV)
+                {
+                    newButton.ForeColor = Color.BlueViolet;
+                }
+                else
+                {
+                    newButton.ForeColor = Color.Lavender;
+                }
+
+            }
+            if (main.numSV < 10)
+            {
+                Button newButton = new Button();
+                newButton.Tag = -1;
+                newButton.Text = "+"; // Add a image Here
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+                TPnSV.Controls.Add(panel, main.numSV % 5, main.numSV > 4 ? 1 : 0);
+                buttonList.Add(newButton);
+            }
+        }
+
+        private void deleteSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0 && main.networkConfig.Count>1)
+            {
+                main.continuousConfig.RemoveAt(idx);
+                main.networkConfig.RemoveAt(idx);
+                main.numSV--;
+                if (curSV >= main.numSV)
+                {
+                    curSV = main.numSV - 1;
+                    goConfig = main.networkConfig[curSV].goConfig;
+                    svConfig = main.networkConfig[curSV].svConfig;
+                    UpdateTextBox();
+                }
+                addSVButtons();
+            }
+        }
+
+        private void changeSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0)
+            {
+                buttonList[curSV].ForeColor = Color.Lavender;
+                curSV = idx;
+                buttonList[curSV].ForeColor = Color.BlueViolet;
+                goConfig = main.networkConfig[curSV].goConfig;
+                svConfig = main.networkConfig[curSV].svConfig;
+                UpdateTextBox();
+            }
+            else
+            {
+                main.continuousConfig.Add(new ContinuousConfig());
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
+
+                main.numSV++;
+                curSV = main.numSV - 1;
+                goConfig = main.networkConfig[curSV].goConfig;
+                svConfig = main.networkConfig[curSV].svConfig;
+                UpdateTextBox();
+                addSVButtons();
+            }
         }
 
         private void UpdateTextBox()
@@ -76,7 +190,7 @@ namespace TestSet
             TbSvID.Text = svConfig.svId;
             TbSvID.Validated += textBoxValidation;
             TbSvID.KeyPress += textBoxValidation;
-            TbSvMacDest.Text = svConfig.macDest;
+            TbSvMacDest.Text = svConfig.macSrc;
             TbSvMacDest.Validated += textBoxValidation;
             TbSvMacDest.KeyPress += textBoxValidation;
             TbSVNoAsdu.Text = svConfig.noAsdu.ToString();
@@ -85,16 +199,18 @@ namespace TestSet
             TbSvRev.Text = svConfig.confRev.ToString();
             TbSvRev.Validated += textBoxValidation;
             TbSvRev.KeyPress += textBoxValidation;
-            TbSvVLan.Text = "0x" + svConfig.vLan.ToString("X");
-            TbSvVLan.Validated += textBoxValidation;
-            TbSvVLan.KeyPress += textBoxValidation;
+            TbSvVLanID.Text = "0x" + svConfig.vLan.ToString("X");
+            TbSvVLanID.Validated += textBoxValidation;
+            TbSvVLanID.KeyPress += textBoxValidation;
 
-            TbIpAddres.Text = main.generalConfig.ip;
-            TbPort.Text = main.generalConfig.port.ToString();
-            TbIpAddres.Validated += textBoxValidation;
-            TbIpAddres.KeyPress += textBoxValidation;
-            TbPort.Validated += textBoxValidation;
-            TbPort.KeyPress += textBoxValidation;
+            TbSvVLanPriority.Text = svConfig.vLanPriority.ToString();
+            TbSvVLanPriority.Validated += textBoxValidation;
+            TbSvVLanPriority.KeyPress += textBoxValidation;
+
+            TbSvSmpRate.Text = svConfig.smpRate.ToString();
+            TbSvSmpRate.Validated += textBoxValidation;
+            TbSvSmpRate.KeyPress += textBoxValidation;
+
         }
 
         private int HexTextValidation(TextBox tb, int val)
@@ -164,14 +280,17 @@ namespace TestSet
 
             svConfig.frequency = IntTextValidation(TbSvFreq, svConfig.frequency);
             svConfig.svId = TbSvID.Text;
-            svConfig.vLan = HexTextValidation(TbSvVLan, svConfig.vLan);
+            svConfig.vLan = HexTextValidation(TbSvVLanID, svConfig.vLan);
             svConfig.noAsdu = IntTextValidation(TbSVNoAsdu, svConfig.noAsdu);
             svConfig.confRev = IntTextValidation(TbSvRev, svConfig.confRev);
             svConfig.appId = HexTextValidation(TbSvAppID, svConfig.appId);
-            svConfig.macDest = macTextValidation(TbSvMacDest, svConfig.macDest);
+            svConfig.macSrc = macTextValidation(TbSvMacDest, svConfig.macSrc);
+            svConfig.vLanPriority = IntTextValidation(TbSvVLanPriority, svConfig.vLanPriority);
+            svConfig.smpRate = IntTextValidation(TbSvSmpRate, svConfig.smpRate);
 
-            main.generalConfig.port = IntTextValidation(TbPort, main.generalConfig.port);
-            main.generalConfig.ip = TbIpAddres.Text;
+            buttonList[curSV].Text = svConfig.svId; // Update the button text with the new SV ID
+
+
 
         }
 
@@ -179,6 +298,7 @@ namespace TestSet
         {
             ValidateData();
         }
+        
         private void textBoxValidation(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)

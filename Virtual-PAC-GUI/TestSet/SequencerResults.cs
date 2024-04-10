@@ -18,8 +18,9 @@ namespace TestSet
 {
     public partial class SequencerResults : Form
     {
-        List<SequenceConfig> setup = MainForm.main.sequencesConfig;
+        List<SequenceConfig> setup;
         TestRun test = MainForm.main.testRun;
+        private int curSV;
 
         public SequencerResults()
         {
@@ -89,7 +90,7 @@ namespace TestSet
                 return;
 
             double timeMulti = 1;
-            double freq = MainForm.main.networkConfig.svConfig.frequency;
+            double freq = MainForm.main.networkConfig[curSV].svConfig.frequency;
             string xAxisLegend = "Time [s]";
             if (graphTimeDomain == GraphTimeDomain.cycle)
             {

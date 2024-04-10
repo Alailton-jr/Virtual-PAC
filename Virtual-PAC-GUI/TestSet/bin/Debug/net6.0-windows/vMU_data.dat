@@ -1,211 +1,916 @@
 {
-  "networkConfig": {
-    "svConfig": {
-      "frequency": 60,
-      "svId": "TRTC",
-      "vLan": 256,
-      "appId": 16384,
-      "noAsdu": 1,
-      "macDest": "01-0C-CD-04-00-00",
-      "confRev": 1
+  "numSV": 2,
+  "networkConfig": [
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "TRTC",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:00",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_0",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:00",
+        "confRev": 1
+      }
     },
-    "goConfig": {
-      "controlRef": "GOOSE",
-      "goId": "GO01",
-      "vLan": 100,
-      "appId": 4000,
-      "macSrc": "01-0C-CD-01-00-00",
-      "confRev": 0
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "SV_1",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:01",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_1",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:01",
+        "confRev": 1
+      }
     }
-  },
+  ],
   "communicationConfig": {
     "status": false,
-    "name": "vMU",
-    "password": "passwd",
-    "ip": "10.3.193.121",
+    "name": "admin",
+    "password": "admin",
+    "ip": "172.30.129.121",
     "port": 8081
   },
-  "continuousConfig": {
-    "data": [
-      {
-        "Mod": 1900.0,
-        "Ang": 0.0
-      },
-      {
-        "Mod": 1900.0,
-        "Ang": 120.0
-      },
-      {
-        "Mod": 1900.0,
-        "Ang": 120.0
-      },
-      {
-        "Mod": 100.0,
-        "Ang": 0.0
-      },
-      {
-        "Mod": 13800.0,
-        "Ang": 0.0
-      },
-      {
-        "Mod": 13800.0,
-        "Ang": 120.0
-      },
-      {
-        "Mod": 13800.0,
-        "Ang": 120.0
-      },
-      {
-        "Mod": 80.0,
-        "Ang": 0.0
-      }
-    ]
-  },
-  "generalConfig": {
-    "ip": "10.3.193.121",
-    "port": 8081
-  },
-  "connectionFlag": false,
-  "sequencesConfig": [
+  "continuousConfig": [
     {
-      "name": "Sequence 1",
-      "time": 3.0,
+      "values": null,
       "data": [
         {
-          "name": null,
-          "module": 400.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 400.0,
-          "angle": -120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 400.0,
-          "angle": 120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
         }
       ]
     },
     {
-      "name": "Sequence 2",
-      "time": 2.0,
+      "values": null,
       "data": [
         {
-          "name": null,
-          "module": 1450.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 1450.0,
-          "angle": -120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 1450.0,
-          "angle": 120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
-        }
-      ]
-    },
-    {
-      "name": "Sequence 3",
-      "time": 1.0,
-      "data": [
-        {
-          "name": null,
-          "module": 200.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 200.0,
-          "angle": -120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 200.0,
-          "angle": 120.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
         },
         {
-          "name": null,
-          "module": 0.0,
-          "angle": 0.0
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
         }
       ]
     }
   ],
+  "sequencesConfig": [
+    [
+      {
+        "name": "Fault",
+        "time": 3.0,
+        "data": [
+          {
+            "name": "Ia",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ib",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ic",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "In",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Va",
+            "module": 8000.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Vb",
+            "module": 8000.0,
+            "angle": -120.0
+          },
+          {
+            "name": "Vc",
+            "module": 8000.0,
+            "angle": 120.0
+          },
+          {
+            "name": "Vn",
+            "module": 0.0,
+            "angle": 0.0
+          }
+        ]
+      },
+      {
+        "name": "Fault1",
+        "time": 2.0,
+        "data": [
+          {
+            "name": "Ia",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ib",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ic",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "In",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Va",
+            "module": 4000.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Vb",
+            "module": 4000.0,
+            "angle": -120.0
+          },
+          {
+            "name": "Vc",
+            "module": 4000.0,
+            "angle": 120.0
+          },
+          {
+            "name": "Vn",
+            "module": 0.0,
+            "angle": 0.0
+          }
+        ]
+      },
+      {
+        "name": "Fault2",
+        "time": 3.0,
+        "data": [
+          {
+            "name": "Ia",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ib",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ic",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "In",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Va",
+            "module": 8000.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Vb",
+            "module": 8000.0,
+            "angle": -120.0
+          },
+          {
+            "name": "Vc",
+            "module": 8000.0,
+            "angle": 120.0
+          },
+          {
+            "name": "Vn",
+            "module": 0.0,
+            "angle": 0.0
+          }
+        ]
+      },
+      {
+        "name": "Fault3",
+        "time": 2.0,
+        "data": [
+          {
+            "name": "Ia",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ib",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ic",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "In",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Va",
+            "module": 11000.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Vb",
+            "module": 11000.0,
+            "angle": -120.0
+          },
+          {
+            "name": "Vc",
+            "module": 11000.0,
+            "angle": 120.0
+          },
+          {
+            "name": "Vn",
+            "module": 0.0,
+            "angle": 0.0
+          }
+        ]
+      },
+      {
+        "name": "Fault4",
+        "time": 3.0,
+        "data": [
+          {
+            "name": "Ia",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ib",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Ic",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "In",
+            "module": 0.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Va",
+            "module": 8000.0,
+            "angle": 0.0
+          },
+          {
+            "name": "Vb",
+            "module": 8000.0,
+            "angle": -120.0
+          },
+          {
+            "name": "Vc",
+            "module": 8000.0,
+            "angle": 120.0
+          },
+          {
+            "name": "Vn",
+            "module": 0.0,
+            "angle": 0.0
+          }
+        ]
+      }
+    ],
+    []
+  ],
+  "transientConfig": [
+    {
+      "fileName": "C:\\Users\\alail\\OneDrive\\Área de Trabalho\\simulation_02.out",
+      "nData": 9,
+      "setup": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "fileName": "C:\\Users\\alail\\OneDrive\\Área de Trabalho\\simulation_02.out",
+      "nData": 9,
+      "setup": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    }
+  ],
+  "generalConfig": {
+    "ip": null,
+    "port": 0
+  },
+  "connectionFlag": false,
   "testRun": {
     "startedTime": 0.0,
     "endedTime": 0.0,
@@ -216,7 +921,7 @@
     "input": null
   },
   "serverCon": {
-    "serverIp": "10.3.193.121",
+    "serverIp": "172.30.129.121",
     "serverPort": 8081
   }
 }

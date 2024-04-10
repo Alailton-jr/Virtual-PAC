@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             BtnConnect = new Button();
-            panel2 = new Panel();
             groupBox1 = new GroupBox();
             TbPort = new TextBox();
             label4 = new Label();
@@ -41,7 +39,6 @@
             label2 = new Label();
             TbName = new TextBox();
             label1 = new Label();
-            TimerCon = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -49,39 +46,28 @@
             // panel1
             // 
             panel1.Controls.Add(BtnConnect);
-            panel1.Controls.Add(panel2);
             panel1.Controls.Add(groupBox1);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Padding = new Padding(31, 22, 0, 0);
-            panel1.Size = new Size(361, 614);
+            panel1.Size = new Size(417, 614);
             panel1.TabIndex = 0;
             // 
             // BtnConnect
             // 
-            BtnConnect.Dock = DockStyle.Top;
+            BtnConnect.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnConnect.FlatAppearance.BorderSize = 0;
-            BtnConnect.FlatStyle = FlatStyle.Flat;
+            BtnConnect.FlatStyle = FlatStyle.Popup;
             BtnConnect.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnConnect.Location = new Point(31, 279);
+            BtnConnect.Location = new Point(107, 275);
             BtnConnect.Margin = new Padding(3, 2, 3, 2);
             BtnConnect.Name = "BtnConnect";
-            BtnConnect.Size = new Size(330, 48);
+            BtnConnect.Size = new Size(178, 40);
             BtnConnect.TabIndex = 3;
             BtnConnect.Text = "Conectar";
             BtnConnect.UseVisualStyleBackColor = true;
             BtnConnect.Click += BtnConnect_Click;
-            // 
-            // panel2
-            // 
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(31, 262);
-            panel2.Margin = new Padding(3, 2, 3, 2);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(330, 17);
-            panel2.TabIndex = 4;
             // 
             // groupBox1
             // 
@@ -93,7 +79,6 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(TbName);
             groupBox1.Controls.Add(label1);
-            groupBox1.Dock = DockStyle.Top;
             groupBox1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox1.ForeColor = Color.AliceBlue;
             groupBox1.Location = new Point(31, 22);
@@ -201,11 +186,6 @@
             label1.TabIndex = 1;
             label1.Text = "Nome";
             // 
-            // TimerCon
-            // 
-            TimerCon.Interval = 1000;
-            TimerCon.Tick += TimerConnection_Tick;
-            // 
             // Comunication
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -235,9 +215,7 @@
         private Label label2;
         private TextBox TbName;
         private Button BtnConnect;
-        private Panel panel2;
         private TextBox TbPort;
         private Label label4;
-        private System.Windows.Forms.Timer TimerCon;
     }
 }

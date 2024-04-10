@@ -30,23 +30,22 @@
         {
             panel1 = new Panel();
             BtnSendConfig = new Button();
-            groupBox2 = new GroupBox();
-            label15 = new Label();
-            TbPort = new TextBox();
-            label10 = new Label();
-            TbIpAddres = new TextBox();
             groupBox1 = new GroupBox();
+            label16 = new Label();
+            TbSvSmpRate = new TextBox();
+            TbSvVLanPriority = new TextBox();
             button2 = new Button();
             TbSvMacDest = new TextBox();
+            label15 = new Label();
             label7 = new Label();
             label6 = new Label();
             TbSvRev = new TextBox();
             label5 = new Label();
+            label3 = new Label();
+            TbSvVLanID = new TextBox();
             TbSVNoAsdu = new TextBox();
             label4 = new Label();
             TbSvAppID = new TextBox();
-            label3 = new Label();
-            TbSvVLan = new TextBox();
             label2 = new Label();
             TbSvID = new TextBox();
             label1 = new Label();
@@ -66,28 +65,31 @@
             TbGoID = new TextBox();
             label14 = new Label();
             TbGoControlRef = new TextBox();
+            label10 = new Label();
             openFileDialog1 = new OpenFileDialog();
             PnSv = new Panel();
+            panel5 = new Panel();
+            TPnSV = new TableLayoutPanel();
             panel1.SuspendLayout();
-            groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             GOOSE_GroupBox.SuspendLayout();
+            PnSv.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(40, 58, 73);
             panel1.Controls.Add(BtnSendConfig);
-            panel1.Controls.Add(groupBox2);
             panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(BtnLoadConfig);
             panel1.Controls.Add(GOOSE_GroupBox);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 66);
+            panel1.Location = new Point(0, 91);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(18, 15, 0, 0);
-            panel1.Size = new Size(1072, 548);
+            panel1.Size = new Size(1072, 523);
             panel1.TabIndex = 0;
             // 
             // BtnSendConfig
@@ -97,7 +99,7 @@
             BtnSendConfig.FlatAppearance.BorderSize = 0;
             BtnSendConfig.FlatStyle = FlatStyle.Popup;
             BtnSendConfig.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnSendConfig.Location = new Point(659, 504);
+            BtnSendConfig.Location = new Point(653, 479);
             BtnSendConfig.Margin = new Padding(3, 2, 3, 2);
             BtnSendConfig.Name = "BtnSendConfig";
             BtnSendConfig.Size = new Size(202, 33);
@@ -106,98 +108,74 @@
             BtnSendConfig.UseVisualStyleBackColor = true;
             BtnSendConfig.Click += BtnSendConfig_Click;
             // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(label15);
-            groupBox2.Controls.Add(TbPort);
-            groupBox2.Controls.Add(label10);
-            groupBox2.Controls.Add(TbIpAddres);
-            groupBox2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBox2.ForeColor = Color.GhostWhite;
-            groupBox2.Location = new Point(97, 5);
-            groupBox2.Margin = new Padding(3, 2, 3, 2);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(3, 2, 3, 2);
-            groupBox2.Size = new Size(878, 91);
-            groupBox2.TabIndex = 8;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "General";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.ForeColor = Color.Lavender;
-            label15.Location = new Point(365, 47);
-            label15.Name = "label15";
-            label15.Size = new Size(46, 25);
-            label15.TabIndex = 16;
-            label15.Text = "Port";
-            // 
-            // TbPort
-            // 
-            TbPort.BackColor = Color.FromArgb(31, 45, 56);
-            TbPort.BorderStyle = BorderStyle.None;
-            TbPort.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            TbPort.ForeColor = Color.Lavender;
-            TbPort.Location = new Point(417, 47);
-            TbPort.Margin = new Padding(3, 2, 3, 2);
-            TbPort.Name = "TbPort";
-            TbPort.Size = new Size(148, 25);
-            TbPort.TabIndex = 17;
-            TbPort.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.ForeColor = Color.Lavender;
-            label10.Location = new Point(19, 47);
-            label10.Name = "label10";
-            label10.Size = new Size(100, 25);
-            label10.TabIndex = 15;
-            label10.Text = "Ip Address";
-            // 
-            // TbIpAddres
-            // 
-            TbIpAddres.BackColor = Color.FromArgb(31, 45, 56);
-            TbIpAddres.BorderStyle = BorderStyle.None;
-            TbIpAddres.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            TbIpAddres.ForeColor = Color.Lavender;
-            TbIpAddres.Location = new Point(125, 47);
-            TbIpAddres.Margin = new Padding(3, 2, 3, 2);
-            TbIpAddres.Name = "TbIpAddres";
-            TbIpAddres.Size = new Size(216, 25);
-            TbIpAddres.TabIndex = 15;
-            TbIpAddres.TextAlign = HorizontalAlignment.Center;
-            // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label16);
+            groupBox1.Controls.Add(TbSvSmpRate);
+            groupBox1.Controls.Add(TbSvVLanPriority);
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(TbSvMacDest);
+            groupBox1.Controls.Add(label15);
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(TbSvRev);
             groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(TbSvVLanID);
             groupBox1.Controls.Add(TbSVNoAsdu);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(TbSvAppID);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(TbSvVLan);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(TbSvID);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(TbSvFreq);
             groupBox1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox1.ForeColor = Color.GhostWhite;
-            groupBox1.Location = new Point(97, 98);
+            groupBox1.Location = new Point(97, 17);
             groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(426, 389);
+            groupBox1.Size = new Size(426, 448);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Sampled Value";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.ForeColor = Color.Lavender;
+            label16.Location = new Point(27, 241);
+            label16.Name = "label16";
+            label16.Size = new Size(127, 25);
+            label16.TabIndex = 18;
+            label16.Text = "Sampled Rate";
+            // 
+            // TbSvSmpRate
+            // 
+            TbSvSmpRate.BackColor = Color.FromArgb(31, 45, 56);
+            TbSvSmpRate.BorderStyle = BorderStyle.None;
+            TbSvSmpRate.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            TbSvSmpRate.ForeColor = Color.Lavender;
+            TbSvSmpRate.Location = new Point(157, 241);
+            TbSvSmpRate.Margin = new Padding(3, 2, 3, 2);
+            TbSvSmpRate.Name = "TbSvSmpRate";
+            TbSvSmpRate.Size = new Size(218, 25);
+            TbSvSmpRate.TabIndex = 17;
+            TbSvSmpRate.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TbSvVLanPriority
+            // 
+            TbSvVLanPriority.BackColor = Color.FromArgb(31, 45, 56);
+            TbSvVLanPriority.BorderStyle = BorderStyle.None;
+            TbSvVLanPriority.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            TbSvVLanPriority.ForeColor = Color.Lavender;
+            TbSvVLanPriority.Location = new Point(157, 361);
+            TbSvVLanPriority.Margin = new Padding(3, 2, 3, 2);
+            TbSvVLanPriority.Name = "TbSvVLanPriority";
+            TbSvVLanPriority.Size = new Size(223, 25);
+            TbSvVLanPriority.TabIndex = 16;
+            TbSvVLanPriority.TextAlign = HorizontalAlignment.Center;
             // 
             // button2
             // 
@@ -206,7 +184,7 @@
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Popup;
             button2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(125, 348);
+            button2.Location = new Point(125, 407);
             button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
             button2.Size = new Size(147, 33);
@@ -220,19 +198,30 @@
             TbSvMacDest.BorderStyle = BorderStyle.None;
             TbSvMacDest.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSvMacDest.ForeColor = Color.Lavender;
-            TbSvMacDest.Location = new Point(158, 256);
+            TbSvMacDest.Location = new Point(146, 81);
             TbSvMacDest.Margin = new Padding(3, 2, 3, 2);
             TbSvMacDest.Name = "TbSvMacDest";
-            TbSvMacDest.Size = new Size(213, 25);
+            TbSvMacDest.Size = new Size(228, 25);
             TbSvMacDest.TabIndex = 14;
             TbSvMacDest.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.ForeColor = Color.Lavender;
+            label15.Location = new Point(34, 361);
+            label15.Name = "label15";
+            label15.Size = new Size(117, 25);
+            label15.TabIndex = 15;
+            label15.Text = "vLan Priority";
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label7.ForeColor = Color.Lavender;
-            label7.Location = new Point(23, 172);
+            label7.Location = new Point(27, 121);
             label7.Name = "label7";
             label7.Size = new Size(69, 25);
             label7.TabIndex = 13;
@@ -243,7 +232,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = Color.Lavender;
-            label6.Location = new Point(23, 46);
+            label6.Location = new Point(26, 201);
             label6.Name = "label6";
             label6.Size = new Size(105, 25);
             label6.TabIndex = 11;
@@ -255,10 +244,10 @@
             TbSvRev.BorderStyle = BorderStyle.None;
             TbSvRev.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSvRev.ForeColor = Color.Lavender;
-            TbSvRev.Location = new Point(110, 298);
+            TbSvRev.Location = new Point(102, 161);
             TbSvRev.Margin = new Padding(3, 2, 3, 2);
             TbSvRev.Name = "TbSvRev";
-            TbSvRev.Size = new Size(260, 25);
+            TbSvRev.Size = new Size(273, 25);
             TbSvRev.TabIndex = 12;
             TbSvRev.TextAlign = HorizontalAlignment.Center;
             // 
@@ -267,11 +256,35 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = Color.Lavender;
-            label5.Location = new Point(23, 214);
+            label5.Location = new Point(33, 281);
             label5.Name = "label5";
             label5.Size = new Size(79, 25);
             label5.TabIndex = 9;
             label5.Text = "NoAsdu";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.ForeColor = Color.Lavender;
+            label3.Location = new Point(32, 321);
+            label3.Name = "label3";
+            label3.Size = new Size(126, 25);
+            label3.TabIndex = 5;
+            label3.Text = "Virtual Lan ID";
+            // 
+            // TbSvVLanID
+            // 
+            TbSvVLanID.BackColor = Color.FromArgb(31, 45, 56);
+            TbSvVLanID.BorderStyle = BorderStyle.None;
+            TbSvVLanID.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            TbSvVLanID.ForeColor = Color.Lavender;
+            TbSvVLanID.Location = new Point(157, 321);
+            TbSvVLanID.Margin = new Padding(3, 2, 3, 2);
+            TbSvVLanID.Name = "TbSvVLanID";
+            TbSvVLanID.Size = new Size(222, 25);
+            TbSvVLanID.TabIndex = 4;
+            TbSvVLanID.TextAlign = HorizontalAlignment.Center;
             // 
             // TbSVNoAsdu
             // 
@@ -279,10 +292,10 @@
             TbSVNoAsdu.BorderStyle = BorderStyle.None;
             TbSVNoAsdu.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSVNoAsdu.ForeColor = Color.Lavender;
-            TbSVNoAsdu.Location = new Point(115, 214);
+            TbSVNoAsdu.Location = new Point(118, 281);
             TbSVNoAsdu.Margin = new Padding(3, 2, 3, 2);
             TbSVNoAsdu.Name = "TbSVNoAsdu";
-            TbSVNoAsdu.Size = new Size(256, 25);
+            TbSVNoAsdu.Size = new Size(263, 25);
             TbSVNoAsdu.TabIndex = 8;
             TbSVNoAsdu.TextAlign = HorizontalAlignment.Center;
             // 
@@ -291,7 +304,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = Color.Lavender;
-            label4.Location = new Point(23, 298);
+            label4.Location = new Point(28, 161);
             label4.Name = "label4";
             label4.Size = new Size(75, 25);
             label4.TabIndex = 7;
@@ -303,43 +316,19 @@
             TbSvAppID.BorderStyle = BorderStyle.None;
             TbSvAppID.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSvAppID.ForeColor = Color.Lavender;
-            TbSvAppID.Location = new Point(104, 172);
+            TbSvAppID.Location = new Point(102, 121);
             TbSvAppID.Margin = new Padding(3, 2, 3, 2);
             TbSvAppID.Name = "TbSvAppID";
-            TbSvAppID.Size = new Size(266, 25);
+            TbSvAppID.Size = new Size(272, 25);
             TbSvAppID.TabIndex = 6;
             TbSvAppID.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = Color.Lavender;
-            label3.Location = new Point(23, 130);
-            label3.Name = "label3";
-            label3.Size = new Size(103, 25);
-            label3.TabIndex = 5;
-            label3.Text = "Virtual Lan";
-            // 
-            // TbSvVLan
-            // 
-            TbSvVLan.BackColor = Color.FromArgb(31, 45, 56);
-            TbSvVLan.BorderStyle = BorderStyle.None;
-            TbSvVLan.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            TbSvVLan.ForeColor = Color.Lavender;
-            TbSvVLan.Location = new Point(139, 130);
-            TbSvVLan.Margin = new Padding(3, 2, 3, 2);
-            TbSvVLan.Name = "TbSvVLan";
-            TbSvVLan.Size = new Size(231, 25);
-            TbSvVLan.TabIndex = 4;
-            TbSvVLan.TextAlign = HorizontalAlignment.Center;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = Color.Lavender;
-            label2.Location = new Point(23, 88);
+            label2.Location = new Point(26, 41);
             label2.Name = "label2";
             label2.Size = new Size(160, 25);
             label2.TabIndex = 3;
@@ -351,10 +340,10 @@
             TbSvID.BorderStyle = BorderStyle.None;
             TbSvID.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSvID.ForeColor = Color.Lavender;
-            TbSvID.Location = new Point(205, 88);
+            TbSvID.Location = new Point(192, 41);
             TbSvID.Margin = new Padding(3, 2, 3, 2);
             TbSvID.Name = "TbSvID";
-            TbSvID.Size = new Size(165, 25);
+            TbSvID.Size = new Size(182, 25);
             TbSvID.TabIndex = 2;
             TbSvID.TextAlign = HorizontalAlignment.Center;
             // 
@@ -363,7 +352,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = Color.Lavender;
-            label1.Location = new Point(23, 256);
+            label1.Location = new Point(26, 81);
             label1.Name = "label1";
             label1.Size = new Size(117, 25);
             label1.TabIndex = 1;
@@ -375,10 +364,10 @@
             TbSvFreq.BorderStyle = BorderStyle.None;
             TbSvFreq.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             TbSvFreq.ForeColor = Color.Lavender;
-            TbSvFreq.Location = new Point(143, 46);
+            TbSvFreq.Location = new Point(137, 201);
             TbSvFreq.Margin = new Padding(3, 2, 3, 2);
             TbSvFreq.Name = "TbSvFreq";
-            TbSvFreq.Size = new Size(228, 25);
+            TbSvFreq.Size = new Size(237, 25);
             TbSvFreq.TabIndex = 0;
             TbSvFreq.TextAlign = HorizontalAlignment.Center;
             // 
@@ -389,7 +378,7 @@
             BtnLoadConfig.FlatAppearance.BorderSize = 0;
             BtnLoadConfig.FlatStyle = FlatStyle.Popup;
             BtnLoadConfig.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnLoadConfig.Location = new Point(201, 504);
+            BtnLoadConfig.Location = new Point(201, 479);
             BtnLoadConfig.Margin = new Padding(3, 2, 3, 2);
             BtnLoadConfig.Name = "BtnLoadConfig";
             BtnLoadConfig.Size = new Size(202, 33);
@@ -415,11 +404,11 @@
             GOOSE_GroupBox.Controls.Add(TbGoControlRef);
             GOOSE_GroupBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             GOOSE_GroupBox.ForeColor = Color.GhostWhite;
-            GOOSE_GroupBox.Location = new Point(549, 98);
+            GOOSE_GroupBox.Location = new Point(549, 17);
             GOOSE_GroupBox.Margin = new Padding(3, 2, 3, 2);
             GOOSE_GroupBox.Name = "GOOSE_GroupBox";
             GOOSE_GroupBox.Padding = new Padding(3, 2, 3, 2);
-            GOOSE_GroupBox.Size = new Size(426, 389);
+            GOOSE_GroupBox.Size = new Size(426, 448);
             GOOSE_GroupBox.TabIndex = 1;
             GOOSE_GroupBox.TabStop = false;
             GOOSE_GroupBox.Text = "GOOSE";
@@ -431,7 +420,7 @@
             BtnImportScl.FlatAppearance.BorderSize = 0;
             BtnImportScl.FlatStyle = FlatStyle.Popup;
             BtnImportScl.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnImportScl.Location = new Point(139, 348);
+            BtnImportScl.Location = new Point(139, 407);
             BtnImportScl.Margin = new Padding(3, 2, 3, 2);
             BtnImportScl.Name = "BtnImportScl";
             BtnImportScl.Size = new Size(147, 33);
@@ -585,17 +574,58 @@
             TbGoControlRef.TabIndex = 0;
             TbGoControlRef.TextAlign = HorizontalAlignment.Center;
             // 
+            // label10
+            // 
+            label10.BackColor = Color.FromArgb(31, 45, 56);
+            label10.Dock = DockStyle.Fill;
+            label10.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Location = new Point(0, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(102, 61);
+            label10.TabIndex = 10;
+            label10.Text = "Sampled\r\nValue\r\nChannel\r\n";
+            label10.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
             // PnSv
             // 
+            PnSv.Controls.Add(panel5);
+            PnSv.Controls.Add(TPnSV);
             PnSv.Dock = DockStyle.Top;
             PnSv.Location = new Point(0, 0);
             PnSv.Name = "PnSv";
-            PnSv.Size = new Size(1072, 66);
+            PnSv.Size = new Size(1072, 91);
             PnSv.TabIndex = 10;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(label10);
+            panel5.Location = new Point(97, 12);
+            panel5.Margin = new Padding(20, 3, 20, 3);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(102, 61);
+            panel5.TabIndex = 11;
+            // 
+            // TPnSV
+            // 
+            TPnSV.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TPnSV.BackColor = Color.FromArgb(31, 45, 56);
+            TPnSV.ColumnCount = 5;
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            TPnSV.Location = new Point(201, 12);
+            TPnSV.Name = "TPnSV";
+            TPnSV.RowCount = 2;
+            TPnSV.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            TPnSV.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            TPnSV.Size = new Size(774, 61);
+            TPnSV.TabIndex = 0;
             // 
             // Network
             // 
@@ -612,12 +642,12 @@
             Name = "Network";
             Text = "Form2";
             panel1.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             GOOSE_GroupBox.ResumeLayout(false);
             GOOSE_GroupBox.PerformLayout();
+            PnSv.ResumeLayout(false);
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -650,7 +680,7 @@
         private Label label4;
         private TextBox TbSvAppID;
         private Label label3;
-        private TextBox TbSvVLan;
+        private TextBox TbSvVLanID;
         private Label label2;
         private TextBox TbSvID;
         private Label label1;
@@ -659,12 +689,14 @@
         private OpenFileDialog openFileDialog1;
         private Button BtnLoadConfig;
         private Button button2;
-        private GroupBox groupBox2;
-        private Label label15;
-        private TextBox TbPort;
-        private Label label10;
-        private TextBox TbIpAddres;
         private Button BtnSendConfig;
         private Panel PnSv;
+        private TableLayoutPanel TPnSV;
+        private Label label10;
+        private Panel panel5;
+        private TextBox TbSvVLanPriority;
+        private Label label15;
+        private Label label16;
+        private TextBox TbSvSmpRate;
     }
 }

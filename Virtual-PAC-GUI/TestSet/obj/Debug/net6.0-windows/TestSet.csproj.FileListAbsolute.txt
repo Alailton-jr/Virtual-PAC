@@ -144,3 +144,5 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
