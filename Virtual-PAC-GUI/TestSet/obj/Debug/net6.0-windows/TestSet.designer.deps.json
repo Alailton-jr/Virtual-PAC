@@ -41,11 +41,11 @@
           }
         }
       },
-      "YamlDotNet/13.1.1": {
+      "YamlDotNet/13.7.1": {
         "runtime": {
           "lib/net6.0/YamlDotNet.dll": {
             "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.1.1.0"
+            "fileVersion": "13.7.1.0"
           }
         }
       }
@@ -80,12 +80,12 @@
       "path": "oxyplot.windowsforms/2.1.2",
       "hashPath": "oxyplot.windowsforms.2.1.2.nupkg.sha512"
     },
-    "YamlDotNet/13.1.1": {
+    "YamlDotNet/13.7.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3AS0fEwxOucP0h68JXMxfj3NyfgX9EOVE29NlKqKxWMHfKMAuZ7MWw5u362Bs6OALtnBTzi/JYIiMidQXoKVWw==",
-      "path": "yamldotnet/13.1.1",
-      "hashPath": "yamldotnet.13.1.1.nupkg.sha512"
+      "sha512": "sha512-X4m1PnFcJwvAj1sCDMntg/eZcX96CJLrWMiYnq41KqhFVZPuw63ZTSxIGqgdCwHWHvCAyTxheELC/VDf1HsU2A==",
+      "path": "yamldotnet/13.7.1",
+      "hashPath": "yamldotnet.13.7.1.nupkg.sha512"
     }
   }
 }

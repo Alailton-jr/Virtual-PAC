@@ -242,24 +242,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ALAILTON\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\alail\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\Server.csproj",
+      "projectUniqueName": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\Server.csproj",
-      "packagesPath": "C:\\Users\\ALAILTON\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\obj\\",
+      "projectPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\Server.csproj",
+      "packagesPath": "C:\\Users\\alail\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Server\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ALAILTON\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\alail\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -273,11 +268,11 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj": {
-              "projectPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj"
+            "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj": {
+              "projectPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Ied\\Ied.csproj"
             },
-            "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {
-              "projectPath": "c:\\Users\\ALAILTON\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj"
+            "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj": {
+              "projectPath": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj"
             }
           }
         }
@@ -286,6 +281,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -316,6 +316,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.28, 6.0.28]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.28, 6.0.28]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.28, 6.0.28]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.28, 6.0.28]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -324,7 +342,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -333,7 +351,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'InputSimulator 1.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "O pacote 'InputSimulator 1.0.4' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' em vez da estrutura de destino do projeto 'net6.0-windows7.0'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
       "libraryId": "InputSimulator",
       "targetGraphs": [
         "net6.0-windows7.0"

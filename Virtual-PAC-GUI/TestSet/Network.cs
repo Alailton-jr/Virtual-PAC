@@ -19,12 +19,18 @@ namespace TestSet
 
         private NetworkConfig.GOConfig goConfig;
         private NetworkConfig.SVConfig svConfig;
+        private int curSV;
 
         public Network()
         {
             InitializeComponent();
-            if (main.networkConfig.goConfig == null) main.networkConfig.goConfig = new NetworkConfig.GOConfig();
-            if (main.networkConfig.svConfig == null) main.networkConfig.svConfig = new NetworkConfig.SVConfig();
+            curSV = 0;
+
+            if (main.networkConfig == null)
+                main.networkConfig = 
+
+            if (main.networkConfig[curSV].goConfig == null) main.networkConfig.goConfig = new NetworkConfig.GOConfig();
+            if (main.networkConfig[curSV].svConfig == null) main.networkConfig.svConfig = new NetworkConfig.SVConfig();
             goConfig = main.networkConfig.goConfig;
             svConfig = main.networkConfig.svConfig;
 

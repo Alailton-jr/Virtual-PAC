@@ -159,7 +159,7 @@
             BtnConnection.Name = "BtnConnection";
             BtnConnection.Size = new Size(184, 82);
             BtnConnection.TabIndex = 3;
-            BtnConnection.Text = "Comunicação";
+            BtnConnection.Text = "General";
             BtnConnection.TextAlign = ContentAlignment.MiddleRight;
             BtnConnection.UseVisualStyleBackColor = true;
             BtnConnection.Click += BtnConnection_Click;

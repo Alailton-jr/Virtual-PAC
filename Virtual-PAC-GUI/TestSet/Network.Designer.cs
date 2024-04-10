@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            BtnSendConfig = new Button();
             groupBox2 = new GroupBox();
             label15 = new Label();
             TbPort = new TextBox();
@@ -66,7 +67,7 @@
             label14 = new Label();
             TbGoControlRef = new TextBox();
             openFileDialog1 = new OpenFileDialog();
-            BtnSendConfig = new Button();
+            PnSv = new Panel();
             panel1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -82,12 +83,28 @@
             panel1.Controls.Add(BtnLoadConfig);
             panel1.Controls.Add(GOOSE_GroupBox);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
+            panel1.Location = new Point(0, 66);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(18, 15, 0, 0);
-            panel1.Size = new Size(1072, 614);
+            panel1.Size = new Size(1072, 548);
             panel1.TabIndex = 0;
+            // 
+            // BtnSendConfig
+            // 
+            BtnSendConfig.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnSendConfig.FlatAppearance.BorderColor = Color.White;
+            BtnSendConfig.FlatAppearance.BorderSize = 0;
+            BtnSendConfig.FlatStyle = FlatStyle.Popup;
+            BtnSendConfig.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            BtnSendConfig.Location = new Point(659, 504);
+            BtnSendConfig.Margin = new Padding(3, 2, 3, 2);
+            BtnSendConfig.Name = "BtnSendConfig";
+            BtnSendConfig.Size = new Size(202, 33);
+            BtnSendConfig.TabIndex = 9;
+            BtnSendConfig.Text = "Enviar para vMU";
+            BtnSendConfig.UseVisualStyleBackColor = true;
+            BtnSendConfig.Click += BtnSendConfig_Click;
             // 
             // groupBox2
             // 
@@ -97,7 +114,7 @@
             groupBox2.Controls.Add(TbIpAddres);
             groupBox2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox2.ForeColor = Color.GhostWhite;
-            groupBox2.Location = new Point(82, 37);
+            groupBox2.Location = new Point(97, 5);
             groupBox2.Margin = new Padding(3, 2, 3, 2);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(3, 2, 3, 2);
@@ -173,7 +190,7 @@
             groupBox1.Controls.Add(TbSvFreq);
             groupBox1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox1.ForeColor = Color.GhostWhite;
-            groupBox1.Location = new Point(82, 145);
+            groupBox1.Location = new Point(97, 98);
             groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 2, 3, 2);
@@ -367,12 +384,12 @@
             // 
             // BtnLoadConfig
             // 
-            BtnLoadConfig.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnLoadConfig.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnLoadConfig.FlatAppearance.BorderColor = Color.White;
             BtnLoadConfig.FlatAppearance.BorderSize = 0;
             BtnLoadConfig.FlatStyle = FlatStyle.Popup;
             BtnLoadConfig.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnLoadConfig.Location = new Point(306, 560);
+            BtnLoadConfig.Location = new Point(201, 504);
             BtnLoadConfig.Margin = new Padding(3, 2, 3, 2);
             BtnLoadConfig.Name = "BtnLoadConfig";
             BtnLoadConfig.Size = new Size(202, 33);
@@ -398,7 +415,7 @@
             GOOSE_GroupBox.Controls.Add(TbGoControlRef);
             GOOSE_GroupBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             GOOSE_GroupBox.ForeColor = Color.GhostWhite;
-            GOOSE_GroupBox.Location = new Point(534, 145);
+            GOOSE_GroupBox.Location = new Point(549, 98);
             GOOSE_GroupBox.Margin = new Padding(3, 2, 3, 2);
             GOOSE_GroupBox.Name = "GOOSE_GroupBox";
             GOOSE_GroupBox.Padding = new Padding(3, 2, 3, 2);
@@ -572,29 +589,23 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // BtnSendConfig
+            // PnSv
             // 
-            BtnSendConfig.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            BtnSendConfig.FlatAppearance.BorderColor = Color.White;
-            BtnSendConfig.FlatAppearance.BorderSize = 0;
-            BtnSendConfig.FlatStyle = FlatStyle.Popup;
-            BtnSendConfig.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnSendConfig.Location = new Point(534, 560);
-            BtnSendConfig.Margin = new Padding(3, 2, 3, 2);
-            BtnSendConfig.Name = "BtnSendConfig";
-            BtnSendConfig.Size = new Size(202, 33);
-            BtnSendConfig.TabIndex = 9;
-            BtnSendConfig.Text = "Enviar para vMU";
-            BtnSendConfig.UseVisualStyleBackColor = true;
-            BtnSendConfig.Click += BtnSendConfig_Click;
+            PnSv.Dock = DockStyle.Top;
+            PnSv.Location = new Point(0, 0);
+            PnSv.Name = "PnSv";
+            PnSv.Size = new Size(1072, 66);
+            PnSv.TabIndex = 10;
             // 
             // Network
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(40, 58, 73);
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1072, 614);
             Controls.Add(panel1);
+            Controls.Add(PnSv);
             ForeColor = Color.Lavender;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
@@ -654,5 +665,6 @@
         private Label label10;
         private TextBox TbIpAddres;
         private Button BtnSendConfig;
+        private Panel PnSv;
     }
 }
