@@ -11,12 +11,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static TestSet.MainForm;
 using Newtonsoft.Json;
 using static TestSet.YamlSequencer;
+using Button = System.Windows.Forms.Button;
 
 namespace TestSet
 {
     public partial class Sequencer : Form
     {
-        List<SequenceConfig> setup = MainForm.main.sequencesConfig;
+        List<SequenceConfig> config;
+        private int curSV;
+        private List<Button> buttonList;
 
         private enum TextMode
         {
@@ -43,6 +46,26 @@ namespace TestSet
         {
             //setup.Clear();
 
+            curSV = 0;
+            buttonList = new List<Button>();
+
+            if (main.sequencesConfig == null)
+                main.sequencesConfig = new List<List<SequenceConfig>>() { SequenceConfig.defaultSequences() };
+            while (main.sequencesConfig.Count < main.numSV)
+                main.sequencesConfig.Add(SequenceConfig.defaultSequences());
+
+            if (main.networkConfig == null)
+                main.networkConfig = new List<NetworkConfig> { new NetworkConfig(0) };
+            while (main.networkConfig.Count < main.numSV)
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
+
+            if (main.continuousConfig == null)
+                main.continuousConfig = new List<ContinuousConfig> { new ContinuousConfig() };
+            while (main.continuousConfig.Count < main.numSV)
+                main.continuousConfig.Add(new ContinuousConfig());
+
+            config = main.sequencesConfig[curSV];
+
             tbIaAng.Validated += CurrentTextValidation;
             tbIaMod.Validated += CurrentTextValidation;
             tbIaAng.KeyPress += CurrentTextValidationKey;
@@ -56,12 +79,129 @@ namespace TestSet
             tabControl.Appearance = TabAppearance.FlatButtons;
             tabControl.Margin = new Padding(0);
 
-            TableFormat();
+            //TableFormat();
+
+            addSVButtons();
 
             updateTable();
             updateGraph();
 
 
+        }
+
+        private void addSVButtons()
+        {
+            buttonList.Clear();
+            TPnSV.Controls.Clear();
+            for (int i = 0; i < main.numSV; i++)
+            {
+                Button newButton = new Button();
+                newButton.Tag = i;
+                newButton.Text = main.networkConfig[i].svConfig.svId;
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                newButton.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+
+                Button deletButton = new Button();
+                deletButton.Tag = i;
+                deletButton.Text = "X"; // Add a image Here
+                deletButton.Click += deleteSVPanel;
+                deletButton.Dock = DockStyle.Right;
+                deletButton.Size = new Size(28, 20);
+
+
+                panel.Controls.Add(new Panel() { Dock = DockStyle.Right, Width = 0 });
+                panel.Controls.Add(deletButton);
+                panel.Controls.Add(newButton);
+
+                TPnSV.Controls.Add(panel, i % 5, i > 4 ? 1 : 0);
+
+                buttonList.Add(newButton);
+                newButton.BringToFront();
+
+                if (i == curSV)
+                {
+                    newButton.ForeColor = Color.BlueViolet;
+                }
+                else
+                {
+                    newButton.ForeColor = Color.Lavender;
+                }
+
+            }
+            if (main.numSV < 10)
+            {
+                Button newButton = new Button();
+                newButton.Tag = -1;
+                newButton.Text = "+"; // Add a image Here
+                newButton.Click += changeSVPanel;
+                newButton.Dock = DockStyle.Fill;
+                Panel panel = new Panel();
+                panel.Dock = DockStyle.Fill;
+                panel.Margin = new Padding(8, 2, 8, 2);
+                panel.Controls.Add(newButton);
+                TPnSV.Controls.Add(panel, main.numSV % 5, main.numSV > 4 ? 1 : 0);
+                buttonList.Add(newButton);
+            }
+        }
+
+        private void deleteSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0 && main.networkConfig.Count > 1)
+            {
+                main.networkConfig.RemoveAt(idx);
+                main.continuousConfig.RemoveAt(idx);
+                main.sequencesConfig.RemoveAt(idx);
+
+                main.numSV--;
+                if (curSV >= main.numSV)
+                {
+                    curSV = main.numSV - 1;
+                    config = main.sequencesConfig[curSV];
+                    updateTable();
+                    if (tableSequence.CurrentRow != null)
+                        tableSequence_CellClick(null, new DataGridViewCellEventArgs(1, tableSequence.CurrentRow.Index));
+                    updateGraph();
+                }
+                addSVButtons();
+            }
+        }
+
+        private void changeSVPanel(object sender, EventArgs e)
+        {
+            Button local = (Button)sender;
+            int idx = (int)local.Tag;
+            if (idx >= 0)
+            {
+                buttonList[curSV].ForeColor = Color.Lavender;
+                curSV = idx;
+                buttonList[curSV].ForeColor = Color.BlueViolet;
+
+                config = main.sequencesConfig[curSV];
+                updateTable();
+                if (tableSequence.CurrentRow != null)
+                    tableSequence_CellClick(null, new DataGridViewCellEventArgs(1, tableSequence.CurrentRow.Index));
+                updateGraph();
+            }
+            else
+            {
+                main.continuousConfig.Add(new ContinuousConfig());
+                main.networkConfig.Add(new NetworkConfig(main.networkConfig.Count));
+                main.sequencesConfig.Add(SequenceConfig.defaultSequences());
+
+                main.numSV++;
+                curSV = main.numSV - 1;
+                config = main.sequencesConfig[curSV];
+                updateTable();
+                addSVButtons();
+            }
         }
 
         private void TableFormat()
@@ -126,7 +266,7 @@ namespace TestSet
         private void updateTable()
         {
             tableSequence.Rows.Clear();
-            for (int i = 0; i < setup.Count; i++)
+            for (int i = 0; i < config.Count; i++)
             {
                 var row = new DataGridViewRow();
                 var cell1 = new DataGridViewButtonCell();
@@ -134,12 +274,12 @@ namespace TestSet
                 row.Cells.Add(cell1);
                 row.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 var cell2 = new DataGridViewTextBoxCell();
-                cell2.Value = setup[i].name;
+                cell2.Value = config[i].name;
                 row.Cells.Add(cell2);
                 row.Cells[1].ReadOnly = true;
                 row.Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 var cell3 = new DataGridViewTextBoxCell();
-                cell3.Value = setup[i].time.ToString();
+                cell3.Value = config[i].time.ToString();
                 row.Cells.Add(cell3);
                 row.Cells[2].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 row.Cells[2].ReadOnly = true;
@@ -158,12 +298,12 @@ namespace TestSet
             row.Cells.Add(cell1);
             row.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             var cell2 = new DataGridViewTextBoxCell();
-            cell2.Value = setup[i].name;
+            cell2.Value = config[i].name;
             row.Cells.Add(cell2);
             row.Cells[1].ReadOnly = true;
             row.Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             var cell3 = new DataGridViewTextBoxCell();
-            cell3.Value = setup[i].time.ToString();
+            cell3.Value = config[i].time.ToString();
             row.Cells.Add(cell3);
             row.Cells[2].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             row.Cells[2].ReadOnly = true;
@@ -184,7 +324,7 @@ namespace TestSet
         {
             string name = tbNameSequence.Text;
             int lastDigit = 0;
-            while (setup.Exists(obj => obj.name == name))
+            while (config.Exists(obj => obj.name == name))
             {
                 if (char.IsDigit(name[^1]))
                 {
@@ -217,7 +357,6 @@ namespace TestSet
             vali += TextValidate(tbVnAng);
 
             #endregion
-
             if (vali > 0)
             {
                 MessageBox.Show("Valores Inválidos");
@@ -234,11 +373,9 @@ namespace TestSet
                 list.data.Add(new SequenceConfig.variable("Vc", double.Parse(tbVcMod.Text), double.Parse(tbVcAng.Text)));
                 list.data.Add(new SequenceConfig.variable("Vn", double.Parse(tbVnMod.Text), double.Parse(tbVnAng.Text)));
 
-                setup.Add(list);
-                addTable(setup.Count - 1);
-
+                config.Add(list);
+                addTable(config.Count - 1);
                 updateGraph();
-
             }
         }
 
@@ -249,16 +386,16 @@ namespace TestSet
 
             if (e.ColumnIndex == 0)
             {
-                if (setup.Count > 0)
+                if (config.Count > 0)
                 {
-                    setup.RemoveAt(e.RowIndex);
+                    config.RemoveAt(e.RowIndex);
                     tableSequence.Rows.RemoveAt(e.RowIndex);
                 }
 
             }
             else if (e.ColumnIndex > 0)
             {
-                var x = setup[e.RowIndex];
+                var x = config[e.RowIndex];
                 tbIaMod.Text = x.data[0].module.ToString();
                 tbIaAng.Text = x.data[0].angle.ToString();
                 tbIbMod.Text = x.data[1].module.ToString();
@@ -427,11 +564,13 @@ namespace TestSet
         {
 
             string name = tbNameSequence.Text;
+            if (tableSequence.CurrentRow == null)
+                return;
             int indx = tableSequence.CurrentRow.Index;
-            if (name != setup[indx].name)
+            if (name != config[indx].name)
             {
                 int lastDigit = 0;
-                while (setup.Exists(obj => obj.name == name))
+                while (config.Exists(obj => obj.name == name))
                 {
                     if (char.IsDigit(name[^1]))
                     {
@@ -482,7 +621,7 @@ namespace TestSet
                 list.data.Add(new SequenceConfig.variable("Vc", double.Parse(tbVcMod.Text), double.Parse(tbVcAng.Text)));
                 list.data.Add(new SequenceConfig.variable("Vn", double.Parse(tbVnMod.Text), double.Parse(tbVnAng.Text)));
 
-                setup[indx] = list;
+                config[indx] = list;
                 updateTable();
                 updateGraph();
 
@@ -490,29 +629,25 @@ namespace TestSet
 
         }
 
-
         private Thread testTh;
         private bool testRunning = false;
         private void BtnStart_Click(object sender, EventArgs e)
         {
+            var errorSV = new List<string>();
+            for (int i = 0; i < main.numSV; i++)
+            {
+                if (main.sequencesConfig[i].Count == 0)
+                    errorSV.Add(main.networkConfig[i].svConfig.svId);
+            }
+            if (errorSV.Count > 0)
+            {
+                MessageBox.Show("Empty sequences in SVs: " + string.Join(", ", errorSV));
+                return;
+            }
 
             if (!testRunning)
             {
-                //TbDebug.Visible = false;
-
-                var yamlFile = main.CreateYamlNetwork();
-                if (yamlFile != null)
-                {
-                    main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
-                    string res = main.serverCon.SendData("setupNetwork", yamlFile);
-                    if (res == null || res == "error")
-                    {
-                        MessageBox.Show("It Wasn't possible to connected to vMU!");
-                        return;
-                    }
-                }
-
-                yamlFile = main.CreateYamlSequencer();
+                var yamlFile = main.CreateYamlSequencer();
                 if (yamlFile != null)
                 {
                     main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
@@ -536,6 +671,9 @@ namespace TestSet
                 BtnStart.Text = "Iniciar Sequências";
                 testRunning = false;
                 testTh.Join();
+                main.serverCon.ConnectionLost -= ConnectionStopHandler;
+                main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
+                string res = main.serverCon.SendData("stopSequencer", "All");
             }
         }
 
@@ -555,7 +693,7 @@ namespace TestSet
             while (testRunning)
             {
                 res = main.serverCon.SendData("getSequencerResults", "All");
-                if (res == null || res == "error") ;
+                if (res == null || res == "error");
                 else
                 {
                     try
@@ -586,11 +724,11 @@ namespace TestSet
 
         private void updateTestGraph(double currentTime)
         {
-            if (setup.Count == 0)
+            if (config.Count == 0)
                 return;
 
             double timeMulti = 1;
-            double freq = MainForm.main.networkConfig.svConfig.frequency;
+            double freq = MainForm.main.networkConfig[curSV].svConfig.frequency;
             string xAxisLegend = "Time [s]";
             if (graphTimeDomain == GraphTimeDomain.cycle)
             {
@@ -624,7 +762,7 @@ namespace TestSet
                 double t0 = 0;
                 double x;
                 double y;
-                foreach (SequenceConfig sequence in setup)
+                foreach (SequenceConfig sequence in config)
                 {
                     for (x = t0; x <= sequence.time + t0; x += 1 / 1000.0)
                     {
@@ -655,7 +793,7 @@ namespace TestSet
                 double t0 = 0;
                 double x;
                 double y;
-                foreach (SequenceConfig sequence in setup)
+                foreach (SequenceConfig sequence in config)
                 {
                     for (x = t0; x <= sequence.time + t0; x += 1 / 1000.0)
                     {
@@ -766,11 +904,11 @@ namespace TestSet
         private void updateGraph()
         {
 
-            if (setup.Count == 0)
+            if (config.Count == 0)
                 return;
 
             double timeMulti = 1;
-            double freq = MainForm.main.networkConfig.svConfig.frequency;
+            double freq = MainForm.main.networkConfig[curSV].svConfig.frequency;
             string xAxisLegend = "Time [s]";
             if (graphTimeDomain == GraphTimeDomain.cycle)
             {
@@ -804,7 +942,7 @@ namespace TestSet
                 double t0 = 0;
                 double x;
                 double y;
-                foreach (SequenceConfig sequence in setup)
+                foreach (SequenceConfig sequence in config)
                 {
                     for (x = t0; x <= sequence.time + t0; x += 1 / 1000.0)
                     {
@@ -835,7 +973,7 @@ namespace TestSet
                 double t0 = 0;
                 double x;
                 double y;
-                foreach (SequenceConfig sequence in setup)
+                foreach (SequenceConfig sequence in config)
                 {
                     for (x = t0; x <= sequence.time + t0; x += 1 / 1000.0)
                     {
@@ -965,9 +1103,9 @@ namespace TestSet
             updateGraph();
         }
 
-        private void TableSizeChanged(object sender, EventArgs e)
-        {
-            TableFormat();
-        }
+        //private void TableSizeChanged(object sender, EventArgs e)
+        //{
+        //    TableFormat();
+        //}
     }
 }

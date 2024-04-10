@@ -109,56 +109,10 @@ namespace TestSet
 
         private void BtnConnect_Click(object sender, EventArgs e)
         {
-            if (!main.connectionFlag)
-            {
-                tempoConect = getTimeStamp();
-                testConect = true;
-                MainForm.timerConnection.Start();
-                TimerCon.Start();
-                BtnConnect.Text = "Parar";
-                BtnConnect.Enabled = false;
-
-            }
-            else
-            {
-                TimerCon.Stop();
-                MainForm.timerConnection.Stop();
-                BtnConnect.Text = "Conectar";
-                main.connectionFlag = false;
-            }
-        }
-
-        private void TimerConnection_Tick(object sender, EventArgs e)
-        {
-
-            if (!main.connectionFlag && !testConect)
-            {
-                BtnConnect.Text = "Conectar";
-            }
-            else
-            {
-                BtnConnect.Text = "Parar";
-            }
-
-            if ((getTimeStamp() - tempoConect > 2) && testConect)
-            {
-                if (!main.connectionFlag)
-                {
-                    MainForm.timerConnection.Stop();
-                    timerConnection.Stop();
-                    BtnConnect.Text = "Conectar";
-                    BtnConnect.Enabled = true;
-                    testConect = false;
-                    TimerCon.Stop();
-                }
-                else
-                {
-                    BtnConnect.Enabled = true;
-                    testConect = false;
-                }
-            }
-
-
+            main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
+            string res = main.serverCon.SendData("TestConnection", "All");
+            if (res == null || res == "error") MessageBox.Show("It Wasn't possible to connected to the vMU!");
+            else MessageBox.Show("Connected to the vMU!");
         }
 
     }
