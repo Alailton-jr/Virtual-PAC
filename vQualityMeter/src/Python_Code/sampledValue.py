@@ -3,6 +3,8 @@ class QualityEvent_t(object):
     def __init__(self, ) -> None:
         self.topThreshold = 0
         self.bottomThreshold = 0
+        self.minDuration = 0;
+        self.maxDuration = 0;
         self.flag = 0
 
 class QualityAnalyse_t(object):
@@ -14,6 +16,7 @@ class QualityAnalyse_t(object):
         self.interruption = QualityEvent_t()
         self.overVoltage = QualityEvent_t()
         self.underVoltage = QualityEvent_t()
+        self.sustainedInterruption = QualityEvent_t()
 
 class SampledValue_t(object):
     def __init__(self, smpRate:int, freq:int, svID:str, analyseData:QualityAnalyse_t) -> None:
