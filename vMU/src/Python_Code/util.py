@@ -1,7 +1,8 @@
 #!/root/Virtual-PAC/vMU/vEnv/bin/python3
 
 from yaml import safe_load
-import uuid, psutil
+import uuid, psutil, os
+from time import sleep
 
 def loadYaml(name:str):
     with open(name, 'r') as file:
@@ -19,11 +20,42 @@ def getIface() -> str:
     return None
 
 def send_signal_by_name(process_name, signal):
-    for process in psutil.process_iter(['pid', 'name']):
-        cmd = ' '.join(psutil.Process(process.info['pid']).cmdline())
-        if cmd == process_name:
-            process_pid = process.info['pid']
+    try:
+        for process in psutil.process_iter(['pid', 'name']):
+            cmd = ' '.join(psutil.Process(process.info['pid']).cmdline())
+            if cmd == process_name:
+                process_pid = process.info['pid']
+            else:
+                continue
             try:
                 psutil.Process(process_pid).send_signal(signal)
+                break
             except psutil.NoSuchProcess:
                 print(f"Process '{process_name}' not found.")
+    except psutil.NoSuchProcess:
+        print(f"Process '{process_name}' not found.")
+
+def send_signal_to_process(process_name, pid, signal_number):
+    while 1:
+        if pid is None:
+            pid = find_process_id_by_name(process_name)
+            if pid is None:
+                return
+        try:
+            os.kill(pid, signal_number)
+            print(f"Signal {signal_number} sent to process {pid}.")
+            pid = None
+            sleep(0.5)
+        except ProcessLookupError:
+            print(f"Process {pid} not found.")
+            return
+        except PermissionError:
+            print(f"Permission denied to send signal to process {pid}.")
+            return
+
+def find_process_id_by_name(process_name):
+    import psutil
+    for process in psutil.process_iter(['pid', 'name']):
+        if process.info['name'] == process_name:
+            return process.pid
+    return None

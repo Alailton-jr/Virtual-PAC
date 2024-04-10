@@ -2,7 +2,7 @@
 
 import subprocess, os, signal, time, socket, threading, json, psutil, yaml, numpy as np, src.Python_Code.muApi as muApi
 from multiprocessing import shared_memory
-from src.Python_Code.util import getIface
+from src.Python_Code.util import getIface, send_signal_by_name
 
 
 # Service Directory

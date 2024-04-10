@@ -13,7 +13,7 @@ Network:
     frequency: 60
     macDst: 01:0C:CD:01:00:00
     macSrc: null
-    noAsdu: 1
+    noAsdu: 2
     pps: 4800
     smpRate: 80
     smpSync: 0
@@ -44,36 +44,84 @@ Network:
 Test:
 - values:
   - angle: 0
-    module: 4800
+    module: 800
   - angle: -120
-    module: 4800
+    module: 800
   - angle: 120
-    module: 4800
+    module: 800
   - angle: 0
     module: 0
   - angle: 0
-    module: 4800
+    module: 1400
   - angle: -120
-    module: 4800
+    module: 1400
   - angle: 120
-    module: 4800
+    module: 1400
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
+  - angle: 0
+    module: 0
   - angle: 0
     module: 0
 - values:
   - angle: 0
-    module: 0
+    module: 600
+  - angle: -120
+    module: 600
+  - angle: 120
+    module: 600
   - angle: 0
     module: 0
   - angle: 0
     module: 0
-  - angle: 0
+  - angle: -120
+    module: 0
+  - angle: 120
     module: 0
   - angle: 0
     module: 0
-  - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
-  - angle: 0
-    module: 0
-numSV: 1
+numSV: 2

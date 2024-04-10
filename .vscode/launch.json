@@ -20,7 +20,7 @@
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "args": [
                 "eth0",
-                "1"
+                "4"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

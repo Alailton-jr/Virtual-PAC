@@ -96,7 +96,10 @@ def ClientHandler(clientSocket):
                     else:
                         clientSocket.sendall("error".encode())
                 elif entry == 'stopSequencer':
-                    pass
+                    if stopSequencer():
+                        clientSocket.sendall("okay".encode())
+                    else:
+                        clientSocket.sendall("error".encode())
                 elif entry == 'getSequencerResults':
                     if (values := getSequencerResults()) is not None:
                         clientSocket.sendall(values.encode())

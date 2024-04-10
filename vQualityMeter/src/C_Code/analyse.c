@@ -3,14 +3,15 @@
 // #define MAX_SAG_SIZE 80*60*5
 #define TEMP_BUFFER_SIZE 5
 #define TEMP_BUFFER_RMS_SIZE 100
+#define M_PI 3.14159265358979323846
 
 sampledValue_t* sv;
 uint16_t windowSize = 80/4;
 
 double symCompMatrix[3][3][2] = {
-    {{1,0}, {-0.5, 0.86602540378}, {-0.5, -0.86602540378}},
-    {{1,0}, {-0.5, -0.86602540378}, {-0.5, 0.86602540378}},
-    {{1,0}, {1,0}, {1,0}},
+    {{1/3,0}, {-0.5/3, 0.86602540378/3}, {-0.5/3, -0.86602540378/3}},
+    {{1/3,0}, {-0.5/3, -0.86602540378/3}, {-0.5/3, 0.86602540378/3}},
+    {{1/3,0}, {1/3,0}, {1/3,0}},
 };
 
 int32_t tempBufferArr[MAX_SAMPLED_VALUES][TEMP_BUFFER_SIZE][8][256]; // TODO Dynamic buffer size
@@ -71,10 +72,10 @@ void swellAnalise(sampledValue_t *sv, uint16_t svIdx){
 
     // 0-3: Current; 4-7: Voltage
     for (int channel = 4; channel < sv->numChanels-1; channel++){
-        if ( sv->analyseData.phasor[channel][1][0] > swell->bottomThreshold ){
+        if ( sv->analyseData.phasor_polar[channel][1][0] > swell->bottomThreshold ){
             found = 1;
             if(!swell->flag){
-                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]); // Debug
+                printf("%lf\n ", sv->analyseData.phasor_polar[channel][1][0]); // Debug
                 swell->flag = 1;
                 swell->posCycle = 0;
                 clock_gettime(0, &swell->t0);
@@ -138,11 +139,11 @@ void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
 
     // 0-3: Current; 4-7: Voltage
     for (int channel = 4; channel < sv->numChanels-1; channel++){
-        if (sv->analyseData.phasor[channel][1][0] < sag->topThreshold &&
-            sv->analyseData.phasor[channel][1][0] > sag->bottomThreshold){
+        if (sv->analyseData.phasor_polar[channel][1][0] < sag->topThreshold &&
+            sv->analyseData.phasor_polar[channel][1][0] > sag->bottomThreshold){
             found = 1;
             if(!sag->flag){
-                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]); // Debug
+                printf("%lf\n ", sv->analyseData.phasor_polar[channel][1][0]); // Debug
                 sag->flag = 1;
                 sag->posCycle = 0;
                 clock_gettime(0, &sag->t0);
@@ -212,15 +213,14 @@ void threePhaseToSymComp(sampledValue_t *sv){
     for (int i = 0; i < 3; i++) {
         sv->analyseData.symetrical[0][i][0] = 0;
         sv->analyseData.symetrical[0][i][1] = 0;
-        for (int k = 0; k < 3; k++){
-            sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][k][0] * sv->analyseData.phasor[0+k][1][0] - symCompMatrix[i][k][1] * sv->analyseData.phasor[0+k][1][1];
-
-            sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][k][0] * sv->analyseData.phasor[0+k][1][1] + symCompMatrix[i][k][1] * sv->analyseData.phasor[0+k][1][0];
+        for (int j = 0; j < 3; j++){
+            sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j][1][0] - symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j][1][1];
+            sv->analyseData.symetrical[0][i][1] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j][1][1] + symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j][1][0];
         }
     }
     if (count>= 1000){
-        printf("Ia: %lf, Ib: %lf, Ic: %lf\n", sv->analyseData.phasor[0][1][0], sv->analyseData.phasor[1][1][0], sv->analyseData.phasor[2][1][0]);
-        // printf("V0: %lf, V1: %lf, V2: %lf\n", sv->analyseData.symetrical[0][0][0], sv->analyseData.symetrical[0][1][0], sv->analyseData.symetrical[0][2][0]);
+        printf("Ia: %lf|_%lf, Ib: %lf|_%lf, Ic: %lf|_%lf\n", sv->analyseData.phasor_polar[0][1][0], sv->analyseData.phasor_polar[0][1][1]*180/M_PI, sv->analyseData.phasor_polar[1][1][0], sv->analyseData.phasor_polar[1][1][1]*180/M_PI, sv->analyseData.phasor_polar[2][1][0], sv->analyseData.phasor_polar[2][1][1]*180/M_PI);
+        printf("V0: %lf, V1: %lf, V2: %lf\n", sqrt(sv->analyseData.symetrical[0][0][0]*sv->analyseData.symetrical[0][0][0] + sv->analyseData.symetrical[0][0][1]*sv->analyseData.symetrical[0][0][1]), sqrt(sv->analyseData.symetrical[0][1][0]*sv->analyseData.symetrical[0][1][0] + sv->analyseData.symetrical[0][1][1]*sv->analyseData.symetrical[0][1][1]), sqrt(sv->analyseData.symetrical[0][2][0]*sv->analyseData.symetrical[0][2][0] + sv->analyseData.symetrical[0][2][1]*sv->analyseData.symetrical[0][2][1]));
         count = 0;
     }
 }
@@ -336,10 +336,14 @@ void runAnalyse(){
 
             for (channel = 0; channel < sv[svIdx].numChanels; channel++){
                 for (i = 0; i < MAX_HARMONIC; i++){
-                    sv[svIdx].analyseData.phasor[channel][i][0] = sqrt(fft_output[svIdx][channel][i][0] * fft_output[svIdx][channel][i][0] + fft_output[svIdx][channel][i][1] * fft_output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
-                    sv[svIdx].analyseData.phasor[channel][i][1] = atan2(fft_output[svIdx][channel][i][1], fft_output[svIdx][channel][i][0]);
+                    sv[svIdx].analyseData.phasor_polar[channel][i][0] = sqrt(fft_output[svIdx][channel][i][0] * fft_output[svIdx][channel][i][0] + fft_output[svIdx][channel][i][1] * fft_output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
+                    sv[svIdx].analyseData.phasor_polar[channel][i][1] = atan2(fft_output[svIdx][channel][i][1], fft_output[svIdx][channel][i][0]);
+
+                    sv[svIdx].analyseData.phasor_rect[channel][i][0] = fft_output[svIdx][channel][i][0]/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
+                    sv[svIdx].analyseData.phasor_rect[channel][i][1] = fft_output[svIdx][channel][i][1]/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
+
                 }
-                tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor[channel][1][0];
+                tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor_polar[channel][1][0];
 
                 if (!debug)
                 for (i=sv[svIdx].smpRate*0.4; i<sv[svIdx].smpRate*0.6; i++){
@@ -356,8 +360,8 @@ void runAnalyse(){
             }
 
             threePhaseToSymComp(&sv[svIdx]);
-            sagAnalise(&sv[svIdx], svIdx);
-            swellAnalise(&sv[svIdx], svIdx);
+            // sagAnalise(&sv[svIdx], svIdx);
+            // swellAnalise(&sv[svIdx], svIdx);
 
         }
     }
@@ -424,10 +428,10 @@ void sagAnalise_Old(sampledValue_t *sv, uint16_t svIdx){
 
     // 0-3: Current; 4-7: Voltage
     for (int channel = 4; channel < sv->numChanels-1; channel++){
-        if (sv->analyseData.phasor[channel][1][0] < sag->topThreshold){
+        if (sv->analyseData.phasor_polar[channel][1][0] < sag->topThreshold){
             found = 1;
             if(!sag->flag){
-                printf("%lf\n ", sv->analyseData.phasor[channel][1][0]);
+                printf("%lf\n ", sv->analyseData.phasor_polar[channel][1][0]);
                 sag->flag = 1;
                 sag->posCycle = 0;
                 clock_gettime(0, &sag->t0);

@@ -2,7 +2,7 @@
 
 import subprocess, os, signal, numpy as np, psutil
 from Control import SvPublisher
-from util import loadYaml, get_mac_address, getIface, send_signal_by_name
+from util import loadYaml, get_mac_address, getIface, send_signal_to_process
 
 # SharedMemory from C-API 
 import os, sys
@@ -33,7 +33,7 @@ def prepareFrames(config:dict):
         for j in range(numTest):
             for channel in range(8):
                 seqData[j,channel,:] = np.sqrt(2) * testConfig[j]['values'][channel]['module'] * \
-                    np.sin(2 * np.pi * freq * t + testConfig[j]['values'][channel]['angle'])
+                    np.sin(2 * np.pi * freq * t + np.deg2rad(testConfig[j]['values'][channel]['angle']))
                 seqData[j,channel,:] = (100*j) + channel
             smpPerSeq.append(int(testConfig[j]['duration'] * smpRate * freq))
 
@@ -85,8 +85,7 @@ def startReplay(memNames:list[str]):
 
 def cleanUp(signum, frame):
     print('Closing sequencer setup...')
-    for command in commands:
-        send_signal_by_name(command, psutil.signal.SIGTERM)
+    send_signal_to_process("sequenceReplay", None, signal.SIGTERM)
     exit(0)
 
 if __name__=='__main__':

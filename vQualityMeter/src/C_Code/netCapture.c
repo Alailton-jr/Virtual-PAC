@@ -7,32 +7,41 @@ ThreadPool pool;
 int idxThreads = 0;
 uint8_t frameCaptured[20][2048];
 FILE *fp[MAX_CAPTURED];
-char filename[MAX_CAPTURED][50];
+FILE *svData;
+char filename[MAX_CAPTURED][128];
+char curDir[512];
 char svID[MAX_CAPTURED][256];
 uint8_t nSV = 0;
 struct timespec t0, t1;
+pthread_mutex_t mutex;
 
 typedef struct{
     char svID[256];
     char FileName[256];
-    double lastTime;
     double meanTime;
+    uint64_t nPackets;
     uint8_t nAsdu;
-    uint8_t macAddr[6];
-    uint16_t vLanId;
-    uint8_t vLanPriority;
+    uint8_t macSrc[6];
+    uint8_t macDst[6];
+    int32_t vLanId;
+    int16_t vLanPriority;
     uint8_t nChannels;
+    uint16_t appID;
     struct timespec t0;
+    struct timespec t1;
 }svCapt_t;
 
 svCapt_t svCaptured[MAX_CAPTURED];
 
 void* processPacket(uint8_t* frame, uint64_t size){
 
-    int i = 0;
+    int i = 0, has_vLAN = 0;
 
     // Skip Ethernet and vLAN
-    if (frame[12] == 0x81 && frame[13] == 0x00)  i = 16;
+    if (frame[12] == 0x81 && frame[13] == 0x00)  {
+        i = 16;
+        has_vLAN = 1;
+    }
     else i = 12;
 
     if (!(frame[i] == 0x88 && frame[i+1] == 0xba)) return NULL; // Check if packet is SV
@@ -82,66 +91,57 @@ void* processPacket(uint8_t* frame, uint64_t size){
             */
             if (frame[i] == 0x80){
                 found = 0;
+                pthread_mutex_lock(&mutex);
                 for (idx = 0; idx < nSV; idx++){
                     if (memcmp(svCaptured[idx].svID, &frame[i+2], frame[i+1]) == 0){
                         svIdx = idx;
                         found = 1;
+                        clock_gettime(0, &svCaptured[idx].t1);
+                        svCaptured[idx].meanTime += ((svCaptured[idx].t1.tv_sec - svCaptured[idx].t0.tv_sec) + (svCaptured[idx].t1.tv_nsec - svCaptured[idx].t0.tv_nsec)/1e9)*1e3;
+                        svCaptured[idx].nPackets++;
+                        svCaptured[idx].t0 = svCaptured[idx].t1;
                         break;
                     }
                 }
                 if (!found){
                     svIdx = nSV;
-                    memcpy(svCaptured[idx].svID, &frame[i+2], frame[i+1]);
-                    svCaptured[idx].vLanId = frame[14] | frame[15] << 8;
-                    svCaptured[idx].vLanPriority = frame[16] & 0x07; // May be wrong
-                    memcpy(svCaptured[idx].macAddr, &frame[6], 6);
-                    svCaptured[idx].nAsdu = noAsdu;
-                    svCaptured[idx].lastTime = 0;
                     nSV++;
+                    memcpy(svCaptured[svIdx].svID, &frame[i+2], frame[i+1]);
+                    if (has_vLAN){
+                        svCaptured[svIdx].vLanPriority = (frame[14] & 0xC0) >> 5;
+                        svCaptured[svIdx].vLanId = frame[15] + (frame[14] & 0x0f)*256;
+                        svCaptured[svIdx].appID = (frame[18] << 8) | frame[19];
+                    }else{
+                        svCaptured[svIdx].vLanPriority = -1;
+                        svCaptured[svIdx].vLanId = -1;
+                        svCaptured[svIdx].appID = (frame[14] << 8) | frame[15];
+                    }
+                    memcpy(svCaptured[svIdx].macDst, &frame[0], 6);
+                    memcpy(svCaptured[svIdx].macSrc, &frame[6], 6);
+                    
+                    svCaptured[svIdx].nAsdu = noAsdu;
+                    svCaptured[svIdx].meanTime = 0;
+                    svCaptured[svIdx].nPackets = 0;
+                    clock_gettime(0, &svCaptured[svIdx].t0);
+                    
                 }
+                pthread_mutex_unlock(&mutex);
             }
             i += frame[i+1] + 2; // Skip field Tag, Length and Value
         }
         j = 0;
         if (svIdx == -1) return NULL;
-        
+        svCaptured[svIdx].nChannels = (frame[i+1])/8;
+        pthread_mutex_lock(&mutex);
         while (j < frame[i+1]) // Decode the raw values
         {
-            // rawValues[idxRaw][j/8] = 0;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+2+j] << 24;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+3+j] << 16;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+4+j] << 8;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
-            // rawValues[idxRaw][j/8] = ((int32_t) frame[i+2+j] << 24) | ((int32_t) frame[i+3+j] << 16) | ((int32_t) frame[i+4+j] << 8) | ((int32_t) frame[i+5+j]);
-            sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
-            // if (j/8 == 4) 
-                // fprintf(fp, "%d, ", sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle]);
+            fprintf(fp[svIdx], "%d,", (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216)));
             j += 8;
         }
-        sampledValues[svIdx].idxCycle++;
-        if (sampledValues[svIdx].idxCycle >= sampledValues[svIdx].smpRate) {
-            sampledValues[svIdx].idxCycle = 0;
-            sampledValues[svIdx].idxBuffer++;
-            sampledValues[svIdx].cycledCaptured++;
-            if (sampledValues[svIdx].idxBuffer >= sampledValues[svIdx].freq) {
-                sampledValues[svIdx].idxBuffer = 0;
-                // saveArray(&sampledValues[svIdx]);
-            }
-        }
-        
-        // if (idxRaw % (MAX_RAW / NUM_DFT_PER_CYCLE) == 0) { // Compute the DFT
-        //     struct timespec t0, t1;
-        //     // clock_gettime(0, &t0);
-        //     computeDFT();
-        //     // clock_gettime(0, &t1);
-        //     // printf("Time: %ld us\n", (t1.tv_nsec - t0.tv_nsec)/1000);
-        // }
-        // idxRaw++;
-        // if (idxRaw == MAX_RAW) idxRaw = 0;
-        // pthread_mutex_unlock(&mutex); // Unlock the raw values
+        fprintf(fp[svIdx], "\n");
+        pthread_mutex_unlock(&mutex);
         i += frame[i+1] + 2;
     }
-
     return NULL;
 }
 
@@ -181,23 +181,60 @@ void runSniffer(double time){
     }
 }
 
+void closeFiles(){
+
+    char SvFileName[256];
+
+    for (int i = 0; i < MAX_CAPTURED; i++){
+        if (i >= nSV) {
+            fclose(fp[i]);
+            remove(filename[i]);
+            continue;
+        }
+        fclose(fp[i]);
+        sprintf(SvFileName, "%s/captSV/%s.csv", curDir, svCaptured[i].svID);
+        if (rename(filename[i], SvFileName) != 0){
+            perror("Error renaming file");
+        }
+
+        svCaptured[i].meanTime /= svCaptured[i].nPackets;
+        fprintf(svData, "- svID: %s\n", svCaptured[i].svID);
+        fprintf(svData, "  MeanTime: %lf\n", svCaptured[i].meanTime);
+        fprintf(svData, "  nPackets: %lu\n", svCaptured[i].nPackets);
+        fprintf(svData, "  nAsdu: %u\n", svCaptured[i].nAsdu);
+        fprintf(svData, "  macSrc: %02x:%02x:%02x:%02x:%02x:%02x\n", svCaptured[i].macSrc[0], svCaptured[i].macSrc[1], svCaptured[i].macSrc[2], svCaptured[i].macSrc[3], svCaptured[i].macSrc[4], svCaptured[i].macSrc[5]);
+        fprintf(svData, "  macDst: %02x:%02x:%02x:%02x:%02x:%02x\n", svCaptured[i].macDst[0], svCaptured[i].macDst[1], svCaptured[i].macDst[2], svCaptured[i].macDst[3], svCaptured[i].macDst[4], svCaptured[i].macDst[5]);
+        fprintf(svData, "  vLanId: %d\n", svCaptured[i].vLanId);
+        fprintf(svData, "  vLanPriority: %d\n", svCaptured[i].vLanPriority);
+        fprintf(svData, "  appID: %d\n", svCaptured[i].appID);
+        fprintf(svData, "  nChannels: %d\n", svCaptured[i].nChannels);
+    }
+    fprintf(svData, "nSV: %u\n", nSV);
+    fclose(svData);
+    
+}
+
 void openFiles(){
-    char filePath[512], curDir[512];
+    char filePath[512], svDataName[512];
     readlink("/proc/self/exe", filePath, sizeof(filePath) - 1);
     strcpy(curDir, dirname(filePath));
 
-    for (int i = 0; i < nSV; i++){
-        sprintf(filename[i], "%s/%s.csv", curDir, svID[i]);
+    for (int i = 0; i < MAX_CAPTURED; i++){
+        sprintf(filename[i], "%s/captSV/%d.csv", curDir, i);
         fp[i] = fopen(filename[i], "w");
         if (fp[i] == NULL){
             printf("Error opening file %s\n", filename[i]);
             exit(1);
         }
     }
+    sprintf(svDataName, "%s/captSV/svData.yaml", curDir);
+    svData = fopen(svDataName, "w");
 }
 
 void cleanUp(int signum){
     printf("Cleaning up...\n");
+    closeFiles();
+    pthread_mutex_destroy(&mutex);
     thread_pool_destroy(&pool);
     socketCleanup(&eth);
     exit(0);
@@ -227,9 +264,11 @@ int main(int argc, uint8_t* argv[]){
         return -1;
     }
 
-    thread_pool_init(&pool, 2, 10);
+    thread_pool_init(&pool, 4, 10);
     
+    openFiles();
+    pthread_mutex_init(&mutex, NULL);
     runSniffer(time);
-
+    cleanUp(0);
 
 }

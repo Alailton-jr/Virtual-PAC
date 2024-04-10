@@ -4,7 +4,10 @@ import numpy as np, psutil, signal, os, sys, subprocess
 from Control import SvPublisher
 from time import sleep
 from multiprocessing import shared_memory
-from util import loadYaml, get_mac_address, getIface, send_signal_by_name
+from util import loadYaml, get_mac_address, getIface, send_signal_to_process
+
+#debug
+import matplotlib.pyplot as plt
 
 
 # SharedMemory from C-API 
@@ -16,6 +19,7 @@ fileFolder = os.path.dirname(os.path.realpath(__file__))
 setupFolder = os.path.join(fileFolder, '..', '..', 'continuousSetup.yaml')
 replayFile = os.path.join(fileFolder, '..', 'C_Build', 'continuousReplay')
 commands = []
+process = []
 
 onlyUpdate = False
 
@@ -39,9 +43,8 @@ def prepareFrames(config:dict, update = False) -> list[str]:
         data = np.zeros((n_channels,t.shape[0]))
         confValues = config['Test'][i]['values']
         for j in range(n_channels):
-            data[j,:] = confValues[j]['module'] * np.sqrt(2) * np.sin(2*np.pi*freq*t + confValues[j]['angle'])
-            if not update:
-                data[j,:] = 100+j
+            
+            data[j,:] = confValues[j]['module'] * np.sqrt(2) * np.sin(2*np.pi*freq*t + np.deg2rad(confValues[j]['angle']))
             
         # base frame
         sv = SvPublisher(
@@ -57,6 +60,9 @@ def prepareFrames(config:dict, update = False) -> list[str]:
             smpSynch = netConfig['smpSync'],
         )
         frameBase = bytearray(sv.getFrame([[[10, '0']]* 8]*n_asdu, 0))
+
+        plt.plot(data[0,:])
+        plt.savefig(f"test_{i+1}.png")
 
         arr = data.flatten(order='C').astype(np.int32)
 
@@ -79,11 +85,10 @@ def prepareFrames(config:dict, update = False) -> list[str]:
             frameBase
         )
         memNames.append(f"continuousReplay_{i+1}")
-        break
     return memNames
 
 def startReplay(memNames):
-    process = []
+    process.clear()
     for name in memNames:
         command = f'{replayFile} {name}  {getIface()}'
         process.append(subprocess.Popen(command, shell=True))
@@ -95,8 +100,7 @@ def startReplay(memNames):
 
 def cleanUp(signum, frame):
     print("Closing continuous Setup...")
-    for command in commands:
-        send_signal_by_name(command, psutil.signal.SIGTERM)
+    send_signal_to_process("continuousReplay", None, signal.SIGTERM)
     exit(0)
 
 if __name__=='__main__':

@@ -104,9 +104,9 @@ int main(int argc, char *argv[])
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*channel + 1] = (arrMatrix[noSeq][channel][i] & 0x00FF0000) >> 16;
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*channel + 2] = (arrMatrix[noSeq][channel][i] & 0x0000FF00) >> 8;
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*channel + 3] = arrMatrix[noSeq][channel][i] & 0x000000FF;
-                i++;
-                if (i >= data->smpRate) i = 0;
             }
+            i++;
+            if (i >= data->smpRate) i = 0;
             smpCount++;
             if (smpCount >= maxSmpCount) smpCount = 0;
             noFrame++;

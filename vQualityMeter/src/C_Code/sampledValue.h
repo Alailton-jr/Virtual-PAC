@@ -25,7 +25,8 @@ typedef struct{
 }QualityEvent_t;
 
 typedef struct {
-    double phasor[NUM_CHANELS][MAX_HARMONIC][2];
+    double phasor_polar[NUM_CHANELS][MAX_HARMONIC][2];
+    double phasor_rect[NUM_CHANELS][MAX_HARMONIC][2];
     double symetrical[2][3][2];
     double unbalance[2];
     QualityEvent_t sag;

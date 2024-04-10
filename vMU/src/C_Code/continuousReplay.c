@@ -7,7 +7,7 @@ int32_t** arrMatrix;
 continuousData_t* data;
 
 void cleanup(int signum) {
-    printf("Replay Leaving...\n");
+    printf("Continuous Replay Leaving...\n");
     socketCleanup(&eth);
     free(arrMatrix);
     for(int i = 0;i<ALL_SHM; i++)
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     uint8_t *frame = (uint8_t*) allShm[1].ptr;
     int32_t *arr = (int32_t*) allShm[2].ptr;
 
-    arrMatrix = (int32_t**) malloc(data->n_channels*sizeof(int32_t*));
+    arrMatrix = (int32_t**) malloc(data->n_channels*sizeof(int32_t**));
     for (int i = 0; i < data->n_channels; i++){
         arrMatrix[i] = &arr[i*data->smpRate];
     }
@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
     iov.iov_len = data->frameLength;
     msg_hdr.msg_iov = &iov;
     msg_hdr.msg_iovlen = 1;
+
 
     // Timer Setup
     struct period_info pinfo;
@@ -94,9 +95,9 @@ int main(int argc, char *argv[])
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*i_channel + 1] = (arrMatrix[i_channel][i_smp] & 0x00FF0000) >> 16;
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*i_channel + 2] = (arrMatrix[i_channel][i_smp] & 0x0000FF00) >> 8;
                 frame[data->allDataPos + (i_asdu*data->asduLength) + 8*i_channel + 3] = arrMatrix[i_channel][i_smp] & 0x000000FF;
-                i_smp++;
-                if(i_smp >= data->smpRate) i_smp = 0;
             }
+            i_smp++;
+            if(i_smp >= data->smpRate) i_smp = 0;
             smpCount++;
             if (smpCount >= maxSmpCount) smpCount = 0;
         }
