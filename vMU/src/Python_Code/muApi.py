@@ -4,7 +4,6 @@
 import signal, socket, threading, json, yaml, psutil, numpy as np, queue, time, sys, subprocess
 from multiprocessing import shared_memory, resource_tracker
 import os
-from util import get_ip_address
 
 #region Controller Commands
 try:
@@ -15,6 +14,9 @@ controller = np.ndarray((1,), dtype=np.uint32, buffer=controllerShm.buf)
 
 workDir = os.path.dirname(os.path.abspath(__file__))
 filesDir = os.path.join(workDir, '..', '..')
+
+sys.path.append(workDir)
+from util import get_ip_address
 
 NOTHING = 0x00
 START_CONTINUOUS = 0x01

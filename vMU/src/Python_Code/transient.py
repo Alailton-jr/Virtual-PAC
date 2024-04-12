@@ -70,7 +70,7 @@ def prepareFrames(config:dict):
             pps,
             n_channels,
             n_asdu,
-            0,
+            int(config['loop']),
             f'transientReplay_{i+1}',
             f'transientReplay_Array_{i+1}',
             f'transientReplay_Frame_{i+1}',

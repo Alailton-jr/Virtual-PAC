@@ -30,7 +30,7 @@ double **wt_input[MAX_SAMPLED_VALUES];
 double **wt_output_cA[MAX_SAMPLED_VALUES];
 double **wt_output_cD[MAX_SAMPLED_VALUES];
 
-char curDir[512];
+char curDir[256];
 
 void saveArr(double *arr, int64_t size, char *name){
     FILE *fp = fopen(name, "w");
@@ -190,7 +190,7 @@ void sagAnalise(sampledValue_t *sv, uint16_t svIdx){
                     time_t current_time;
                     current_time = time(NULL);
                     local_time = localtime(&current_time);
-                    char fileName [256];
+                    char fileName [512];
                     sprintf(fileName, "%s/files/%s_sag_%04d-%02d-%02d_%02d-%02d-%02d.csv", curDir, sv->svId,
                         local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
                         local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
@@ -411,7 +411,6 @@ int main(){
     strcpy(curDir, dirname(filePath));
 
     sv = openSampledValue(0);
-    // debug();
     runAnalyse();
 
     printf("ended\n");
@@ -419,102 +418,18 @@ int main(){
 }
 
 
+    // Voltage Sags and Swells: Sudden, short-duration decreases (sags) or increases (swells) in voltage levels, often caused by faults or switching operations.
 
+    // Voltage Interruptions: Complete loss of voltage for a short period, typically caused by faults or equipment failure.
 
+    // Voltage Fluctuations: Rapid and repetitive variations in voltage magnitude, often caused by the operation of large loads or switching of equipment.
 
-void sagAnalise_Old(sampledValue_t *sv, uint16_t svIdx){
-    int found = 0;
-    QualityEvent_t *sag = &sv->analyseData.sag;
+    // Harmonics: Non-linear loads such as variable speed drives or power electronics can introduce harmonic currents, resulting in distorted voltage and current waveforms. Harmonics can lead to overheating of equipment and interference with sensitive electronics.
 
-    // 0-3: Current; 4-7: Voltage
-    for (int channel = 4; channel < sv->numChanels-1; channel++){
-        if (sv->analyseData.phasor_polar[channel][1][0] < sag->topThreshold){
-            found = 1;
-            if(!sag->flag){
-                printf("%lf\n ", sv->analyseData.phasor_polar[channel][1][0]);
-                sag->flag = 1;
-                sag->posCycle = 0;
-                clock_gettime(0, &sag->t0);
-                for (channel = 0; channel<sv->numChanels; channel++){
-                    sag->idx[channel] = 0;
-                    // for(int idxBuffer = 1; idxBuffer < TEMP_BUFFER_SIZE+1; idxBuffer++){
-                    //     if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
-                    //         break;
-                    //     }
-                    //     for (int idx = 0; idx < sv->smpRate; idx++){
-                    //         sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel][idx];
-                    //         sag->idx[channel]++;
-                    //     }
-                    // }
-                    for (int idxBuffer = 1; idxBuffer < TEMP_BUFFER_RMS_SIZE+1; idxBuffer++){
-                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
-                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][(tempBufferIdx[svIdx] + idxBuffer)%TEMP_BUFFER_SIZE][channel];
-                        sag->idx[channel]++;
-                    }
-                }
-                // sag->bufferIdx = tempBufferRMSIdx[svIdx];
-            }else{
-                // if (sag->bufferIdx != tempBufferIdx[svIdx]){
-                for (channel = 0; channel < sv->numChanels; channel++){
-                    // if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
-                    //     break;
-                    // }
-                    // for (int idx = 0; idx < sv->smpRate; idx++){
-                    //     sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][idx];
-                    //     sag->idx[channel]++;
-                    // }
-                    if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) break;
-                    else{
-                        sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
-                        sag->idx[channel]++;
-                    }
+    // Transient Voltage Surges: Short-duration increases in voltage, commonly caused by lightning strikes, switching operations, or capacitor switching.
 
-                }
-                // sag->bufferIdx = tempBufferIdx;
-            }
-            break;
-        }
-    }
-    
-    if (sag->flag){
-        if(!found){
-            if (sag->bufferIdx != tempBufferIdx[svIdx]){
-                if (sag->posCycle < TEMP_BUFFER_RMS_SIZE){
-                    // for (channel = 0; channel < sv->numChanels; channel++){
-                    //     if (sag->idx[channel] + sv->smpRate > MAX_SAG_SIZE){
-                    //         break;
-                    //     }
-                    //     for (int idx = 0; idx < sv->smpRate; idx++){
-                    //         sag->arr[channel][sag->idx[channel]] = tempBufferArr[svIdx][tempBufferIdx[svIdx]][channel][idx];
-                    //         sag->idx[channel]++;
-                    //     }
-                    // }
-                    // sag->bufferIdx = tempBufferIdx;
-                    for (int channel = 0; channel < sv->numChanels; channel++){
-                        if (sag->idx[channel] > MAX_BUFFER_EVENT_SIZE) 
-                            break;
-                        else{
-                            sag->arr[channel][sag->idx[channel]] = tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel];
-                            sag->idx[channel]++;
-                        }
-                    }
-                    sag->posCycle++;
-                }else{
-                    sag->flag = 0;
-                    clock_gettime(0, &sag->t1);
-                    double time_val = (sag->t1.tv_sec - sag->t0.tv_sec) + (sag->t1.tv_nsec - sag->t0.tv_nsec) / 1e9;
-                    printf("Sag time: %lf\n", time_val);
-                    struct tm *local_time;
-                    time_t current_time;
-                    current_time = time(NULL);
-                    local_time = localtime(&current_time);
-                    char fileName [256];
-                    sprintf(fileName, "%s_%04d-%02d-%02d_%02d-%02d-%02d.csv", sv->svId,
-                        local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday,
-                        local_time->tm_hour, local_time->tm_min, local_time->tm_sec);
-                    saveEvent(sag, sv->numChanels, sag->idx[0], fileName);
-                }
-            }
-        }
-    }
-}
+    // Voltage Unbalance: Imbalance in the distribution of voltages among the phases of a three-phase system, leading to unequal loading and potential overheating of equipment.
+
+// Flicker: Rapid variations in voltage magnitude that can cause visible fluctuations in lighting intensity, often attributed to large fluctuating loads.
+
+// Frequency Variations: Departures from the nominal frequency of the power system, which can affect the operation of synchronous equipment and clocks.

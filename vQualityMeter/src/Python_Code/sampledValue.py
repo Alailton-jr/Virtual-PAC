@@ -1,3 +1,15 @@
+#!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Add the path to the C_Build folder
+from Python_C_Build import shm_sequenceReplay
+
+class SampledValueControl(object):
+    def __init__(self) -> None:
+        pass
+
+    def openShm(self,):
+        pass
+
 
 class QualityEvent_t(object):
     def __init__(self, ) -> None:
@@ -26,4 +38,4 @@ class SampledValue_t(object):
         self.svID = svID
     def loadFromYaml(self, yamlFile:str) -> bool:
         pass
-    
+     

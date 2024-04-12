@@ -229,7 +229,8 @@ void findWavelet(char* motherWavelet, double* low_pass, double* high_pass, uint3
 }
 
 void wt_excecute(dwt_plan plan){
-    int i, j;
+    uint64_t i;
+    uint32_t j;
     for(i = 0; i < plan.length; i++){
         plan.cA[i] = 0;
         plan.cD[i] = 0;

@@ -1,7 +1,7 @@
-#!/root/Virtual-PAC/vMU/vEnv/bin/python3
+#!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
 
-from yaml import safe_load, socket
-import uuid, psutil, os
+from yaml import safe_load
+import uuid, psutil, os, socket
 from time import sleep
 
 def loadYaml(name:str):

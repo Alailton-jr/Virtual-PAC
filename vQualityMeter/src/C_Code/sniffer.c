@@ -25,7 +25,7 @@ void saveArray(sampledValue_t* sv){
     }
     for (int i = 0; i < sv->freq; i++) {
         for (int j = 0; j < sv->smpRate; j++) {
-            fprintf(fp, "%d", sv->snifferArr[i][j]);
+            fprintf(fp, "%d", sv->snifferArr[0][i][j]);
             if (j < sv->smpRate - 1) {
                 fprintf(fp, ",");
             }

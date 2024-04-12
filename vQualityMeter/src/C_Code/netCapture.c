@@ -8,15 +8,15 @@ int idxThreads = 0;
 uint8_t frameCaptured[20][2048];
 FILE *fp[MAX_CAPTURED];
 FILE *svData;
-char filename[MAX_CAPTURED][128];
-char curDir[512];
+char filename[MAX_CAPTURED][280];
+char curDir[256];
 char svID[MAX_CAPTURED][256];
 uint8_t nSV = 0;
 struct timespec t0, t1;
 pthread_mutex_t mutex;
 
 typedef struct{
-    char svID[256];
+    char svID[128];
     char FileName[256];
     double meanTime;
     uint64_t nPackets;
@@ -183,7 +183,7 @@ void runSniffer(double time){
 
 void closeFiles(){
 
-    char SvFileName[256];
+    char SvFileName[512];
 
     for (int i = 0; i < MAX_CAPTURED; i++){
         if (i >= nSV) {

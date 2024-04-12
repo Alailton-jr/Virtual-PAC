@@ -1,4 +1,5 @@
-import socket, threading, json
+#!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
+from util import get_ip_address
 
 class QualityAPI(object):
     def __init__(self):
@@ -16,11 +17,17 @@ class QualityAPI(object):
             print(f'Error: {e}')
             return False
     
-    def runServer(self):
+    def runServer(self, onThread=False):
+        if onThread:
+            threading.Thread(target=self._runServer, daemon=True).start()
+        else:
+            self._runServer()
+    
+    def _runServer(self):
         while True:
             client_socket, client_address = self.server_socket.accept()
             print("Connected to client:", client_address)
-            threading.Thread(target=self.ClientHandler, args=(client_socket,), daemon=True).start()
+            threading.Thread(target=self.clientHandler, args=(client_socket,), daemon=True).start()
 
     def clientHandler(self, clientSocket):
         try:
@@ -35,7 +42,6 @@ class QualityAPI(object):
                     
                     if entry == 'testConnection':
                         clientSocket.sendall("success".encode())
-
         except Exception as e:
             print(f'Error: {e}')
         finally:
@@ -43,8 +49,10 @@ class QualityAPI(object):
             
 
 
-
-
+if __name__ == '__main__':
+    api = QualityAPI()
+    api.connect(get_ip_address(), 8008)
+    api.runServer()
 
 
 

@@ -59,15 +59,15 @@ void deleteSampledValue(int index);
 sampledValue_t* openSampledValue(int sniffer){
     shm_setup_s svMemory = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
     if (svMemory.ptr == NULL){
-        shm_setup_s svMemory = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
+        svMemory = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
     }
     char memName[256];
     sampledValue_t *sv = (sampledValue_t *)svMemory.ptr;
     for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
         if(!sv[i].initialized) continue;
 
-        for (int j = 0; j < sv[i].numChanels; j++){
-            for (int k=0; k < sv[i].freq; k++){
+        for (uint8_t j = 0; j < sv[i].numChanels; j++){
+            for (uint32_t k=0; k < sv[i].freq; k++){
                 sprintf(memName, "QualitySampledValue_%d_%d_%d", i, j, k);
                 shm_setup_s cycleMemoryMem = openSharedMemory(memName, sv[i].smpRate*sizeof(int32_t));
                 if (cycleMemoryMem.ptr == NULL) continue;
@@ -99,8 +99,8 @@ void addSampledValue(int index, sampledValue_t *_sv){
     memcpy(&sv[index], _sv, sizeof(sampledValue_t));
 
     char memName[256];
-    for (int i = 0;i < sv[index].numChanels; i++){
-        for (int j=0; j<sv[index].freq; j++){
+    for (uint8_t i = 0;i < sv[index].numChanels; i++){
+        for (uint32_t j=0; j<sv[index].freq; j++){
             sprintf(memName, "QualitySampledValue_%d_%d_%d", index, i, j);
             cycleMemoryMem = createSharedMemory(memName, sv[index].smpRate*sizeof(int32_t));
             sv[index].snifferArr[i][j] = (int32_t *)cycleMemoryMem.ptr;
@@ -116,8 +116,8 @@ void deleteSampledValue(int index){
     sampledValue_t *sv = (sampledValue_t *)svMemory.ptr;
     if (!sv[index].initialized) return;
 
-    for (int i = 0;i < sv[index].numChanels; i++){
-        for (int j=0; j<sv[index].freq; j++){
+    for (uint8_t i = 0;i < sv[index].numChanels; i++){
+        for (uint32_t j=0; j<sv[index].freq; j++){
             sprintf(memName, "QualitySampledValue_%d_%d_%d", index, i, j);
             shm_setup_s cycleMemoryMem = openSharedMemory(memName, sv[index].smpRate*sizeof(int32_t));
             if (cycleMemoryMem.ptr == NULL) continue;

@@ -46,7 +46,6 @@ int main(int argc, char *argv[]){
     uint8_t *frame = (uint8_t*) allShm[2].ptr;
     uint32_t nframes = data->arrLength/data->n_channels;
 
-
     // Socket setup
     eth.fanout_grp = 1;
     socketSetup(&eth, data->frameLength, 0);
@@ -71,7 +70,11 @@ int main(int argc, char *argv[]){
     uint64_t i = 0;
     uint16_t smpCount = 0, i_asdu, tempSmpCount, channel;
     uint8_t debug = 0;
-    while(i < data->arrLength){
+    while(1){
+        if (i < data->arrLength){
+            if (data->isLoop) i = 0;
+            else break;
+        }
         // Adjust frame
         for(i_asdu = 0; i_asdu < data->n_asdu; i_asdu++){
             frame[data->smpCountPos + (i_asdu*data->asduLength)] = (smpCount & 0xFF00) >> 8;

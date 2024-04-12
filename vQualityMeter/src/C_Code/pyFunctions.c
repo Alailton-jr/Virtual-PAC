@@ -1,10 +1,14 @@
 #include <Python.h>
+#include "sampledValue.h"
 
 static PyObject* pyOpenSvSharedMemory(PyObject* self, PyObject* args){
-    PyObject* shmName;
-
-    if (!PyArg_ParseTuple)
-
+    sampledValue_t *sv = openSampledValue(0);
+    PyObject *capsule = PyCapsule_New(sv, "sampledValue_t", NULL);
+    if (capsule == NULL){
+        PyErr_SetString(PyExc_RuntimeError, "Failed to create capsule object");
+        return NULL;
+    }
+    return capsule;
 }
 
 static PyMethodDef methods[] = {
@@ -14,8 +18,8 @@ static PyMethodDef methods[] = {
 
 static struct PyModuleDef module = {
     PyModuleDef_HEAD_INIT,
-    "pyShmMemory",
-    "Create shared memory for transient replay",
+    "pyCFunctions",
+    "Module to call C functions from Python",
     -1,
     methods
 };

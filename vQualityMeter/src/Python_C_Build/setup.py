@@ -1,23 +1,26 @@
-#!/root/Virtual-PAC/vMU/vEnv/bin/python3
+#!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
 
 def runBuild():
     from distutils.core import setup, Extension
     import numpy as np
-    from os import path, listdir, getcwd
+    from os import path, listdir, getcwd, environ
     from shutil import move, rmtree
-
+    #get python.h include location
+    import sys
+    include = sys.executable
+    print(include)
     c_folder = path.abspath(path.join(path.dirname(__file__), '..', 'C_Code'))
     removeDir = path.abspath(path.join(path.dirname(__file__), '..', '..', 'build'))
     build_folder = path.abspath(path.join(path.dirname(__file__)))
 
-    args = ['-Wno-unused-function']
+    args = ['-Wno-unused-function', '-Wno-incompatible-pointer-types', '-Wno-unused-variable', '-Wno-implicit-function-declaration']
 
     exts = [
         Extension(
-            'pyShmMemory',
-            sources=[path.join(c_folder, 'pyShmMemory.c')],
+            'pyCFunctions',
+            sources=[path.join(c_folder, 'pyFunctions.c')],
             include_dirs=[np.get_include()],
-            extra_compile_args=args
+            extra_compile_args=args,
         )
     ]
 
@@ -35,6 +38,7 @@ def runBuild():
     for _file in files:
         if _file.endswith('.so'):
             move(_file, path.join(build_folder, _file))
-    rmtree(removeDir)
+    if path.exists(removeDir):
+        rmtree(removeDir)
 
 runBuild()
