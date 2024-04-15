@@ -7,8 +7,17 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="MonitorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ShowData.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SnifferForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SvMonitor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

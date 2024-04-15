@@ -75,6 +75,7 @@ namespace TestSet
             [YamlDotNet.Serialization.YamlMember(Alias = "GOOSE STOP")]
             public int GooseStop { get; set; }
             public List<List<List<int>>> Channels;
+            public bool loop;
         }
     }
     
@@ -294,7 +295,8 @@ namespace TestSet
                 Network = new YamlNetwork.YamlRoot[transientConfig.Count],
                 Files = new List<string>(),
                 GooseStop = 0,
-                Channels = new List<List<List<int>>>()
+                Channels = new List<List<List<int>>>(),
+                loop = transientConfig[0].loop
             };
             for (int i = 0; i < this.transientConfig.Count; i++)
             {
@@ -796,6 +798,7 @@ namespace TestSet
         [JsonIgnore]
         public List<List<double>> data { get; set; }
         public string fileName { get; set; }
+        public bool loop { get; set; }
         public int nData { get; set; }
         public int[] setup { get; 
         set; }
@@ -807,6 +810,7 @@ namespace TestSet
             this.nData = -1;
             for (int i = 0; i < 8; i++)
                 this.setup[i] = -1;
+            this.loop = false;
         }
         public void resetSetup()
         {

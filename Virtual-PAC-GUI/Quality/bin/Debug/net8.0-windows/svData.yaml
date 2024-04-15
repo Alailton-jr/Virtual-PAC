@@ -1,0 +1,22 @@
+svData:
+- svID: SV_1
+  MeanTime: 0.208185
+  nPackets: 24017
+  nAsdu: 1
+  macSrc: 00:15:5d:b0:12:59
+  macDst: 01:0c:cd:01:00:01
+  vLanId: 100
+  vLanPriority: 4
+  appID: 4800
+  nChannels: 8
+- svID: TRTC
+  MeanTime: 0.208261
+  nPackets: 24008
+  nAsdu: 1
+  macSrc: 00:15:5d:b0:12:59
+  macDst: 01:0c:cd:01:00:00
+  vLanId: 100
+  vLanPriority: 4
+  appID: 4800
+  nChannels: 8
+nSV: 2

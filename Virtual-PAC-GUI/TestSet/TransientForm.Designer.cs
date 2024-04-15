@@ -67,6 +67,7 @@
             TbNDados = new TextBox();
             CbkPlotRMS = new CheckBox();
             BtnStart = new Button();
+            CbxLoop = new CheckBox();
             PnSv.SuspendLayout();
             panel5.SuspendLayout();
             panel1.SuspendLayout();
@@ -579,12 +580,30 @@
             BtnStart.UseVisualStyleBackColor = true;
             BtnStart.Click += BtnStart_Click;
             // 
+            // CbxLoop
+            // 
+            CbxLoop.AutoSize = true;
+            CbxLoop.BackColor = Color.FromArgb(31, 45, 56);
+            CbxLoop.FlatAppearance.BorderColor = Color.Lavender;
+            CbxLoop.FlatAppearance.BorderSize = 20;
+            CbxLoop.FlatStyle = FlatStyle.Flat;
+            CbxLoop.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            CbxLoop.Location = new Point(327, 152);
+            CbxLoop.Name = "CbxLoop";
+            CbxLoop.Padding = new Padding(5, 0, 0, 0);
+            CbxLoop.Size = new Size(136, 29);
+            CbxLoop.TabIndex = 24;
+            CbxLoop.Text = "Run on Loop";
+            CbxLoop.UseVisualStyleBackColor = false;
+            CbxLoop.CheckedChanged += CbxLoop_CheckedChanged;
+            // 
             // TransientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 58, 73);
             ClientSize = new Size(1072, 614);
+            Controls.Add(CbxLoop);
             Controls.Add(BtnStart);
             Controls.Add(CbkPlotRMS);
             Controls.Add(TbNDados);
@@ -649,5 +668,6 @@
         private CheckBox ChkIb;
         private CheckBox CbkPlotRMS;
         private Button BtnStart;
+        private CheckBox CbxLoop;
     }
 }
