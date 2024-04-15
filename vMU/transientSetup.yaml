@@ -1,11 +1,18 @@
 Channels:
 - - - 0
     - 0
-- - - 0
+  - - 1
     - 1
+  - - 2
+    - 2
+  - - 4
+    - 3
+  - - 5
+    - 4
+  - - 6
+    - 5
 Files:
 - simulation_01.out
-- simulation_02.out
 GOOSE STOP: 0
 Network:
 - GoNetwork:
@@ -22,36 +29,14 @@ Network:
     frequency: 60
     macDst: 01:0C:CD:01:00:00
     macSrc: null
-    noAsdu: 1
+    noAsdu: 8
     pps: 4800
-    smpRate: 80
+    smpRate: 256
     smpSync: 0
     svId: TRTC
     vLanID: 100
-    vLanPriority: 4
-- GoNetwork:
-    appId: 4800
-    confRev: 1
-    controlRef: GOOSE
-    dataSize: 0
-    goId: GOOSE_1
-    macSrc: 01:0C:CD:04:00:01
-    vLan: 100
-  SvNetwork:
-    AppId: 4800
-    confRev: 1
-    frequency: 60
-    macDst: 01:0C:CD:01:00:01
-    macSrc: null
-    noAsdu: 1
-    pps: 4800
-    smpRate: 80
-    smpSync: 0
-    svId: SV_1
-    vLanID: 100
-    vLanPriority: 4
+    vLanPriority: 7
 Number of Channels:
 - 8
-- 8
-Number of Files: 2
+Number of Files: 1
 loop: true

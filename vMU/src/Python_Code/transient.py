@@ -7,7 +7,7 @@ import numpy as np
 import subprocess, psutil, signal
 from scipy.interpolate import interp1d
 from Control import SvPublisher
-from util import loadYaml, get_mac_address, getIface, send_signal_by_name
+from util import loadYaml, get_mac_address, getIface, send_signal_to_process
 
 # SharedMemory from C-API 
 import os, sys
@@ -56,8 +56,13 @@ def prepareFrames(config:dict):
         time = np.arange(0, time_file[-1], 1/pps)
         vec = np.zeros((n_channels, len(time)))
         for channel in channels:
-            inter = interp1d(time_file, data[channel[1], :], kind='linear')
+            inter = interp1d(time_file, data[channel[1]+1, :], kind='linear')
             vec[channel[0], :] = inter(time)
+
+        # Debug
+        import matplotlib.pyplot as plt
+        plt.plot(vec[0,:])
+        plt.savefig(f'channel_{i+1}.png')
 
         arr = vec.flatten(order='F').astype(np.int32)
 
@@ -100,10 +105,8 @@ def main():
         print(f'No transient setup file found at {setupFolder}')
 
 def cleanUp(signum, frame):
-    if len(commands) > 0:
-        for command in commands:
-            send_signal_by_name(command, psutil.signal.SIGTERM)
     print('Closing transient setup...')
+    send_signal_to_process("transientReplay", None, signal.SIGTERM)
     exit(0)
 
 if __name__ == '__main__':

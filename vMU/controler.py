@@ -2,7 +2,7 @@
 
 import subprocess, os, signal, time, socket, threading, json, psutil, yaml, numpy as np, src.Python_Code.muApi as muApi
 from multiprocessing import shared_memory
-from src.Python_Code.util import getIface, send_signal_by_name
+from src.Python_Code.util import getIface, send_signal_by_name, send_signal_to_process
 
 
 # Service Directory
@@ -118,7 +118,8 @@ class vMU_Brain:
         if 'transient' not in self.tests:
             return
         self.tests['transient']['running'] = False
-        self.send_signal_by_name(self.tests['transient']['command'], psutil.signal.SIGTERM)
+        # self.send_signal_by_name(self.tests['transient']['command'], psutil.signal.SIGTERM)
+        send_signal_to_process("transient.py", None, signal.SIGTERM)
 
     def runSequencer(self):
         if 'sequencer' in self.tests:
@@ -133,7 +134,8 @@ class vMU_Brain:
         if 'sequencer' not in self.tests:
             return
         self.tests['sequencer']['running'] = False
-        self.send_signal_by_name(self.tests['sequencer']['command'], psutil.signal.SIGTERM)
+        # self.send_signal_by_name(self.tests['sequencer']['command'], psutil.signal.SIGTERM)
+        send_signal_to_process("sequencer.py", None, signal.SIGTERM)
 
     def runContinuous(self):
         if 'continuous' in self.tests:

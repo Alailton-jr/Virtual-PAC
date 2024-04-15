@@ -9,6 +9,9 @@
 #include <fcntl.h>
 #include <signal.h>
 
+#include <stdint.h>
+#include <time.h>
+
 typedef struct{
     int32_t *arr;
     int32_t size;
@@ -25,6 +28,12 @@ void cleanup(int sig){
 
 int main(int argc, char *argv[]){
 
+
+    printf("%lu\n", sizeof(struct timespec));
+    
+    printf("%lu\n", sizeof(FILE)/sizeof(uint8_t));
+
+    return 0;
 
     signal(SIGINT, cleanup);
     signal(SIGTERM, cleanup);

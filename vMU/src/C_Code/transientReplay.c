@@ -10,7 +10,7 @@ void cleanUp(int signum){
     printf("Transient Replay Leaving...\n");
     socketCleanup(&eth);
     for(int i = 0;i<ALL_SHM; i++)
-        close(allShm[i].id);
+        deleteSharedMemory(&allShm[i]);
     exit(0);
 }
 
@@ -21,6 +21,8 @@ int main(int argc, char *argv[]){
         printf("Usage: ./transientReplay <shmName> <iface>\n");
         return -1;
     }
+
+    printf("Transient Replay Starting...\n");
 
     // Signal handling for closing the program
     signal(SIGTERM, cleanUp);
@@ -71,7 +73,7 @@ int main(int argc, char *argv[]){
     uint16_t smpCount = 0, i_asdu, tempSmpCount, channel;
     uint8_t debug = 0;
     while(1){
-        if (i < data->arrLength){
+        if (i >= data->arrLength){
             if (data->isLoop) i = 0;
             else break;
         }

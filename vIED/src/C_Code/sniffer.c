@@ -12,7 +12,7 @@
 #include <sched.h>
 
 /*
-    Obs: The definitions MAX_RAW and NUM_CHANELS was used considering the 4800Hz Sampled Value rate
+    Obs: The definitions MAX_RAW and NUM_CHANNELS was used considering the 4800Hz Sampled Value rate
 */
 
 //--------------- Thread Pool -----------------//
@@ -73,7 +73,7 @@ void* watchDogTask(){
     while (1){
         if (updateFlag) updateFlag = 0;
         else {
-            for(int i=0;i<NUM_CHANELS;i++){
+            for(int i=0;i<NUM_CHANNELS;i++){
                 values[2*i] = 0;
                 values[2*i+1] = 0; 
             }
@@ -262,7 +262,7 @@ int32_t main(int argc, char *argv[])
     signal(SIGTERM, cleanup); // Register the cleanup function
 
     // Create the shared memory for the sampled values
-    shm_setup_s valuesShm = createSharedMemory("phasor",2*NUM_CHANELS * sizeof(double));
+    shm_setup_s valuesShm = createSharedMemory("phasor",2*NUM_CHANNELS * sizeof(double));
     values = (double*) valuesShm.ptr;
     allShm[0] = &valuesShm;
 

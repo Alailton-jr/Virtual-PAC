@@ -90,7 +90,7 @@ def prepareFrames(config:dict, update = False) -> list[str]:
 def startReplay(memNames):
     process.clear()
     for name in memNames:
-        command = f'{replayFile} {name}  {getIface()}'
+        command = f'{replayFile} {name} {getIface()}'
         process.append(subprocess.Popen(command, shell=True))
         commands.append(command)
     sleep(5)

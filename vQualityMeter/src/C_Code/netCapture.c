@@ -108,7 +108,7 @@ void* processPacket(uint8_t* frame, uint64_t size){
                     nSV++;
                     memcpy(svCaptured[svIdx].svID, &frame[i+2], frame[i+1]);
                     if (has_vLAN){
-                        svCaptured[svIdx].vLanPriority = (frame[14] & 0xC0) >> 5;
+                        svCaptured[svIdx].vLanPriority = (frame[14] & 0xe0) >> 5;
                         svCaptured[svIdx].vLanId = frame[15] + (frame[14] & 0x0f)*256;
                         svCaptured[svIdx].appID = (frame[18] << 8) | frame[19];
                     }else{
@@ -184,7 +184,7 @@ void runSniffer(double time){
 void closeFiles(){
 
     char SvFileName[512];
-
+    uint8_t hasSv = 0;
     for (int i = 0; i < MAX_CAPTURED; i++){
         if (i >= nSV) {
             fclose(fp[i]);
@@ -196,6 +196,10 @@ void closeFiles(){
         if (rename(filename[i], SvFileName) != 0){
             perror("Error renaming file");
         }
+        
+        if (!hasSv)
+            fprintf(svData, "svData:\n");
+        hasSv = 1;
 
         svCaptured[i].meanTime /= svCaptured[i].nPackets;
         fprintf(svData, "- svID: %s\n", svCaptured[i].svID);
@@ -209,6 +213,7 @@ void closeFiles(){
         fprintf(svData, "  appID: %d\n", svCaptured[i].appID);
         fprintf(svData, "  nChannels: %d\n", svCaptured[i].nChannels);
     }
+    if (!hasSv) fprintf(svData, "svData: []\n");
     fprintf(svData, "nSV: %u\n", nSV);
     fclose(svData);
     

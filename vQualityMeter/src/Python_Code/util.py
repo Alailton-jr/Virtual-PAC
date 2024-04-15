@@ -32,21 +32,22 @@ def get_ip_address():
     return ip_address
 
 
-def send_signal_by_name(process_name, signal):
-    try:
-        for process in psutil.process_iter(['pid', 'name']):
-            cmd = ' '.join(psutil.Process(process.info['pid']).cmdline())
-            if cmd == process_name:
-                process_pid = process.info['pid']
-            else:
-                continue
-            try:
-                psutil.Process(process_pid).send_signal(signal)
-                break
-            except psutil.NoSuchProcess:
-                print(f"Process '{process_name}' not found.")
-    except psutil.NoSuchProcess:
-        print(f"Process '{process_name}' not found.")
+def send_signal_by_arg(arg:str, signal_number):
+    for process in psutil.process_iter(['pid', 'name', 'cmdline']):
+        if arg in process.info['cmdline']:
+            process_pid = process.info['pid']
+        else:
+            continue
+        try:
+            os.kill(process_pid, signal_number)
+            print(f"Signal {signal_number} sent to process {process_pid}.")
+            break
+        except ProcessLookupError:
+            print(f"Process {process_pid} not found.")
+            return
+        except PermissionError:
+            print(f"Permission denied to send signal to process {process_pid}.")
+            return
 
 def send_signal_to_process(process_name, pid, signal_number):
     while 1:

@@ -129,6 +129,7 @@ def ClientHandler(clientSocket):
                     startTransient()
                     clientSocket.sendall("okay".encode())
                 elif entry == 'stopTransient':
+                    print('Stopping Transient')
                     stopTransient()
                     clientSocket.sendall("okay".encode())
                 elif entry == 'getTransientResult':

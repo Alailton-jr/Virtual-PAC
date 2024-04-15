@@ -3,12 +3,8 @@
 def runBuild():
     from distutils.core import setup, Extension
     import numpy as np
-    from os import path, listdir, getcwd, environ
+    from os import path, listdir, getcwd
     from shutil import move, rmtree
-    #get python.h include location
-    import sys
-    include = sys.executable
-    print(include)
     c_folder = path.abspath(path.join(path.dirname(__file__), '..', 'C_Code'))
     removeDir = path.abspath(path.join(path.dirname(__file__), '..', '..', 'build'))
     build_folder = path.abspath(path.join(path.dirname(__file__)))

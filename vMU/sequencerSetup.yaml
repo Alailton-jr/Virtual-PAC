@@ -34,7 +34,7 @@ Network:
     frequency: 60
     macDst: 01:0C:CD:01:00:01
     macSrc: null
-    noAsdu: 1
+    noAsdu: 2
     pps: 4800
     smpRate: 80
     smpSync: 0

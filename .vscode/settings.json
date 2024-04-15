@@ -34,7 +34,9 @@
         "wavelet.h": "c",
         "array": "c",
         "string_view": "c",
-        "initializer_list": "c"
+        "initializer_list": "c",
+        "arrayobject.h": "c",
+        "chrono": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln",
     "C_Cpp.intelliSenseEngineFallback": "enabled"

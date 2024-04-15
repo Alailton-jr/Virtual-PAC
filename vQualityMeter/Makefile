@@ -18,6 +18,11 @@ PIP = $(VENV)/bin/pip3
 .PHONY: venv
 venv: python_shebang
 
+	@if [ -d "$(VENV)" ]; then \
+        echo "Removing directory $(VENV)"; \
+        rm -rf $(VENV); \
+    fi
+
 	@if ! dpkg -l |  grep -P 'python.*venv|venv.*python' >/dev/null; then \
 		echo Installing Python VENV... \
 		sudo $(INSTALL_CMD) update -y; \

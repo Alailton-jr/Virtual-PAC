@@ -1,0 +1,77 @@
+SampledValues:
+- SVID: TRTC
+  macSrc: 01:0c:cd:01:00:00
+  frequency: 60
+  smpRate: 256
+  noAsdu: 8
+  noChannels: 8
+  nominalVoltage: 7800
+  nominalCurrent: 200
+  sag:
+    topThreshold: 0.9
+    bottomThreshold: 0.1
+    minDuration: 0.01
+    maxDuration: 60
+  swell:
+    topThreshold: 1.9
+    bottomThreshold: 1.1
+    minDuration: 0.01
+    maxDuration: 60
+  interruption:
+    topThreshold: 0.1
+    bottomThreshold: 0
+    minDuration: 0.01
+    maxDuration: 60
+  overVoltage:
+    topThreshold: 1.5
+    bottomThreshold: 1.1
+    minDuration: 60
+    maxDuration: 180
+  underVoltage:
+    topThreshold: 0.9
+    bottomThreshold: 0.1
+    minDuration: 60
+    maxDuration: 180
+  sustainedinterruption:
+    topThreshold: 0.1
+    bottomThreshold: 0
+    minDuration: 60
+    maxDuration: 180
+- SVID: SV_1
+  macSrc: 01:0c:cd:01:00:01
+  frequency: 60
+  smpRate: 80
+  noAsdu: 1
+  noChannels: 8
+  nominalVoltage: 0
+  nominalCurrent: 0
+  sag:
+    topThreshold: 0.9
+    bottomThreshold: 0.1
+    minDuration: 0.01
+    maxDuration: 60
+  swell:
+    topThreshold: 1.9
+    bottomThreshold: 1.1
+    minDuration: 0.01
+    maxDuration: 60
+  interruption:
+    topThreshold: 0.1
+    bottomThreshold: 0
+    minDuration: 0.01
+    maxDuration: 60
+  overVoltage:
+    topThreshold: 1.5
+    bottomThreshold: 1.1
+    minDuration: 60
+    maxDuration: 180
+  underVoltage:
+    topThreshold: 0.9
+    bottomThreshold: 0.1
+    minDuration: 60
+    maxDuration: 180
+  sustainedinterruption:
+    topThreshold: 0.1
+    bottomThreshold: 0
+    minDuration: 60
+    maxDuration: 180

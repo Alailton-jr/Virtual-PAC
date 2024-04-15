@@ -15,13 +15,20 @@ typedef enum {
 typedef struct{
     uint32_t topThreshold;
     uint32_t bottomThreshold;
+    double minDuration;
+    double maxDuration;
+    double minVal;
+    double maxVal;
     uint32_t idx[NUM_CHANELS];
     uint32_t bufferIdx;
     uint32_t posCycle;
     uint8_t flag;
     struct timespec t0;
     struct timespec t1;
-    double arr[NUM_CHANELS][MAX_BUFFER_EVENT_SIZE];
+    char eventName[40];
+    char fileName[512];
+    double duration;
+    FILE *fp;
 }QualityEvent_t;
 
 typedef struct {
@@ -42,11 +49,11 @@ typedef struct{
     uint32_t smpRate;
     uint32_t freq;
     uint8_t initialized;
+    uint8_t numChanels;
     int32_t *snifferArr[NUM_CHANELS][FREQUENCY];
     int32_t *analyseArr[NUM_CHANELS][FREQUENCY];
     double rms[NUM_CHANELS];
     QualityAnalyse_t analyseData;
-    uint8_t numChanels;
     int32_t idxCycle;
     int32_t idxBuffer;
     int32_t idxProcessedBuffer;
@@ -106,6 +113,10 @@ void addSampledValue(int index, sampledValue_t *_sv){
             sv[index].snifferArr[i][j] = (int32_t *)cycleMemoryMem.ptr;
         }
     }
+    printf("nChannels: %u\n", sv[index].numChanels);
+    printf("freq: %u\n", sv[index].freq);
+    printf("smpRate: %u\n", sv[index].smpRate);
+    sv[index].initialized = 1;
 }
 
 void deleteSampledValue(int index){

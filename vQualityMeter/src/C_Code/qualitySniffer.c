@@ -10,7 +10,7 @@ sampledValue_t* sampledValues; // Array of sampled values
 
 // Packet Processing
 int idxThreads = 0;
-uint8_t frameCaptured[NUM_THREADS][2048]; // Buffer to store the captured packets
+uint8_t **frameCaptured;
 
 void cleanup(int signum);
 
@@ -36,7 +36,7 @@ void saveArray(sampledValue_t* sv){
     cleanup(0);
 }
 
-void* processPacket(uint8_t* frame, uint64_t size){
+void* processPacket(uint8_t* frame, int32_t size){
 
     // uint8_t* frame = (uint8_t *) args;
     
@@ -78,8 +78,8 @@ void* processPacket(uint8_t* frame, uint64_t size){
             i += 4;
         else 
             i += 2;
-
-        while (frame[i] != 0x87 && i <= size) { // skip all the fields until Sequence of Data
+        uint32_t debug;
+        while (frame[i] != 0x87) { // skip all the fields until Sequence of Data
             /*
                 * 0x80 -> svId
                 * 0x81 -> datSet Name
@@ -94,7 +94,7 @@ void* processPacket(uint8_t* frame, uint64_t size){
             */
             if (frame[i] == 0x80){ // Check if svId is the same
                 for (int idx = 0; idx < MAX_SAMPLED_VALUES; idx++){
-                    if (sampledValues[idx].snifferArr != NULL){
+                    if (sampledValues[idx].initialized){
                         char* debug = sampledValues[idx].svId;
                         if (memcmp(sampledValues[idx].svId, &frame[i+2], frame[i+1]) == 0){
                             svIdx = idx;
@@ -104,6 +104,7 @@ void* processPacket(uint8_t* frame, uint64_t size){
                 }
             }
             i += frame[i+1] + 2; // Skip field Tag, Length and Value
+            if (i >= size) return NULL;
         }
         j = 0;
         if (svIdx == -1) return NULL;
@@ -111,15 +112,7 @@ void* processPacket(uint8_t* frame, uint64_t size){
         
         while (j < frame[i+1]) // Decode the raw values
         {
-            // rawValues[idxRaw][j/8] = 0;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+2+j] << 24;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+3+j] << 16;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+4+j] << 8;
-            // rawValues[idxRaw][j/8] |= (int)frame[i+5+j];
-            // rawValues[idxRaw][j/8] = ((int32_t) frame[i+2+j] << 24) | ((int32_t) frame[i+3+j] << 16) | ((int32_t) frame[i+4+j] << 8) | ((int32_t) frame[i+5+j]);
             sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
-            // if (j/8 == 4) 
-                // fprintf(fp, "%d, ", sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle]);
             j += 8;
         }
         sampledValues[svIdx].idxCycle++;
@@ -129,20 +122,9 @@ void* processPacket(uint8_t* frame, uint64_t size){
             sampledValues[svIdx].cycledCaptured++;
             if (sampledValues[svIdx].idxBuffer >= sampledValues[svIdx].freq) {
                 sampledValues[svIdx].idxBuffer = 0;
-                // saveArray(&sampledValues[svIdx]);
             }
         }
         
-        // if (idxRaw % (MAX_RAW / NUM_DFT_PER_CYCLE) == 0) { // Compute the DFT
-        //     struct timespec t0, t1;
-        //     // clock_gettime(0, &t0);
-        //     computeDFT();
-        //     // clock_gettime(0, &t1);
-        //     // printf("Time: %ld us\n", (t1.tv_nsec - t0.tv_nsec)/1000);
-        // }
-        // idxRaw++;
-        // if (idxRaw == MAX_RAW) idxRaw = 0;
-        // pthread_mutex_unlock(&mutex); // Unlock the raw values
         i += frame[i+1] + 2;
     }
     return NULL;
@@ -171,6 +153,7 @@ void runSniffer(){
     while(1) {
         rx_bytes = recvmsg(eth.socket, &msg_hdr, 0);
         if (rx_bytes) {
+                
             memcpy(frameCaptured[idxThreads], eth.rx_buffer, rx_bytes); // Copy the packet to the buffer
             thread_pool_submit(&pool, processPacket, &frameCaptured[idxThreads][0], rx_bytes);
             idxThreads++;
@@ -201,7 +184,14 @@ int main(int argc, char *argv[]){
     signal(SIGTERM, cleanup);
 
     // Initialize the Thread Pool
-    thread_pool_init(&pool, 4,5);
+    // thread_pool_init(&pool, 4,5);
+    
+    thread_pool_init(&pool, 1,5);
+
+    frameCaptured = (uint8_t**)malloc((pool.task_queue->numTasks + 2)*sizeof(uint8_t));
+    for (int i = 0; i < pool.task_queue->numTasks + 2; i++){
+        frameCaptured[i] = (uint8_t*)malloc(4096*sizeof(uint8_t));
+    }
 
     // Initialize the Ethernet Socket
     eth.fanout_grp = 2;
@@ -223,9 +213,11 @@ int main(int argc, char *argv[]){
     // addSampledValue(0, "TRTC", 60, 80);
     sampledValues = openSampledValue(1);
 
-    // printf("%s \n", sampledValues[0].svId);
-    // printf("%d \n", sampledValues[0].snifferValues[0]);
-    // sampledValues[0].snifferValues[0] = 0;
+    uint8_t nSVdetected = 0;
+    for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
+        if (sampledValues[i].initialized) nSVdetected++;
+    }
+    printf("Number of Sampled Values detected: %d\n", nSVdetected);
 
     // sleep(8);
 

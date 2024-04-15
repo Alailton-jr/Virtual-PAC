@@ -48,8 +48,12 @@ int main(int argc, uint8_t* argv[]){
     sv.numChanels = 8;
     sv.analyseData = qa;
 
+    // Debug
+    sv.cycledCaptured = 200;
 
     addSampledValue(0, &sv);
+    sv.svId[0] = 'A';
+    addSampledValue(1, &sv);
 
     return 0;
 }
