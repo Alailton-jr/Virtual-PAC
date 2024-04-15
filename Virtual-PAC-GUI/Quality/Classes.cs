@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Quality
 {
@@ -15,23 +18,57 @@ namespace Quality
         public class vQualityControl
         {
             public ServerConfig serverConfig { get; set; }
-            public SocketConnection socketConnection { get; set; }
+            public SocketConnection socket { get; set; }
             public List<SampledValue> sampledValues { get; set; }
             
             public vQualityControl()
             {
                 this.serverConfig = new ServerConfig();
-                this.socketConnection = new SocketConnection();
+                this.socket = new SocketConnection();
             }
             
+            public void saveConfig()
+            {
+                try
+                {
+                    string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+                    string filePath = "vQuality_data.dat";
+                    File.WriteAllText(filePath, json);
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+
+            public void loadConfig()
+            {
+                try
+                {
+                    string filePath = "vQuality_data.dat";
+                    string fileData = File.ReadAllText(filePath);
+                    vQualityControl control = JsonConvert.DeserializeObject<vQualityControl>(fileData);
+                    this.serverConfig = control.serverConfig;
+                    this.socket = control.socket;
+                    this.sampledValues = control.sampledValues;
+                }
+                catch (Exception)
+                {
+                    this.serverConfig = new ServerConfig();
+                    this.socket = new SocketConnection();
+                    this.sampledValues = new List<SampledValue>();
+                }
+            }
+
             public string CreateYamlSampledValue()
             {
                 if (sampledValues == null) return null;
                 if (sampledValues.Count == 0) return null;
                 YamlSampledValue.YamlRoot yamlRoot = new YamlSampledValue.YamlRoot();
                 yamlRoot.SampledValues = new YamlSampledValue.SampledValue[sampledValues.Count];
-                for(int i=0;i< sampledValues.Count; i++)
-                {
+                for (int i = 0; i < sampledValues.Count; i++)
+                { 
+                    yamlRoot.SampledValues[i] = new YamlSampledValue.SampledValue();
                     yamlRoot.SampledValues[i].overVoltage = new YamlSampledValue.QualityEvent()
                     {
                         bottomThreshold = sampledValues[i].overVoltage.bottomThreshold,
@@ -75,11 +112,13 @@ namespace Quality
                         minDuration = sampledValues[i].sustainedinterruption.minDuration
                     };
                     yamlRoot.SampledValues[i].SVID = sampledValues[i].SVID;
-                    yamlRoot.SampledValues[i].macSrc = sampledValues[i].macSrc;
+                    yamlRoot.SampledValues[i].macSrc = sampledValues[i].macDst;
                     yamlRoot.SampledValues[i].frequency = sampledValues[i].frequency;
                     yamlRoot.SampledValues[i].smpRate = sampledValues[i].smpRate;
                     yamlRoot.SampledValues[i].noAsdu = sampledValues[i].noAsdu;
                     yamlRoot.SampledValues[i].noChannels = sampledValues[i].noChannels;
+                    yamlRoot.SampledValues[i].nominalCurrent = sampledValues[i].nominalCurrent;
+                    yamlRoot.SampledValues[i].nominalVoltage = sampledValues[i].nominalVoltage;
                 }
 
                 var serializer = new SerializerBuilder().Build();
@@ -100,7 +139,7 @@ namespace Quality
                     SampledValue sv = new SampledValue()
                     {
                         SVID = item.SVID,
-                        macSrc = item.macSrc,
+                        macDst = item.macSrc,
                         frequency = item.frequency,
                         smpRate = item.smpRate,
                         noAsdu = item.noAsdu,
@@ -186,15 +225,50 @@ namespace Quality
             private Socket clientSocket;
             public string serverIp;
             public int serverPort;
-            private bool isConnected;
+            private bool _isConnected;
+            public bool isConnected
+            {
+                get { return _isConnected; }
+                set
+                {
+                    if (value != _isConnected)
+                    {
+                        if (value == false) HandleConnectionLost();
+                        else HandleConnectionEstablished();
+                        _isConnected = value;
+                    }
+                }
+            }
+            private Mutex _mutex;
 
             public event EventHandler ConnectionLost;
+            public event EventHandler ConnectionEstablished;
 
             public SocketConnection()
             {
                 this.serverIp = "0.0.0.0";
                 this.serverPort = 8000;
                 isConnected = false;
+                _mutex = new Mutex();
+            }
+
+            public void IsSocketConnected()
+            {
+                try
+                {
+                    if (clientSocket == null) Connect();
+                    if (clientSocket.Connected)
+                    {
+                        this.isConnected = !(clientSocket.Poll(1, SelectMode.SelectRead) && clientSocket.Available == 0);
+                    }
+                    else
+                    {
+                        this.isConnected = clientSocket.Connected;
+                    }
+                    
+                }
+                catch (SocketException) { this.isConnected = false; }
+                catch (Exception) { this.isConnected = false; }
             }
 
             public void changeConProperties(string ip, int port)
@@ -220,7 +294,6 @@ namespace Quality
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show($"Failed to connect: {ex.Message}");
                     isConnected = false;
                     return false;
                 }
@@ -237,8 +310,12 @@ namespace Quality
 
             private void HandleConnectionLost()
             {
-                isConnected = false;
                 ConnectionLost?.Invoke(this, EventArgs.Empty);
+            }
+
+            private void HandleConnectionEstablished()
+            {
+                ConnectionEstablished?.Invoke(this, EventArgs.Empty);
             }
 
             public void Disconnect()
@@ -250,27 +327,26 @@ namespace Quality
                 }
             }
 
-            public string SendData(string Entry, string Data)
+            public string? SendData(string Entry, string Data)
             {
+                IsSocketConnected();
+
                 if (!isConnected)
-                    if (!Connect())
-                    {
-                        HandleConnectionLost();
+                    if (!Connect()) 
                         return null;
-                    }
+                _mutex.WaitOne();
                 try
                 {
                     Dictionary<string, string> data = new Dictionary<string, string>()
-                {
-                    {"entry", Entry },
-                    {"data", Data }
-                };
+                    {
+                        {"entry", Entry },
+                        {"data", Data }
+                    };
 
                     string jsonData = JsonConvert.SerializeObject(data);
 
                     byte[] yamlBytes = Encoding.ASCII.GetBytes(jsonData);
                     byte[] buffer = new byte[1024 * 8];
-
                     clientSocket.Send(yamlBytes);
                     int bytesRead = clientSocket.Receive(buffer);
                     if (bytesRead > 0)
@@ -281,15 +357,20 @@ namespace Quality
                     else
                         return null;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    HandleConnectionLost();
+                    IsSocketConnected();
                     return null;
+                }
+                finally
+                {
+                    _mutex.ReleaseMutex();
                 }
             }
 
             public string SendFile(string filePath)
             {
+
                 // Load the file to send
                 byte[] fileData = File.ReadAllBytes(filePath);
                 string fileName = Path.GetFileName(filePath);
@@ -314,29 +395,162 @@ namespace Quality
                 else
                     return null;
             }
+
+            public byte[]? ReceiveFile(string Entry, string Data)
+            {
+                IsSocketConnected();
+
+                if (!isConnected)
+                    if (!Connect())
+                        return null;
+                _mutex.WaitOne();
+                try
+                {
+                    Dictionary<string, string> data = new Dictionary<string, string>()
+                    {
+                        {"entry", Entry },
+                        {"data", Data }
+                    };
+                    string jsonData = JsonConvert.SerializeObject(data);
+                    byte[] yamlBytes = Encoding.ASCII.GetBytes(jsonData);
+                    byte[] buffer = new byte[1024 * 8];
+                    clientSocket.Send(yamlBytes);
+
+                    // Receive the length of the file data (4 bytes)
+                    byte[] lengthBytes = new byte[8];
+                    clientSocket.Receive(lengthBytes);
+                    int fileLength = BitConverter.ToInt32(lengthBytes, 0);
+
+                    // Receive the file data
+                    byte[] fileData = new byte[fileLength];
+                    int totalBytesReceived = 0;
+                    while (totalBytesReceived < fileLength)
+                    {
+                        int bytesReceived = clientSocket.Receive(fileData, totalBytesReceived, fileLength - totalBytesReceived, SocketFlags.None);
+                        if (bytesReceived == 0)
+                            throw new Exception("Connection closed prematurely while receiving file data.");
+                        totalBytesReceived += bytesReceived;
+                    }
+                    return fileData;
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    return null;
+                }
+                finally
+                {
+                    _mutex.ReleaseMutex();
+                }
+            }
         }
 
         public class SampledValue
         {
             public string SVID { get; set; }
+            public string macDst { get; set; }
             public string macSrc { get; set; }
             public int frequency { get; set; }
             public int smpRate { get; set; }
             public int noAsdu { get; set; }
             public int noChannels { get; set; }
+            public bool running { get; set; }
+            public int vLANID { get; set; }
+            public int vLANPriority { get; set; }
+            public int nominalVoltage { get; set; }
+            public int nominalCurrent { get; set; }    
             public QualityEvent sag { get; set; }
             public QualityEvent swell { get; set; }
             public QualityEvent interruption { get; set; }
             public QualityEvent overVoltage { get; set; }
             public QualityEvent underVoltage { get; set; }
             public QualityEvent sustainedinterruption { get; set; }
+
+            public SampledValue()
+            {
+                this.sag = new QualityEvent()
+                {
+                    bottomThreshold = 0.1,
+                    topThreshold = 0.9,
+                    minDuration = 0.01,
+                    maxDuration = 60
+                };
+                this.swell = new QualityEvent()
+                {
+                    bottomThreshold = 1.1,
+                    topThreshold = 1.9,
+                    minDuration = 0.01,
+                    maxDuration = 60
+                };
+                this.interruption = new QualityEvent()
+                {
+                    bottomThreshold = 0,
+                    topThreshold = 0.1,
+                    minDuration = 0.01,
+                    maxDuration = 60
+                };
+                this.overVoltage = new QualityEvent()
+                {
+                    bottomThreshold = 1.1,
+                    topThreshold = 1.5,
+                    minDuration = 60,
+                    maxDuration = 180
+                };
+                this.underVoltage = new QualityEvent()
+                {
+                    bottomThreshold = 0.1,
+                    topThreshold = 0.9,
+                    minDuration = 60,
+                    maxDuration = 180
+                };
+                this.sustainedinterruption = new QualityEvent()
+                {
+                    bottomThreshold = 0,
+                    topThreshold = 0.1,
+                    minDuration = 60,
+                    maxDuration = 180
+                };
+            }
+            
             public class QualityEvent
             {
                 public bool flag;
+
                 public double topThreshold { get; set; }
                 public double bottomThreshold { get; set; }
                 public double minDuration { get; set; }
                 public double maxDuration { get; set; }
+
+                public List<RegisteredEvents> RegisteredEvents { get; set; }
+
+                public QualityEvent()
+                {
+                    this.flag = false;
+                    this.topThreshold = 0;
+                    this.bottomThreshold = 0;
+                    this.minDuration = 0;
+                    this.maxDuration = 0;
+                    this.RegisteredEvents = new List<RegisteredEvents>();
+                }
+            }
+
+            public class RegisteredEvents
+            {
+                public DateTime date { get; set; }
+                public string name { get; set; }
+                public double magnitude { get; set; }
+                public double duration { get; set; }
+                public EventTypes eventType { get; set; }
+            }
+            
+            public enum EventTypes
+            {
+                sag,
+                swell,
+                interruption,
+                overVoltage,
+                underVoltage,
+                sustainedinterruption
             }
         }
 
@@ -354,6 +568,8 @@ namespace Quality
                 public int smpRate { get; set; }
                 public int noAsdu { get; set; }
                 public int noChannels { get; set; }
+                public int nominalVoltage { get; set; }
+                public int nominalCurrent { get; set; }
                 public QualityEvent sag { get; set; }
                 public QualityEvent swell { get; set; }
                 public QualityEvent interruption { get; set; }
@@ -367,6 +583,28 @@ namespace Quality
                 public double bottomThreshold { get; set; }
                 public double minDuration { get; set; }
                 public double maxDuration { get; set; }
+            }
+        }
+
+        public class YamlSnifferData
+        {
+            public class YamlRoot
+            {
+                public int nSV { get; set; }
+                public List<SvData> svData { get; set; }
+            }
+            public class SvData
+            {
+                public string svID { get; set; }
+                public double MeanTime { get; set; }
+                public int nPackets { get; set; }
+                public int nAsdu { get; set; }
+                public string macSrc { get; set; }
+                public string macDst { get; set; }
+                public int vLanId { get; set; }
+                public int vLanPriority { get; set; }
+                public int appID { get; set; }
+                public int nChannels { get; set; }
             }
         }
 
@@ -390,6 +628,39 @@ namespace Quality
                     return true;
             }
             return false;
+        }
+
+        public static bool validateDouble(string doubleString, double? min = null, double? max = null)
+        {
+            double parsedDouble;
+            if (double.TryParse(doubleString, out parsedDouble))
+            {
+                if ((min == null || parsedDouble >= min) && (max == null || parsedDouble <= max))
+                    return true;
+            }
+            return false;
+        }
+
+        public static int changeInt(string intString, int ExtValue, int? min = null, int? max = null)
+        {
+            int parsedInt;
+            if (int.TryParse(intString, out parsedInt))
+            {
+                if ((min == null || parsedInt >= min) && (max == null || parsedInt <= max))
+                    return parsedInt;
+            }
+            return ExtValue;
+        }
+
+        public static double changeDouble(string doubleString, double ExtValue, double? min = null, double? max = null)
+        {
+            double parsedDouble;
+            if (double.TryParse(doubleString, out parsedDouble))
+            {
+                if ((min == null || parsedDouble >= min) && (max == null || parsedDouble <= max))
+                    return parsedDouble;
+            }
+            return ExtValue;
         }
 
     }

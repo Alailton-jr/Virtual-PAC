@@ -112,12 +112,17 @@ C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
 C:\Users\ALAILTON\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.sourcelink.json
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.Up2Date
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.exe
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.deps.json
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.runtimeconfig.json
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\TestSet.pdb
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\WindowsInput.dll
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\OxyPlot.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\OxyPlot.WindowsForms.dll
@@ -131,6 +136,7 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Properties.Resources.resources
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.Sequencer.resources
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.SequencerResults.resources
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.GenerateResource.cache
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.AssemblyInfoInputs.cache
@@ -143,9 +149,3 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.pdb
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.genruntimeconfig.cache
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\ref\TestSet.dll
-C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
-C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
-C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\bin\Debug\net6.0-windows\MathNet.Numerics.dll
-C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.TransientForm.resources
-C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.sourcelink.json
-C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\TestSet\obj\Debug\net6.0-windows\TestSet.csproj.Up2Date

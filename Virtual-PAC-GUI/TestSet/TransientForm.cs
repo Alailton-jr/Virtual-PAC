@@ -18,7 +18,7 @@ namespace TestSet
         private List<ComboBox> comboBoxes;
         private List<CheckBox> checkBoxList;
         private List<string> cbOptions;
-        private bool running = false;   
+        private bool running = false;
 
 
         public TransientForm()
@@ -344,7 +344,7 @@ namespace TestSet
                 if (!config.LoadDataFromFile(filePath)) MessageBox.Show("Error: Could not read file from disk. Original error: ");
                 UpdateFields();
             }
-            
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -399,7 +399,7 @@ namespace TestSet
                         return;
                     }
                     List<string> fileSent = new List<string>();
-                    for(int i=0; i<main.transientConfig.Count; i++)
+                    for (int i = 0; i < main.transientConfig.Count; i++)
                     {
                         if (fileSent.Contains(main.transientConfig[i].fileName)) continue;
                         res = main.serverCon.SendData("receiveTransientFiles", "Hello");
@@ -437,6 +437,14 @@ namespace TestSet
                 }
                 BtnStart.Text = "Start";
                 running = false;
+            }
+        }
+
+        private void CbxLoop_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (var tconfig in main.transientConfig)
+            {
+                tconfig.loop = CbxLoop.Checked;
             }
         }
     }

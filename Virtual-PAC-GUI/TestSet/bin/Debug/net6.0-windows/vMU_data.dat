@@ -1,17 +1,17 @@
 {
-  "numSV": 2,
+  "numSV": 1,
   "networkConfig": [
     {
       "svConfig": {
         "frequency": 60,
         "svId": "TRTC",
         "vLan": 100,
-        "vLanPriority": 4,
+        "vLanPriority": 7,
         "appId": 4800,
-        "noAsdu": 1,
+        "noAsdu": 8,
         "macSrc": "01:0C:CD:01:00:00",
         "confRev": 1,
-        "smpRate": 80
+        "smpRate": 256
       },
       "goConfig": {
         "controlRef": "GOOSE",
@@ -20,28 +20,6 @@
         "vLanPriority": 4,
         "appId": 4800,
         "macSrc": "01:0C:CD:04:00:00",
-        "confRev": 1
-      }
-    },
-    {
-      "svConfig": {
-        "frequency": 60,
-        "svId": "SV_1",
-        "vLan": 100,
-        "vLanPriority": 4,
-        "appId": 4800,
-        "noAsdu": 1,
-        "macSrc": "01:0C:CD:01:00:01",
-        "confRev": 1,
-        "smpRate": 80
-      },
-      "goConfig": {
-        "controlRef": "GOOSE",
-        "goId": "GOOSE_1",
-        "vLan": 100,
-        "vLanPriority": 4,
-        "appId": 4800,
-        "macSrc": "01:0C:CD:04:00:01",
         "confRev": 1
       }
     }
@@ -153,235 +131,6 @@
           "Mod": 0.0,
           "Ang": 0.0
         },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        },
-        {
-          "Mod": 0.0,
-          "Ang": 0.0
-        }
-      ]
-    },
-    {
-      "values": null,
-      "data": [
         {
           "Mod": 0.0,
           "Ang": 0.0
@@ -937,35 +686,21 @@
           }
         ]
       }
-    ],
-    []
+    ]
   ],
   "transientConfig": [
     {
-      "fileName": "",
+      "fileName": "C:\\Users\\alail\\OneDrive\\Área de Trabalho\\simulation_01.out",
+      "loop": true,
       "nData": 9,
       "setup": [
+        0,
+        1,
+        2,
         -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
-      ]
-    },
-    {
-      "fileName": "",
-      "nData": 9,
-      "setup": [
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        3,
+        4,
+        5,
         -1
       ]
     }

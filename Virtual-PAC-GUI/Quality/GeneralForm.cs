@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Quality.Classes;
+using static Quality.MainForm;
 
 namespace Quality
 {
@@ -15,12 +16,23 @@ namespace Quality
     {
 
         private ServerConfig config;
+        private SocketConnection mySocket;
 
         public GeneralForm()
         {
             InitializeComponent();
-            config = MainForm.mainControl.serverConfig;
+            config = mainControl.serverConfig;
+            mySocket = mainControl.socket;
             fillFields();
+
+            mySocket.ConnectionEstablished += (sender, e) =>
+            {
+                BtnConnect.Text = "Desconectar";
+            };
+            mySocket.ConnectionLost += (sender, e) =>
+            {
+                BtnConnect.Text = "Conectar";
+            };
         }
 
         private void fillFields()
@@ -31,5 +43,27 @@ namespace Quality
             TbPort.Text = config.port;
         }
 
+        private void BtnConnect_Click(object sender, EventArgs e)
+        {
+            mySocket.changeConProperties(config.ipAddress, int.Parse(config.port));
+            if (mySocket.Connect())
+            {
+                if (!mySocket.isConnected)
+                    MessageBox.Show("Não foi possível connectar com o Virtual Qualimetro");
+            }
+            else
+            {
+                MessageBox.Show("Não foi possível connectar com o Virtual Qualimetro");
+            }
+        }
+
+        private void TbUser_TextChanged(object sender, EventArgs e)
+        {
+            config.user = TbUser.Text;
+            config.password = TbPassword.Text;
+            config.ipAddress = TbIpAddress.Text;
+            config.port = TbPort.Text;
+            fillFields();
+        }
     }
 }

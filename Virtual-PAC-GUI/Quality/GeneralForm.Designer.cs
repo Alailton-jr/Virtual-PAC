@@ -61,6 +61,7 @@
             TbUser.Size = new Size(316, 31);
             TbUser.TabIndex = 19;
             TbUser.TextAlign = HorizontalAlignment.Center;
+            TbUser.Validated += TbUser_TextChanged;
             // 
             // label9
             // 
@@ -156,6 +157,7 @@
             TbPort.Size = new Size(316, 31);
             TbPort.TabIndex = 25;
             TbPort.TextAlign = HorizontalAlignment.Center;
+            TbPort.Validated += TbUser_TextChanged;
             // 
             // TbIpAddress
             // 
@@ -170,6 +172,7 @@
             TbIpAddress.Size = new Size(316, 31);
             TbIpAddress.TabIndex = 24;
             TbIpAddress.TextAlign = HorizontalAlignment.Center;
+            TbIpAddress.Validated += TbUser_TextChanged;
             // 
             // TbPassword
             // 
@@ -184,6 +187,7 @@
             TbPassword.Size = new Size(316, 31);
             TbPassword.TabIndex = 23;
             TbPassword.TextAlign = HorizontalAlignment.Center;
+            TbPassword.Validated += TbUser_TextChanged;
             // 
             // BtnConnect
             // 
@@ -197,6 +201,7 @@
             BtnConnect.TabIndex = 25;
             BtnConnect.Text = "Conectar com Servidor";
             BtnConnect.UseVisualStyleBackColor = true;
+            BtnConnect.Click += BtnConnect_Click;
             // 
             // label4
             // 
@@ -257,7 +262,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1052, 597);
+            panel2.Size = new Size(1068, 636);
             panel2.TabIndex = 30;
             // 
             // GeneralForm
@@ -265,7 +270,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 58, 73);
-            ClientSize = new Size(1052, 597);
+            ClientSize = new Size(1068, 636);
             Controls.Add(panel2);
             ForeColor = Color.Lavender;
             FormBorderStyle = FormBorderStyle.None;

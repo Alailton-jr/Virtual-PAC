@@ -10,16 +10,35 @@ namespace Quality
         private Form activeForm = null;
         private GeneralForm generalForm;
         private SnifferForm snifferForm;
+        private MonitorForm monitorForm;
         public static vQualityControl mainControl;
+
 
         public MainForm()
         {
             CultureInfo culture = new CultureInfo("en-US");
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             InitializeComponent();
+
             mainControl = new vQualityControl();
+            mainControl.loadConfig();
             generalForm = new GeneralForm();
             snifferForm = new SnifferForm();
+            monitorForm = new MonitorForm();
+
+            mainControl.socket.ConnectionEstablished += (sender, e) =>
+            {
+                LbConStatus.Text = "Conectado";
+                LbConStatus.ForeColor = System.Drawing.Color.Green;
+                TimerServerCon.Start();
+            };
+            mainControl.socket.ConnectionLost += (sender, e) =>
+            {
+                LbConStatus.Text = "Desconectado";
+                LbConStatus.ForeColor = System.Drawing.Color.Red;
+                TimerServerCon.Stop();
+            };
+
         }
 
         #region Windows Config
@@ -85,6 +104,22 @@ namespace Quality
         private void BtnSniffer_Click(object sender, EventArgs e)
         {
             openChildForm(snifferForm);
+        }
+
+        private void BtnMonitor_Click(object sender, EventArgs e)
+        {
+            openChildForm(monitorForm);
+            monitorForm.ExtReload();
+        }
+
+        private void TimerServerCon_Tick(object sender, EventArgs e)
+        {
+            mainControl.socket.IsSocketConnected();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            mainControl.saveConfig();
         }
     }
 }

@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Alailton\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Alailton\\.nuget\\packages"
+      "C:\\Users\\alail\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\alail\\.nuget\\packages"
     ],
     "configProperties": {
       "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true,
