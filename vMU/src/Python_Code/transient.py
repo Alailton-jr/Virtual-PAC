@@ -44,7 +44,7 @@ def prepareFrames(config:dict):
             smpRate= netConfig['smpRate'],
         )
 
-        data = np.genfromtxt(path.join(folderPath, fileName))
+        data = np.genfromtxt(path.join(folderPath, fileName), delimiter=',')
         data = data.T if data.shape[0] > data.shape[1] else data
         n_channels = config['Number of Channels'][i]
         n_asdu = netConfig['noAsdu']
@@ -56,13 +56,14 @@ def prepareFrames(config:dict):
         time = np.arange(0, time_file[-1], 1/pps)
         vec = np.zeros((n_channels, len(time)))
         for channel in channels:
-            inter = interp1d(time_file, data[channel[1]+1, :], kind='linear')
+            inter = interp1d(time_file, data[channel[1], :], kind='linear')
             vec[channel[0], :] = inter(time)
+            # print(channel[0], ' ', channel[1])
 
         # Debug
-        import matplotlib.pyplot as plt
-        plt.plot(vec[0,:])
-        plt.savefig(f'channel_{i+1}.png')
+        # import matplotlib.pyplot as plt
+        # plt.plot(vec[0,:])
+        # plt.savefig(f'channel_{i+1}.png')
 
         arr = vec.flatten(order='F').astype(np.int32)
 
@@ -82,6 +83,7 @@ def prepareFrames(config:dict):
             frameBase
         )
         memoryName.append(f'transientReplay_{i+1}')
+        # break
         # break
     return memoryName
 

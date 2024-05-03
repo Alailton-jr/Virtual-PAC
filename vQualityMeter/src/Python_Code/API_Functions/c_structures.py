@@ -1,3 +1,5 @@
+
+
 from ctypes import *
 
 # Constants
@@ -25,16 +27,17 @@ class QualityEvent_t(Structure):
         ("eventName", c_char * 40),#
         ("fileName", c_char * 512),
         ("duration", c_double),
-        ("fp", c_uint8 * 216),
+        ("fp", c_long),
     ]
 
 # Define QualityAnalyse_t struct
 class QualityAnalyse_t(Structure):
     _fields_ = [
-        ("phasor_polar", c_double * NUM_CHANNELS * MAX_HARMONIC * 2),
-        ("phasor_rect", c_double * NUM_CHANNELS * MAX_HARMONIC * 2),
+        ("phasor_polar", c_double * 2 * MAX_HARMONIC * NUM_CHANNELS),
+        ("phasor_rect", c_double * 2 * MAX_HARMONIC * NUM_CHANNELS),
         ("symmetrical", c_double * 2 * 3 * 2),
         ("unbalance", c_double * 2),
+        ("rms", c_double * NUM_CHANNELS),
         ("sag", QualityEvent_t),
         ("swell", QualityEvent_t),
         ("interruption", QualityEvent_t),
@@ -53,11 +56,12 @@ class sampledValue_t(Structure):
         ("numChannels", c_uint8),
         ("snifferArr", POINTER(c_int32) * FREQUENCY * NUM_CHANNELS),
         ("analyseArr", POINTER(c_int32) * FREQUENCY * NUM_CHANNELS),
-        ("rms", c_double * NUM_CHANNELS),
         ("analyseData", QualityAnalyse_t),
         ("idxCycle", c_int32),
         ("idxBuffer", c_int32),
         ("idxProcessedBuffer", c_int32),
         ("idxProcessedCycle", c_int32),
-        ("cycledCaptured", c_int64)
+        ("cycledCaptured", c_int64),
+        ("nPackets", c_uint32),
+        ("found", c_uint8)
     ]

@@ -35,6 +35,7 @@ typedef struct {
     double imag;
 } complex;
 #include <signal.h>
+#include <unistd.h>
 
 
 // sampledValue.h

@@ -7,6 +7,7 @@ ThreadPool pool; // Thread pool
 eth_t eth; // Ethernet socket structure
 sampledValue_t* sampledValues; // Array of sampled values
 
+double meanTime[MAX_SAMPLED_VALUES];
 
 // Packet Processing
 int idxThreads = 0;
@@ -36,7 +37,24 @@ void saveArray(sampledValue_t* sv){
     cleanup(0);
 }
 
+void* watchDogSv(){
+    while(1){
+        for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
+            if (sampledValues[i].initialized){
+                if (sampledValues[i].nPackets == 0){
+                    sampledValues[i].found = 0;
+                }else{
+                    sampledValues[i].nPackets = 0;
+                    sampledValues[i].found = 1;
+                }
+            }
+        }
+        usleep(1000000);
+    }
+}
+
 void* processPacket(uint8_t* frame, int32_t size){
+    // return NULL;
 
     // uint8_t* frame = (uint8_t *) args;
     
@@ -98,6 +116,7 @@ void* processPacket(uint8_t* frame, int32_t size){
                         char* debug = sampledValues[idx].svId;
                         if (memcmp(sampledValues[idx].svId, &frame[i+2], frame[i+1]) == 0){
                             svIdx = idx;
+                            sampledValues[svIdx].nPackets++;
                             break;
                         }
                     } 
@@ -112,9 +131,14 @@ void* processPacket(uint8_t* frame, int32_t size){
         
         while (j < frame[i+1]) // Decode the raw values
         {
+            if (j > 8*sampledValues[svIdx].numChanels) return NULL;
             sampledValues[svIdx].snifferArr[j/8][sampledValues[svIdx].idxBuffer][sampledValues[svIdx].idxCycle] = (int32_t)((frame[i+5+j]) | (frame[i+4+j]*256) | (frame[i+3+j]*65536) | (frame[i+2+j]*16777216));
             j += 8;
         }
+        // if (sampledValues[svIdx].idxBuffer == 0 && sampledValues[svIdx].idxCycle == 0){
+        //     clock_gettime(0, &sampledValues[svIdx].t0);
+        // }
+
         sampledValues[svIdx].idxCycle++;
         if (sampledValues[svIdx].idxCycle >= sampledValues[svIdx].smpRate) {
             sampledValues[svIdx].idxCycle = 0;
@@ -122,6 +146,8 @@ void* processPacket(uint8_t* frame, int32_t size){
             sampledValues[svIdx].cycledCaptured++;
             if (sampledValues[svIdx].idxBuffer >= sampledValues[svIdx].freq) {
                 sampledValues[svIdx].idxBuffer = 0;
+                // clock_gettime(0, &sampledValues[svIdx].t1);
+                // sampledValues[svIdx].meanTime = sampledValues[svIdx].nPackets/((sampledValues[svIdx].t1.tv_sec - sampledValues[svIdx].t0.tv_sec) + (sampledValues[svIdx].t1.tv_nsec - sampledValues[svIdx].t0.tv_nsec)/1e9)*1e6;
             }
         }
         
@@ -131,7 +157,6 @@ void* processPacket(uint8_t* frame, int32_t size){
 }
 
 void runSniffer(){
-
     int32_t rx_bytes = 0;
     struct msghdr msg_hdr;
     struct iovec iov;
@@ -166,22 +191,28 @@ void cleanup(int signum){
     printf("Leaving Sniffer...\n");
     socketCleanup(&eth);
     thread_pool_destroy(&pool);
-    
     exit(0);
 }
 
+void sigsegv_handler(int signum) {
+    FILE *log_file = fopen("segfault.log", "a");
+    if (log_file != NULL) {
+        fprintf(log_file, "Segmentation fault occurred at Sniffer\n");
+        fclose(log_file);
+    }
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char *argv[]){
-    // pthread_mutex_init(&mutex, NULL);
 
     if (argc != 2) return -1;
-
-    // deleteSampledValueMemory();
 
     printf("Running Sniffer!\n");
 
     // External Close up signals
     signal(SIGINT, cleanup);
     signal(SIGTERM, cleanup);
+    signal(SIGSEGV, sigsegv_handler);
 
     // Initialize the Thread Pool
     // thread_pool_init(&pool, 4,5);
@@ -201,29 +232,24 @@ int main(int argc, char *argv[]){
         thread_pool_destroy(&pool);
         return -1;
     }
-
-    // Initialize the Shared Memory
-    // shm_setup_s shm_sampledValue = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
-    // if (shm_sampledValue.ptr == NULL){
-    //     shm_sampledValue = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
-    // }
-    // sampledValues = (sampledValue_t *)shm_sampledValue.ptr;
-
     
-    // addSampledValue(0, "TRTC", 60, 80);
     sampledValues = openSampledValue(1);
 
     uint8_t nSVdetected = 0;
     for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
-        if (sampledValues[i].initialized) nSVdetected++;
+        if (sampledValues[i].initialized){
+            nSVdetected++;
+        }
     }
+    
+
+    pthread_t watchDogThread;
+    pthread_create(&watchDogThread, NULL, watchDogSv, NULL);
+
+    printf("Running Quality Sniffer: \n");
     printf("Number of Sampled Values detected: %d\n", nSVdetected);
-
-    // sleep(8);
-
     runSniffer();
 
-    printf("hello World!");
 
     cleanup(0);
     return 0;

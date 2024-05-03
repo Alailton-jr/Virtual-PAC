@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include <time.h>
 
+#include "sampledValue.h"
+
 typedef struct{
     int32_t *arr;
     int32_t size;
@@ -29,9 +31,29 @@ void cleanup(int sig){
 int main(int argc, char *argv[]){
 
 
-    printf("%lu\n", sizeof(struct timespec));
+// EventType_t:  896
+// QualityAnalyse_t:  15792
+// SampleValue_t:  23640
+
+
+    sampledValue_t* sv = openSampledValue(0);
+
+    sv[0].analyseData.phasor_polar[7][0][0] = 2.0;
+    sv[0].analyseData.phasor_polar[7][0][1] = 4.0;
+    printf("%f\n", sv[0].analyseData.phasor_polar[0][0][0]);
+
+    FILE *fp;
+
+    printf("%lu\n", sizeof(QualityEvent_t));
+    printf("%lu\n", sizeof(QualityAnalyse_t));
+    printf("%lu\n", sizeof(sampledValue_t));
+
+    printf("%lu\n", sizeof(fp));
     
-    printf("%lu\n", sizeof(FILE)/sizeof(uint8_t));
+
+    // printf("%lu\n", sizeof(struct timespec));
+    
+    // printf("%lu\n", sizeof(FILE)/sizeof(uint8_t));
 
     return 0;
 

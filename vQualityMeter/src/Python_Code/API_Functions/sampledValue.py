@@ -1,6 +1,6 @@
 #!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
 
-from . import os, sys, ctypes, openSvMemory, addSampledValue, QualityEvent_t, QualityAnalyse_t, sampledValue_t
+from . import os, sys, ctypes, openSvMemory, addSampledValue, QualityEvent_t, QualityAnalyse_t, sampledValue_t, MAX_HARMONIC, NUM_CHANNELS
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Add the path to the C_Build folder
 
@@ -32,22 +32,24 @@ class QualityEvent(object):
             bottomThreshold = cStruct.bottomThreshold,
             minDuration = cStruct.minDuration,
             maxDuration = cStruct.maxDuration,
+            eventName= cStruct.eventName.decode('utf-8')
         )
         newClass.flag = cStruct.flag
         return newClass
 
 class QualityAnalyse(object):
-    def __init__(self, sag:QualityEvent, swell:QualityEvent, interruption:QualityEvent, overVoltage:QualityEvent, underVoltage:QualityEvent, sustainedInterruption:QualityEvent) -> None:
+    def __init__(self, sag:QualityEvent, swell:QualityEvent, interruption:QualityEvent, overVoltage:QualityEvent, underVoltage:QualityEvent) -> None:
         self.phasor_polar = None
         self.phasor_rect = None
         self.symmetrical = None
         self.unbalance = None
+        self.rms = None
         self.sag = sag
         self.swell = swell
         self.interruption = interruption
         self.overVoltage = overVoltage
         self.underVoltage = underVoltage
-        self.sustainedInterruption = sustainedInterruption
+        self.sustainedInterruption = None
     
     def getCStruct(self) -> QualityAnalyse_t:
         sag = self.sag.getCStruct()
@@ -73,13 +75,15 @@ class QualityAnalyse(object):
             interruption = QualityEvent.loadFromCStruct(cStruct.interruption),
             overVoltage = QualityEvent.loadFromCStruct(cStruct.overVoltage),
             underVoltage = QualityEvent.loadFromCStruct(cStruct.underVoltage),
-            transient = QualityEvent.loadFromCStruct(cStruct.transient)
         )
-        newClass.phasor_polar = cStruct.phasor_polar,
-        newClass.phasor_rect = cStruct.phasor_rect,
-        newClass.symmetrical = cStruct.symmetrical,
-        newClass.unbalance = cStruct.unbalance,
+        newClass.rms = [x for x in cStruct.rms]
+        newClass.phasor_polar = [[[cStruct.phasor_polar[i][j][k] for k in range(2)] for j in range(40)] for i in range(8)]
+        newClass.phasor_rect = [[[cStruct.phasor_rect[i][j][k] for k in range(2)] for j in range(40)] for i in range(8)]
+        newClass.symmetrical = [[[cStruct.symmetrical[i][j][k] for k in range(2)] for j in range(3)] for i in range(2)]
+        newClass.unbalance = [x for x in cStruct.unbalance]
+        
         return newClass
+    
 
 class SampledValue(object):
     def __init__(self, svId:str, smpRate:int, freq:int, numChannels:int, idxCycle:int=0, idxBuffer:int=0, idxProcessedBuffer:int=0, idxProcessedCycle:int=0, cycledCaptured:int=0, initialized:int=0, analyseData:QualityAnalyse=None) -> None:
@@ -90,6 +94,7 @@ class SampledValue(object):
         self.numChannels = numChannels
         self.idxCycle = idxCycle
         self.idxBuffer = idxBuffer
+        self.found = None
         self.idxProcessedBuffer = idxProcessedBuffer
         self.idxProcessedCycle = idxProcessedCycle
         self.cycledCaptured = cycledCaptured
@@ -115,7 +120,7 @@ class SampledValue(object):
 
     @staticmethod
     def loadFromCStruct(cStruct:sampledValue_t):
-        return SampledValue(
+        newClass = SampledValue(
             svId = ctypes.string_at(cStruct.svId).decode('utf-8'),
             smpRate = cStruct.smpRate,
             freq = cStruct.freq,
@@ -128,24 +133,42 @@ class SampledValue(object):
             cycledCaptured = cStruct.cycledCaptured,
             analyseData = QualityAnalyse.loadFromCStruct(cStruct.analyseData)
         )
+        newClass.found = bool(cStruct.found)
+        return newClass
 
 class SampledValueControl(object):
     def __init__(self) -> None:
         self.shmPointer = None
-        self.shmCapsule = None
+        self.shmOpenned = False
+        self.svIds = [None]*20
 
     def openShm(self,):
-        self.shmCapsule, self.shmPointer = openSvMemory()
+        self.shmPointer = openSvMemory()
+        self.shmOpenned = True
 
-    def getSvData(self, svIdx:int) -> SampledValue:
+    def getSvData(self, svId) -> SampledValue:
+        # if type of svid is str find the idx in self.svIds
+        i_sv = None
+        if isinstance(svId, str):
+            i_sv = self.svIds.index(svId)
+        elif isinstance(svId, int):
+            i_sv = svId
+
+        if i_sv is None:
+            raise Exception("Invalid SVID")
+        
+        if not self.shmOpenned:
+            self.openShm()
         if self.shmPointer is None:
             raise Exception("Shared memory not opened")
         sv = ctypes.cast(self.shmPointer, ctypes.POINTER(sampledValue_t))
-        return SampledValue.loadFromCStruct(sv[svIdx])
+        return SampledValue.loadFromCStruct(sv[i_sv])
 
-    def addSampledValue(self, sv:sampledValue_t, svIdx:int):
+    def addSampledValue(self, sv:sampledValue_t, svId:str, svIdx:int):
+        if not self.shmOpenned:
+            self.openShm()
+        self.svIds[svIdx] = svId
         addSampledValue(ctypes.addressof(sv), svIdx)
-        pass
 
 if __name__ == '__main__':
     x = SampledValueControl()

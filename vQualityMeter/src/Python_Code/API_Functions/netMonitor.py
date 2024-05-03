@@ -1,5 +1,5 @@
 
-from . import loadYaml, os, fileFolder, SampledValue, QualityAnalyse, QualityEvent, addSampledValue, ctypes, subprocess, getIface, signal, send_signal_to_process, shutil, re
+from . import loadYaml, os, fileFolder, SampledValue, QualityAnalyse, QualityEvent, addSampledValue, ctypes, subprocess, getIface, signal, send_signal_to_process, shutil, re, openSvMemory, SampledValueControl, deleteSvShm
 
 netMonitorDir = os.path.join(fileFolder, '..', '..', 'C_Build')
 netMonitorSetupDir = os.path.join(fileFolder, '..', '..')
@@ -12,6 +12,8 @@ analyseEventsDir = os.path.join(netMonitorDir, 'files')
 snifferCommand = f'{snifferFile} {getIface()}'
 analyseCommand = f'{analyseFile}'
 
+svControl = SampledValueControl()
+
 def saveMonitorSetup(data:str):
     try:
         with open(netMonitorSetup, 'w') as file:
@@ -21,6 +23,7 @@ def saveMonitorSetup(data:str):
         return False
 
 def addMonitorSampledValue() -> bool:
+
     if not os.path.exists(netMonitorSetup):
         return False
     try:
@@ -69,21 +72,15 @@ def addMonitorSampledValue() -> bool:
                         minDuration = data["underVoltage"]["minDuration"],
                         maxDuration = data["underVoltage"]["maxDuration"],
                         eventName = "underVoltage"
-                    ),
-                    sustainedInterruption =  QualityEvent(
-                        topThreshold = data["sustainedinterruption"]["topThreshold"] * nomVoltage,
-                        bottomThreshold = data["sustainedinterruption"]["bottomThreshold"] * nomVoltage,
-                        minDuration = data["sustainedinterruption"]["minDuration"],
-                        maxDuration = data["sustainedinterruption"]["maxDuration"],
-                        eventName = "sustainedInterruption"
                     )
                 )
             )
             svStruct = sv.getCStruct()
-            addSampledValue(ctypes.addressof(svStruct), i_sv)
+            svControl.addSampledValue(svStruct, data["SVID"], i_sv)
             i_sv += 1
         return True
-    except:
+    except Exception as e:
+        print("An error occurred:", e)
         return False
 
 #region Run Scripts
@@ -109,6 +106,7 @@ def restartAnalyse():
     runAnalyse()
 
 def runMonitor(sniffer:bool = True, analyser:bool = True):
+    stopMonitor()
     if addMonitorSampledValue():
         if os.path.exists(analyseEventsDir):
             shutil.rmtree(analyseEventsDir)
@@ -117,12 +115,16 @@ def runMonitor(sniffer:bool = True, analyser:bool = True):
             runAnalyse()
         if sniffer:
             runSniffer()
+        svControl.shmOpenned = False
 
 def stopMonitor(sniffer:bool = True, analyser:bool = True):
     if analyser:
         stopAnalyse()
     if sniffer:
         stopSniffer()
+    deleteSvShm()
+
+#endregion
 
 information = {
     "Type": "",
@@ -176,8 +178,29 @@ def getAnalyseWaveForm(name:str):
                 return file.read()
     return None
 
+def getAnalyseSvInfo(svId:str):
+    sv = svControl.getSvData(svId)
+    qualityAnalyse = sv.analyseData
+    ret = {
+        "Flags":{
+            "Sag": qualityAnalyse.sag.flag,
+            "Swell": qualityAnalyse.swell.flag,
+            "interruption": qualityAnalyse.interruption.flag,
+            "OverVoltage": qualityAnalyse.overVoltage.flag,
+            "UnderVoltage": qualityAnalyse.underVoltage.flag
+        },
+        "Rms": qualityAnalyse.rms,
+        "Symmetrical": qualityAnalyse.symmetrical,
+        "Unbalance": qualityAnalyse.unbalance,
+        "Phasor": qualityAnalyse.phasor_polar,
+        "Found": sv.found
+    }
+    return ret
 
-#endregion
+    
+    
+
+
 
 
 

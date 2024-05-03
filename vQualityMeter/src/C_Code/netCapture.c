@@ -123,7 +123,6 @@ void* processPacket(uint8_t* frame, uint64_t size){
                     svCaptured[svIdx].meanTime = 0;
                     svCaptured[svIdx].nPackets = 0;
                     clock_gettime(0, &svCaptured[svIdx].t0);
-                    
                 }
                 pthread_mutex_unlock(&mutex);
             }

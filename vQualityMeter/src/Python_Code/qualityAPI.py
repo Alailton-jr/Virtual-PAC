@@ -6,6 +6,11 @@ from API_Functions import *
 
 QualityAPIDir = os.path.dirname(os.path.realpath(__file__))
 
+
+stopMonitor()
+stopNetworkCapture()
+deleteSvShm()
+
 class QualityAPI(object):
     def __init__(self):
         self.server_socket = None
@@ -16,7 +21,8 @@ class QualityAPI(object):
         if self.logFile:
             self.logFile.write(f'{datetime.datetime.now()} - {msg}\n')
         else:
-            self.logFile = open(os.path.join(QualityAPIDir, 'log.txt'), 'a')
+            self.logFile = open(os.path.join(QualityAPIDir, 'log.txt'), 'w')
+            self.logFile.write(f'{datetime.datetime.now()} - {msg}\n')
             
 
     def connect(self, ip:str, port:int) -> bool:
@@ -46,13 +52,19 @@ class QualityAPI(object):
     def sendFile(self, file:str):
         pass
 
-    def receiveFile(self):
-        pass
-
+    def receiveFile(self, clientSocket):
+        try:
+            # data = bytes()
+            # file_length = int.from_bytes(clientSocket.recv(8), byteorder='little')
+            # while 
+            return True
+        except Exception as ex:
+            print('Yaml Data: ', ex)
+            return False
     def clientHandler(self, clientSocket:socket.socket):
         try:
             while True:
-                data = clientSocket.recv(1024*4)
+                data = clientSocket.recv(1024*10)
                 if data:
                     info = json.loads(data)
                     if 'entry' not in info:
@@ -127,7 +139,9 @@ class QualityAPI(object):
                         if svId:
                             self.log(f"Getting Registered Events of {svId}")
                             data = getAnalyseEvents(svId)
-                            clientSocket.sendall(json.dumps(data).encode())
+                            jsonData = json.dumps(data).encode()
+                            clientSocket.sendall(len(jsonData).to_bytes(4, byteorder='little'))
+                            clientSocket.sendall(jsonData)
                         else:
                             self.log("Error: No Data")
                             clientSocket.sendall("error".encode())
@@ -143,11 +157,27 @@ class QualityAPI(object):
                                 clientSocket.sendall((0).to_bytes(4, byteorder='little'))
                         else:
                             clientSocket.sendall((0).to_bytes(4, byteorder='little'))
-
                     elif entry == 'netMonitorStart':
-                        pass
+                        self.log("Starting Monitor")
+                        runMonitor()
+                        clientSocket.sendall("success".encode())
+                    elif entry == 'netMonitorStop':
+                        self.log("Stopping Monitor")
+                        stopMonitor()
+                        clientSocket.sendall("success".encode())
+                    elif entry == 'getMonitorSvInfo':
+                        svId = info['data']
+                        if svId:
+                            self.log(f"Getting Monitor SV Info of {svId}")
+                            data = getAnalyseSvInfo(svId)
+                            data = json.dumps(data)
+                            clientSocket.sendall(len(data).to_bytes(4, byteorder='little'))
+                            clientSocket.sendall(data.encode())
+                        else:
+                            self.log("Error: No Data")
+                            clientSocket.sendall("error".encode())
 
-                    #end region
+                    #endregion
 
                     else:
                         self.log("Error: Invalid Entry")
@@ -158,9 +188,9 @@ class QualityAPI(object):
             print(f'Error: {e} ')
         finally:
             clientSocket.close()
+            stopMonitor()
+            stopNetworkCapture()
             
-
-
 if __name__ == '__main__':
     api = QualityAPI()
     api.connect(get_ip_address(), 8008)

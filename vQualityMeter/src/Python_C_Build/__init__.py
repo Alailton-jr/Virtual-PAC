@@ -1,8 +1,8 @@
 #!/root/Virtual-PAC/vQualityMeter/vEnv/bin/python3
 
-from .pyCFunctions import openSvMemory_c, addSampledValue_c
+from .pyCFunctions import openSvMemory_c, addSampledValue_c, getQualityAnalyseData_c, deleteSvShm_c
 
-all = ['openSvMemory', 'getPoint']
+all = ['openSvMemory', 'addSampledValue', 'getQualityAnalyseData', 'deleteAllSampledValues']
 
 def openSvMemory():
     '''
@@ -16,3 +16,14 @@ def addSampledValue(sv, svIdx):
     '''
     addSampledValue_c(sv, svIdx)
 
+def getQualityAnalyseData(svPtr:int, svId:int):
+    '''
+        Get the quality analyse data from the shared memory
+    '''
+    return getQualityAnalyseData_c(svPtr, svId)
+
+def deleteSvShm():
+    '''
+        Delete all sampled values from the shared memory
+    '''
+    deleteSvShm_c()

@@ -54,7 +54,7 @@ def ClientHandler(clientSocket):
     print("Server listening on", server_address)
     try:
         while True:
-            data = clientSocket.recv(1024*4)
+            data = clientSocket.recv(1024*8)
             if data:
                 info = json.loads(data)
                 if 'entry' not in info:

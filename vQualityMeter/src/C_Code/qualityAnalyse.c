@@ -7,6 +7,7 @@
 
 sampledValue_t* sv;
 uint16_t windowSize = 80/4;
+int smpGap = 2;
 
 double symCompMatrix[3][3][2] = {
     {{1/3,0}, {-0.5/3, 0.86602540378/3}, {-0.5/3, -0.86602540378/3}},
@@ -224,7 +225,27 @@ void threePhaseToSymComp(sampledValue_t *sv){
             sv->analyseData.symetrical[0][i][0] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j][1][0] - symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j][1][1];
             sv->analyseData.symetrical[0][i][1] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j][1][1] + symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j][1][0];
         }
+        sv->analyseData.symetrical[1][i][0] = 0;
+        sv->analyseData.symetrical[1][i][1] = 0;      
+        for (int j = 0; j < 3; j++){
+            sv->analyseData.symetrical[1][i][0] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j+4][1][0] - symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j+4][1][1];
+            sv->analyseData.symetrical[1][i][1] += symCompMatrix[i][j][0] * sv->analyseData.phasor_rect[j+4][1][1] + symCompMatrix[i][j][1] * sv->analyseData.phasor_rect[j+4][1][0];
+        }
+
+        double temp;
+        temp = sqrt(sv->analyseData.symetrical[0][i][0]*sv->analyseData.symetrical[0][i][0] + sv->analyseData.symetrical[0][i][1]*sv->analyseData.symetrical[0][i][1]);
+        sv->analyseData.symetrical[0][i][1] = atan2(sv->analyseData.symetrical[0][i][0], sv->analyseData.symetrical[0][i][1]);
+        sv->analyseData.symetrical[0][i][0] = temp;
+
+        temp = sqrt(sv->analyseData.symetrical[1][i][0]*sv->analyseData.symetrical[1][i][0] + sv->analyseData.symetrical[1][i][1]*sv->analyseData.symetrical[1][i][1]);
+        sv->analyseData.symetrical[1][i][1] = atan2(sv->analyseData.symetrical[1][i][0], sv->analyseData.symetrical[1][i][1]);
+        sv->analyseData.symetrical[1][i][0] = temp;
+
     }
+    
+
+    sv->analyseData.unbalance[0] = sv->analyseData.symetrical[0][2][0]/sv->analyseData.symetrical[0][1][0];
+    sv->analyseData.unbalance[1] = sv->analyseData.symetrical[1][2][0]/sv->analyseData.symetrical[1][1][0];
 }
 
 void VTCDAnalyse(sampledValue_t *sv, QualityEvent_t *event, uint16_t svIdx){
@@ -237,10 +258,10 @@ void VTCDAnalyse(sampledValue_t *sv, QualityEvent_t *event, uint16_t svIdx){
     uint8_t cn, flag = 0;
     for (cn = 4; cn < sv->numChanels-1;cn++){
         // Check if limits are violeted
-        if ( sv->rms[cn] < event->topThreshold && sv->rms[cn] > event->bottomThreshold ){
+        if ( sv->analyseData.rms[cn] < event->topThreshold && sv->analyseData.rms[cn] > event->bottomThreshold ){
             // Check if the event is already detected
-            if (sv->rms[cn] < event->minVal || event->minVal + 1 < 0.001)  event->minVal = sv->rms[cn];
-            if (sv->rms[cn] > event->maxVal || event->maxVal + 1 < 0.001)  event->maxVal = sv->rms[cn];
+            if (sv->analyseData.rms[cn] < event->minVal || event->minVal + 1 < 0.001)  event->minVal = sv->analyseData.rms[cn];
+            if (sv->analyseData.rms[cn] > event->maxVal || event->maxVal + 1 < 0.001)  event->maxVal = sv->analyseData.rms[cn];
             if (flag) continue;
             flag = 1;
             if (!event->flag){
@@ -263,7 +284,7 @@ void VTCDAnalyse(sampledValue_t *sv, QualityEvent_t *event, uint16_t svIdx){
             }
             else{
                 for (int channel = 0; channel < sv->numChanels; channel++){
-                    fprintf(event->fp, "%lf, ",sv->rms[channel]);
+                    fprintf(event->fp, "%lf, ",sv->analyseData.rms[channel]);
                 }
                 fprintf(event->fp, "\n");
             }
@@ -278,14 +299,14 @@ void VTCDAnalyse(sampledValue_t *sv, QualityEvent_t *event, uint16_t svIdx){
         if (event->posCycle < TEMP_BUFFER_RMS_SIZE){
             event->posCycle++;
             for (int channel = 0; channel < sv->numChanels; channel++){
-                fprintf(event->fp, "%lf, ",sv->rms[channel]);
+                fprintf(event->fp, "%lf, ",sv->analyseData.rms[channel]);
             }
             fprintf(event->fp, "\n");
         }else{
             for (int channel = 0; channel < sv->numChanels; channel++){
-                fprintf(event->fp, "%lf, ",sv->rms[channel]);
+                fprintf(event->fp, "%lf, ",sv->analyseData.rms[channel]);
             }
-            fprintf(event->fp, "\n", event->duration);
+            fprintf(event->fp, "\n");
             event->flag = 0;
             fclose(event->fp);
             if (event->duration < event->minDuration || event->duration > event->maxDuration){
@@ -301,12 +322,27 @@ void VTCDAnalyse(sampledValue_t *sv, QualityEvent_t *event, uint16_t svIdx){
     }
 }
 
+void transientAnalyse(sampledValue_t *sv, dwt_plan* dwt, uint16_t svIdx){
+
+    // int max[16] = 0;
+    // int max_idx[16] = -1; 
+    // for (int cn = 0; cn< sv->numChanels;cn++){
+    //     for (int i=0; i < sv->smpRate;i++){
+    //         if(dwt->cD[i] > max[cn]) {
+    //             max[cn] = dwt[cn].cD[i];
+    //             max_idx[cn] = i;
+    //         }
+    //     }
+    // }
+    return;
+}
+
 void runAnalyse(){
     int i, j, k, idx, idy, _idx, kj;
     uint8_t found;
     int svIdx, channel;
     int cycleAnalised = 1;
-    int idxBuffer, smpGap = 2;
+    int idxBuffer;
     
 
     int64_t sum;
@@ -410,7 +446,7 @@ void runAnalyse(){
             }
 
             for (channel = 0; channel < sv[svIdx].numChanels; channel++){
-                sv[svIdx].rms[channel] = 0;
+                sv[svIdx].analyseData.rms[channel] = 0;
                 for (i = 0; i < MAX_HARMONIC; i++){
                     sv[svIdx].analyseData.phasor_polar[channel][i][0] = sqrt(fft_output[svIdx][channel][i][0] * fft_output[svIdx][channel][i][0] + fft_output[svIdx][channel][i][1] * fft_output[svIdx][channel][i][1])/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
                     sv[svIdx].analyseData.phasor_polar[channel][i][1] = atan2(fft_output[svIdx][channel][i][1], fft_output[svIdx][channel][i][0]);
@@ -418,20 +454,13 @@ void runAnalyse(){
                     sv[svIdx].analyseData.phasor_rect[channel][i][0] = fft_output[svIdx][channel][i][0]/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
                     sv[svIdx].analyseData.phasor_rect[channel][i][1] = fft_output[svIdx][channel][i][1]/(cycleAnalised * sv[svIdx].smpRate) * 1.41421356;
 
-                    sv[svIdx].rms[channel] +=  sv[svIdx].analyseData.phasor_polar[channel][i][0] * sv[svIdx].analyseData.phasor_polar[channel][i][0];
+                    sv[svIdx].analyseData.rms[channel] +=  sv[svIdx].analyseData.phasor_polar[channel][i][0] * sv[svIdx].analyseData.phasor_polar[channel][i][0];
                 }
-                sv[svIdx].rms[channel] = sqrt(sv[svIdx].rms[channel]);
+                sv[svIdx].analyseData.rms[channel] = sqrt(sv[svIdx].analyseData.rms[channel]);
 
                 tempBufferRMSArr[svIdx][tempBufferRMSIdx[svIdx]][channel] = sv[svIdx].analyseData.phasor_polar[channel][1][0];
 
-                // if (!debug)
-                // for (i=sv[svIdx].smpRate*0.4; i<sv[svIdx].smpRate*0.6; i++){
-                //     if (wt_output_cD[svIdx][channel][i] > 1){
-                //         debug = 1;
-                //         saveArr(wt_output_cD[svIdx][channel], sv[svIdx].smpRate, "wt_output.csv");
-                //         saveArr(wt_input[svIdx][channel], sv[svIdx].smpRate, "wt_input.csv");
-                //     }
-                // }
+                
             }
             tempBufferRMSIdx[svIdx]++;
             if (tempBufferRMSIdx[svIdx] > TEMP_BUFFER_RMS_SIZE){
@@ -439,9 +468,12 @@ void runAnalyse(){
             }
 
             VTCDAnalyse(&sv[svIdx], &(sv[svIdx].analyseData.sag), svIdx);
-            // VTCDAnalyse(&sv[svIdx], &(sv[svIdx].analyseData.swell), svIdx);
-            // VTCDAnalyse(&sv[svIdx], &(sv[svIdx].analyseData.interruption), svIdx);
-            // threePhaseToSymComp(&sv[svIdx]);
+            VTCDAnalyse(&sv[svIdx], &(sv[svIdx].analyseData.swell), svIdx);
+            VTCDAnalyse(&sv[svIdx], &(sv[svIdx].analyseData.interruption), svIdx);
+            // transientAnalyse(&sv[svIdx], &wt_plan[svIdx], svIdx);
+            threePhaseToSymComp(&sv[svIdx]);
+            
+            // printf("Analyse Running\n");
             // sagAnalise(&sv[svIdx], svIdx);
             // swellAnalise(&sv[svIdx], svIdx);
         }
@@ -481,19 +513,28 @@ void cleanUp(int signal){
     exit(0);
 }
 
+void sigsegv_handler(int signum) {
+    FILE *log_file = fopen("segfault.log", "a");
+    if (log_file != NULL) {
+        fprintf(log_file, "Segmentation fault occurred at Analyse\n");
+        fclose(log_file);
+    }
+    exit(EXIT_FAILURE);
+}
+
 int main(){
 
     fp = fopen("data.csv", "w");
 
     signal(SIGINT, cleanUp);
     signal(SIGTERM, cleanUp);
+    signal(SIGSEGV, sigsegv_handler);
 
     char filePath[512];
     readlink("/proc/self/exe", filePath, sizeof(filePath) - 1);
     strcpy(curDir, dirname(filePath));
 
     sv = openSampledValue(0);
-
     
     uint8_t nSVdetected = 0;
     for (int i = 0; i < MAX_SAMPLED_VALUES; i++){
@@ -506,12 +547,18 @@ int main(){
             sv[i].analyseData.swell.flag = 0;
             sv[i].analyseData.transient.flag = 0;
             sv[i].analyseData.underVoltage.flag = 0;
+            sv[i].cycledCaptured = 0;
+            sv[i].idxBuffer = 0;
+            sv[i].idxCycle = 0;
+            sv[i].idxProcessedCycle = 0;
+            sv[i].idxProcessedBuffer = sv[i].idxBuffer - smpGap;
             sprintf(svInfoName, "%s/files/%s.info", curDir, sv[i].svId);
             SvInfoFp[i] = fopen(svInfoName,"a");
         }
     }
+    
+    printf("Running Quality Analyser: \n");
     printf("Number of Sampled Values detected: %d\n", nSVdetected);
-
     runAnalyse();
 
     printf("ended\n");

@@ -36,6 +36,7 @@ typedef struct {
     double phasor_rect[NUM_CHANELS][MAX_HARMONIC][2];
     double symetrical[2][3][2];
     double unbalance[2];
+    double rms[NUM_CHANELS];
     QualityEvent_t sag;
     QualityEvent_t swell;
     QualityEvent_t interruption;
@@ -52,18 +53,22 @@ typedef struct{
     uint8_t numChanels;
     int32_t *snifferArr[NUM_CHANELS][FREQUENCY];
     int32_t *analyseArr[NUM_CHANELS][FREQUENCY];
-    double rms[NUM_CHANELS];
     QualityAnalyse_t analyseData;
     int32_t idxCycle;
     int32_t idxBuffer;
     int32_t idxProcessedBuffer;
     int32_t idxProcessedCycle;
     int64_t cycledCaptured;
+    uint32_t nPackets;
+    uint8_t found;
+    // struct timespec t0;
+    // struct timespec t1;
+    // double meanTime;
 }sampledValue_t;
 
 void deleteSampledValue(int index);
 
-sampledValue_t* openSampledValue(int sniffer){
+sampledValue_t* openSampledValue(int type){
     shm_setup_s svMemory = openSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
     if (svMemory.ptr == NULL){
         svMemory = createSharedMemory("QualitySampledValue", MAX_SAMPLED_VALUES*sizeof(sampledValue_t));
@@ -78,9 +83,9 @@ sampledValue_t* openSampledValue(int sniffer){
                 sprintf(memName, "QualitySampledValue_%d_%d_%d", i, j, k);
                 shm_setup_s cycleMemoryMem = openSharedMemory(memName, sv[i].smpRate*sizeof(int32_t));
                 if (cycleMemoryMem.ptr == NULL) continue;
-                if (sniffer) {
+                if (type == 1) {
                     sv[i].snifferArr[j][k] = (int32_t *)cycleMemoryMem.ptr;
-                } else {
+                } else if (type == 0){
                     sv[i].analyseArr[j][k] = (int32_t *)cycleMemoryMem.ptr;
                 }
             }
@@ -113,9 +118,6 @@ void addSampledValue(int index, sampledValue_t *_sv){
             sv[index].snifferArr[i][j] = (int32_t *)cycleMemoryMem.ptr;
         }
     }
-    printf("nChannels: %u\n", sv[index].numChanels);
-    printf("freq: %u\n", sv[index].freq);
-    printf("smpRate: %u\n", sv[index].smpRate);
     sv[index].initialized = 1;
 }
 

@@ -1,0 +1,32 @@
+svData:
+- svID: SV_Bus05
+  MeanTime: 0.000417
+  nPackets: 9600
+  nAsdu: 2
+  macSrc: 00:15:5d:e5:60:e3
+  macDst: 01:0c:cd:01:00:03
+  vLanId: 100
+  vLanPriority: 4
+  appID: 4800
+  nChannels: 0
+- svID: SV_Bus06
+  MeanTime: 0.000417
+  nPackets: 9600
+  nAsdu: 2
+  macSrc: 00:15:5d:e5:60:e3
+  macDst: 01:0c:cd:01:00:04
+  vLanId: 100
+  vLanPriority: 4
+  appID: 4800
+  nChannels: 0
+- svID: SV_Bus07
+  MeanTime: 0.000417
+  nPackets: 9600
+  nAsdu: 2
+  macSrc: 00:15:5d:e5:60:e3
+  macDst: 01:0c:cd:01:00:05
+  vLanId: 100
+  vLanPriority: 4
+  appID: 4800
+  nChannels: 0
+nSV: 3  
