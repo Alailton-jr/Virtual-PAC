@@ -72,7 +72,8 @@
         "numbers": "c",
         "ioctl.h": "c",
         "in.h": "c",
-        "inet.h": "c"
+        "inet.h": "c",
+        "prodist.h": "c"
     },
     "dotnet.defaultSolution": "Virtual-PAC-GUI/Virtual-PAC-GUI.sln",
     "C_Cpp.intelliSenseEngineFallback": "enabled",
