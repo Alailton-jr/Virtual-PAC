@@ -68,6 +68,8 @@
             CbkPlotRMS = new CheckBox();
             BtnStart = new Button();
             CbxLoop = new CheckBox();
+            TbFileLabel = new TextBox();
+            label12 = new Label();
             PnSv.SuspendLayout();
             panel5.SuspendLayout();
             panel1.SuspendLayout();
@@ -130,7 +132,7 @@
             BtnLoadFile.FlatAppearance.BorderSize = 0;
             BtnLoadFile.FlatStyle = FlatStyle.Popup;
             BtnLoadFile.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnLoadFile.Location = new Point(858, 150);
+            BtnLoadFile.Location = new Point(858, 168);
             BtnLoadFile.Margin = new Padding(3, 2, 3, 2);
             BtnLoadFile.Name = "BtnLoadFile";
             BtnLoadFile.Size = new Size(202, 33);
@@ -504,7 +506,7 @@
             label9.BorderStyle = BorderStyle.FixedSingle;
             label9.FlatStyle = FlatStyle.Popup;
             label9.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(36, 112);
+            label9.Location = new Point(36, 95);
             label9.Name = "label9";
             label9.Size = new Size(165, 31);
             label9.TabIndex = 16;
@@ -517,7 +519,7 @@
             TbFileName.BorderStyle = BorderStyle.FixedSingle;
             TbFileName.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
             TbFileName.ForeColor = Color.Lavender;
-            TbFileName.Location = new Point(201, 112);
+            TbFileName.Location = new Point(201, 95);
             TbFileName.Name = "TbFileName";
             TbFileName.Size = new Size(859, 31);
             TbFileName.TabIndex = 17;
@@ -528,7 +530,7 @@
             label11.BorderStyle = BorderStyle.FixedSingle;
             label11.FlatStyle = FlatStyle.Popup;
             label11.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(36, 151);
+            label11.Location = new Point(36, 166);
             label11.Name = "label11";
             label11.Size = new Size(100, 31);
             label11.TabIndex = 18;
@@ -541,7 +543,7 @@
             TbNDados.BorderStyle = BorderStyle.FixedSingle;
             TbNDados.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
             TbNDados.ForeColor = Color.Lavender;
-            TbNDados.Location = new Point(136, 151);
+            TbNDados.Location = new Point(136, 166);
             TbNDados.Name = "TbNDados";
             TbNDados.Size = new Size(70, 31);
             TbNDados.TabIndex = 19;
@@ -555,7 +557,7 @@
             CbkPlotRMS.FlatAppearance.BorderSize = 20;
             CbkPlotRMS.FlatStyle = FlatStyle.Flat;
             CbkPlotRMS.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            CbkPlotRMS.Location = new Point(213, 152);
+            CbkPlotRMS.Location = new Point(213, 167);
             CbkPlotRMS.Name = "CbkPlotRMS";
             CbkPlotRMS.Padding = new Padding(5, 0, 0, 0);
             CbkPlotRMS.Size = new Size(106, 29);
@@ -588,7 +590,7 @@
             CbxLoop.FlatAppearance.BorderSize = 20;
             CbxLoop.FlatStyle = FlatStyle.Flat;
             CbxLoop.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            CbxLoop.Location = new Point(327, 152);
+            CbxLoop.Location = new Point(327, 167);
             CbxLoop.Name = "CbxLoop";
             CbxLoop.Padding = new Padding(5, 0, 0, 0);
             CbxLoop.Size = new Size(136, 29);
@@ -597,12 +599,38 @@
             CbxLoop.UseVisualStyleBackColor = false;
             CbxLoop.CheckedChanged += CbxLoop_CheckedChanged;
             // 
+            // TbFileLabel
+            // 
+            TbFileLabel.BackColor = Color.FromArgb(31, 45, 56);
+            TbFileLabel.BorderStyle = BorderStyle.FixedSingle;
+            TbFileLabel.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            TbFileLabel.ForeColor = Color.Lavender;
+            TbFileLabel.Location = new Point(201, 132);
+            TbFileLabel.Name = "TbFileLabel";
+            TbFileLabel.Size = new Size(859, 31);
+            TbFileLabel.TabIndex = 26;
+            // 
+            // label12
+            // 
+            label12.BackColor = Color.FromArgb(31, 45, 56);
+            label12.BorderStyle = BorderStyle.FixedSingle;
+            label12.FlatStyle = FlatStyle.Popup;
+            label12.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.Location = new Point(36, 132);
+            label12.Name = "label12";
+            label12.Size = new Size(165, 31);
+            label12.TabIndex = 25;
+            label12.Text = "Nome do Arquivo";
+            label12.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // TransientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 58, 73);
             ClientSize = new Size(1072, 614);
+            Controls.Add(TbFileLabel);
+            Controls.Add(label12);
             Controls.Add(CbxLoop);
             Controls.Add(BtnStart);
             Controls.Add(CbkPlotRMS);
@@ -669,5 +697,7 @@
         private CheckBox CbkPlotRMS;
         private Button BtnStart;
         private CheckBox CbxLoop;
+        private TextBox TbFileLabel;
+        private Label label12;
     }
 }

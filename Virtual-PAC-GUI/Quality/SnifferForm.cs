@@ -116,11 +116,16 @@ namespace Quality
         private void BtnStartSearch_Click(object sender, EventArgs e)
         {
             socket.changeConProperties(mainControl.serverConfig.ipAddress, mainControl.serverConfig._port);
-            if (!socket.isConnected) socket.Connect();
+            socket.IsSocketConnected();
             if (!socket.isConnected)
             {
-                MessageBox.Show("Server is not connected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                socket.Connect();
+                if (!socket.isConnected)
+                {
+                    stopSearch();
+                    MessageBox.Show("Server is not connected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             if (searching)
             {
@@ -136,26 +141,28 @@ namespace Quality
         {
             if (!searching)
             {
-                curSel = -1;
-                LbLoading.Visible = true;
-                TbSVFound.Text = "-1";
                 if (sendCommand)
                 {
-                    string res = socket.SendData("netCaptureStart", _duration.ToString());
+                    //string res = socket.SendData("netCaptureStart", _duration.ToString());
+                    string res = socket.SendData(SocketConnection.entryType.CAPT_ANY_SV, _duration.ToString());
                     if (res != null && res == "success")
                     {
+                        curSel = -1;
+                        LbLoading.Visible = true;
+                        pBarSearch.Visible = true;
+                        TbSVFound.Text = "-1";
                         searching = true;
                         TimerGetResults.Start();
                         LbSearchStatus.Text = "Buscando";
+                        BtnStartSearch.Text = "Stop Search";
                     }
                 }
                 else
                 {
-                    searching = true;
-                    TimerGetResults.Start();
+                    searching = false;
+                    //TimerGetResults.Start();
                 }
-            }
-            BtnStartSearch.Text = "Stop Search";
+            } 
         }
 
         private void stopSearch(bool sendCommand = true)
@@ -163,9 +170,12 @@ namespace Quality
             if (searching)
             {
                 LbLoading.Visible = false;
+                pBarSearch.Visible = false;
+                pBarSearch.Value = 0;
                 if (sendCommand)
                 {
-                    string res = socket.SendData("netCaptureStop", "");
+                    //string res = socket.SendData("netCaptureStop", "");
+                    string res = socket.SendData(SocketConnection.entryType.CAPT_SV_STOP, "");
                     if (res != null && res == "success")
                     {
                         searching = false;
@@ -193,7 +203,6 @@ namespace Quality
         {
             double[] freqs = { 50, 60 };
             double[] smpRate = { 80, 240, 256 };
-            meanTime /= 1000;
             double minDifference = double.MaxValue;
             double closestFrequency = 0;
             double closestSampleRate = 0;
@@ -333,7 +342,8 @@ namespace Quality
             int idx = (int)btn.Tag;
             if (idx < 0) return;
 
-            byte[] waveFormBytes = socket.ReceiveFile("netCaptureWaveForm", curSvData[idx].SVID);
+            //byte[] waveFormBytes = socket.ReceiveFile("netCaptureWaveForm", curSvData[idx].SVID);
+            byte[] waveFormBytes = socket.ReceiveFile(SocketConnection.entryType.CAPT_SV_WAVEFORM, curSvData[idx].SVID);
             if (waveFormBytes != null && waveFormBytes.Length <= 0) return;
 
             try
@@ -368,8 +378,6 @@ namespace Quality
             {
                 MessageBox.Show("Error loading file from Server, try capturing again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
         }
 
         private void BtnSelect_Click(object sender, EventArgs e)
@@ -398,8 +406,8 @@ namespace Quality
             TlpData.Controls.Add(LbVerCaptura);
             TlpData.Controls.Add(LbSel);
 
-
             textBoxes = new List<List<TextBox>>();
+            labels = new List<Label>();
             for (int i = 0; i < curSvData.Count; i++)
             {
                 textBoxes.Add(new List<System.Windows.Forms.TextBox>());
@@ -474,7 +482,7 @@ namespace Quality
 
         private void getResults()
         {
-            byte[]? svData = socket.ReceiveFile("netCaptureResults", "");
+            byte[]? svData = socket.ReceiveFile(SocketConnection.entryType.CAPT_SV_DATA, "");
             if (svData != null)
             {
                 string yamlString = System.Text.Encoding.UTF8.GetString(svData);
@@ -482,13 +490,14 @@ namespace Quality
                 {
                     var deserializer = new DeserializerBuilder().Build();
                     var yamlRoot = deserializer.Deserialize<YamlSnifferData.YamlRoot>(yamlString);
+                    if (yamlRoot == null) return;
                     if (yamlRoot.nSV > 0)
                     {
                         //curSvData = yamlRoot.svData;
                         curSvData.Clear();
                         foreach (var sv in yamlRoot.svData)
                         {
-                            var freqAndSmpRate = getFreqAndSmpRate(sv.MeanTime);
+                            var freqAndSmpRate = getFreqAndSmpRate(sv.MeanTime / sv.nAsdu);
                             curSvData.Add(new SampledValue()
                             {
                                 noAsdu = sv.nAsdu,
@@ -518,7 +527,6 @@ namespace Quality
                 {
                     MessageBox.Show("Error parsing the results: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
 
@@ -526,13 +534,33 @@ namespace Quality
         {
             if (searching)
             {
-                string res = socket.SendData("netCaptureStatus", "");
+                if (!socket.isConnected) { 
+                    TimerGetResults.Stop();
+                    stopSearch(false);
+                    MessageBox.Show("Server is not connected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                //string res = socket.SendData("netCaptureStatus", "");
+                string res = socket.SendData(SocketConnection.entryType.CAPT_SV_STATUS, "");
                 if (res != null)
                 {
-                    if (res == "False")
+                    string[] resLines = res.Split("|");
+                    if (resLines[0] == "1")
                     {
-                        stopSearch(false);
+                        try
+                        {
+                            double time = double.Parse(resLines[1]);
+                            int nSv = int.Parse(resLines[2]);
+                            TbSVFound.Text = nSv.ToString();
+                            pBarSearch.Value = (int)(time / _duration * 100);
+                        }
+                        catch { }
+                        
+                    }
+                    else if(resLines[0] == "0")
+                    {
+                        pBarSearch.Value = 100;
                         getResults();
+                        stopSearch(false);
                     }
                 }
             }
@@ -546,7 +574,7 @@ namespace Quality
         private void BtnMapSV_Click(object sender, EventArgs e)
         {
             var svIdx = mainControl.sampledValues.FindIndex(sv => sv.SVID == curSvData[curSel].SVID);
-            if (svIdx != null)
+            if (svIdx != null && svIdx >= 0)
             {
                 mainControl.sampledValues[svIdx] = curSvData[curSel];
             }
@@ -561,7 +589,7 @@ namespace Quality
         // This function will be used for all the textboxes
         private void TbSagBottonThreshold_Validated(object sender, EventArgs e)
         {
-
+            if (curSel < 0) return;
             curSvData[curSel].sag.bottomThreshold = changeDouble(TbSagBottonThreshold.Text, curSvData[curSel].sag.bottomThreshold);
             curSvData[curSel].sag.topThreshold = changeDouble(TbSagTopThreshold.Text, curSvData[curSel].sag.topThreshold);
             curSvData[curSel].sag.maxDuration = changeDouble(TbSagMaxTime.Text, curSvData[curSel].sag.maxDuration);
@@ -618,7 +646,7 @@ namespace Quality
 
             TbInterruptionBottonThreshold.Text = curSvData[curSel].interruption.bottomThreshold.ToString();
             TbInterruptionTopThreshold.Text = curSvData[curSel].interruption.topThreshold.ToString();
-                TbInterruptionMaxTime.Text = curSvData[curSel].interruption.maxDuration.ToString();
+            TbInterruptionMaxTime.Text = curSvData[curSel].interruption.maxDuration.ToString();
             TbInterruptionMinTime.Text = curSvData[curSel].interruption.minDuration.ToString();
 
             TbSustainedBottomThreshold.Text = curSvData[curSel].sustainedinterruption.bottomThreshold.ToString();
@@ -631,5 +659,6 @@ namespace Quality
 
 
         }
+
     }
 }

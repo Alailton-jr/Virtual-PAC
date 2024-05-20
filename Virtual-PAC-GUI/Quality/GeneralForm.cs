@@ -46,15 +46,23 @@ namespace Quality
         private void BtnConnect_Click(object sender, EventArgs e)
         {
             mySocket.changeConProperties(config.ipAddress, int.Parse(config.port));
-            if (mySocket.Connect())
+            if ((!mySocket.isConnected))
             {
-                if (!mySocket.isConnected)
+                if (mySocket.Connect())
+                {
+                    if (!mySocket.isConnected)
+                        MessageBox.Show("Não foi possível connectar com o Virtual Qualimetro");
+                }
+                else
+                {
                     MessageBox.Show("Não foi possível connectar com o Virtual Qualimetro");
+                }
             }
             else
             {
-                MessageBox.Show("Não foi possível connectar com o Virtual Qualimetro");
+                mySocket.closeConnection();
             }
+            
         }
 
         private void TbUser_TextChanged(object sender, EventArgs e)

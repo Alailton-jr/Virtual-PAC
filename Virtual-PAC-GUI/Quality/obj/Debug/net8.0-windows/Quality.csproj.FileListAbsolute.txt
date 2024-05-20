@@ -50,9 +50,13 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.WindowsForms.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.ShowData.resources
+<<<<<<< HEAD
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.dll
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.WindowsForms.dll
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.MonitorForm.resources
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.Properties.Resources.resources
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.ShowData.resources
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.SvMonitor.resources
+=======
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.AnalyseForm.resources
+>>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26

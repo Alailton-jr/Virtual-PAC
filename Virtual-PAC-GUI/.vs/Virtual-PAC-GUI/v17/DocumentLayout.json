@@ -3,6 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\monitorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\monitorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -37,6 +38,58 @@
     {
       "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+=======
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alail\\onedrive\\documentos\\github\\virtual-pac\\virtual-pac-gui\\quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\monitorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\monitorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\generalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\generalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\generalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\generalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\transientform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\testset\\testset.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{991302A1-0C3D-4883-99E6-6B60EED1AC77}|TestSet\\TestSet.csproj|solutionrelative:testset\\testset.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+>>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26
     }
   ],
   "DocumentGroupContainers": [
@@ -46,11 +99,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 1,
+=======
+          "SelectedChildIndex": 3,
+>>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
+<<<<<<< HEAD
               "Title": "MonitorForm.cs",
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MonitorForm.cs",
               "RelativeDocumentMoniker": "Quality\\MonitorForm.cs",
@@ -143,17 +201,165 @@
               "ViewState": "AQIAAA8AAAAAAAAAAAAAAFYAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-10T15:43:57.071Z"
+=======
+              "Title": "SnifferForm.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeDocumentMoniker": "Quality\\SnifferForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeToolTip": "Quality\\SnifferForm.cs",
+              "ViewState": "AQIAAFgBAAAAAAAAAAAQwHcBAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T15:27:22.072Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GeneralForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\GeneralForm.cs",
+              "RelativeDocumentMoniker": "Quality\\GeneralForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\GeneralForm.cs [Design]",
+              "RelativeToolTip": "Quality\\GeneralForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T15:08:25.85Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Classes.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Classes.cs",
+              "RelativeDocumentMoniker": "Quality\\Classes.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Classes.cs",
+              "RelativeToolTip": "Quality\\Classes.cs",
+              "ViewState": "AQIAAPcBAAAAAAAAAAAQwAwCAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T16:33:21.667Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AnalyseForm.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
+              "RelativeDocumentMoniker": "Quality\\AnalyseForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
+              "RelativeToolTip": "Quality\\AnalyseForm.cs",
+              "ViewState": "AQIAAAoBAAAAAAAAAAAowHsBAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T15:35:03.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AnalyseForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
+              "RelativeDocumentMoniker": "Quality\\AnalyseForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs [Design]",
+              "RelativeToolTip": "Quality\\AnalyseForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T15:34:14.369Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MonitorForm.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MonitorForm.cs",
+              "RelativeDocumentMoniker": "Quality\\MonitorForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MonitorForm.cs",
+              "RelativeToolTip": "Quality\\MonitorForm.cs",
+              "ViewState": "AQIAACECAAAAAAAAAAAtwCYCAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T15:47:12.928Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SnifferForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeDocumentMoniker": "Quality\\SnifferForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs [Design]",
+              "RelativeToolTip": "Quality\\SnifferForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T15:27:32.125Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GeneralForm.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\GeneralForm.cs",
+              "RelativeDocumentMoniker": "Quality\\GeneralForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\GeneralForm.cs",
+              "RelativeToolTip": "Quality\\GeneralForm.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAQwC0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T15:08:27.179Z"
+>>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "MainForm.cs [Design]",
+<<<<<<< HEAD
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.cs",
               "RelativeDocumentMoniker": "Quality\\MainForm.cs",
               "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.cs [Design]",
               "RelativeToolTip": "Quality\\MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-10T15:24:35.263Z"
+=======
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.cs",
+              "RelativeDocumentMoniker": "Quality\\MainForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.cs [Design]",
+              "RelativeToolTip": "Quality\\MainForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T15:34:04.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Classes.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Classes.cs",
+              "RelativeDocumentMoniker": "TestSet\\Classes.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\Classes.cs",
+              "RelativeToolTip": "TestSet\\Classes.cs",
+              "ViewState": "AQIAAB4CAAAAAAAAAAAQwD4CAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T14:31:12.955Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TransientForm.cs",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
+              "RelativeDocumentMoniker": "TestSet\\TransientForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
+              "RelativeToolTip": "TestSet\\TransientForm.cs",
+              "ViewState": "AQIAAO0BAAAAAAAAAAApwPgBAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T14:30:11.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TransientForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs",
+              "RelativeDocumentMoniker": "TestSet\\TransientForm.cs",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TransientForm.cs [Design]",
+              "RelativeToolTip": "TestSet\\TransientForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T14:29:12.738Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TestSet",
+              "DocumentMoniker": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+              "RelativeDocumentMoniker": "TestSet\\TestSet.csproj",
+              "ToolTip": "C:\\Users\\alail\\OneDrive\\Documentos\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\TestSet\\TestSet.csproj",
+              "RelativeToolTip": "TestSet\\TestSet.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-19T14:29:07.33Z"
+>>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26
             }
           ]
         }
