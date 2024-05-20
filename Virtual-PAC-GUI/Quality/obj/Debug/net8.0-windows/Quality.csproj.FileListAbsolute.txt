@@ -50,3 +50,4 @@ C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\ob
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\bin\Debug\net8.0-windows\OxyPlot.WindowsForms.dll
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.ShowData.resources
+C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.AnalyseForm.resources

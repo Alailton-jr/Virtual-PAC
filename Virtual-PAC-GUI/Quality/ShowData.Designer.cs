@@ -36,12 +36,13 @@
             tableLayoutPanel3 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             CbxCn4 = new CheckBox();
+            CbxCn8 = new CheckBox();
             CbxCn3 = new CheckBox();
-            CbxCn7 = new CheckBox();
             CbxCn2 = new CheckBox();
-            CbxCn6 = new CheckBox();
             CbxCn1 = new CheckBox();
             CbxCn5 = new CheckBox();
+            CbxCn6 = new CheckBox();
+            CbxCn7 = new CheckBox();
             panel5 = new Panel();
             TbSvID = new TextBox();
             label1 = new Label();
@@ -58,7 +59,6 @@
             BtnExit = new Button();
             panel7 = new Panel();
             panel8 = new Panel();
-            CbxCn8 = new CheckBox();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel2.SuspendLayout();
@@ -178,6 +178,20 @@
             CbxCn4.UseVisualStyleBackColor = false;
             CbxCn4.CheckedChanged += CbxCn1_CheckedChanged;
             // 
+            // CbxCn8
+            // 
+            CbxCn8.AutoSize = true;
+            CbxCn8.BackColor = Color.FromArgb(31, 45, 56);
+            CbxCn8.Font = new Font("Segoe UI", 11F);
+            CbxCn8.Location = new Point(102, 97);
+            CbxCn8.Margin = new Padding(10, 3, 3, 3);
+            CbxCn8.Name = "CbxCn8";
+            CbxCn8.Size = new Size(77, 24);
+            CbxCn8.TabIndex = 48;
+            CbxCn8.Text = "Canal 8";
+            CbxCn8.UseVisualStyleBackColor = false;
+            CbxCn8.CheckedChanged += CbxCn1_CheckedChanged;
+            // 
             // CbxCn3
             // 
             CbxCn3.AutoSize = true;
@@ -192,20 +206,6 @@
             CbxCn3.UseVisualStyleBackColor = false;
             CbxCn3.CheckedChanged += CbxCn1_CheckedChanged;
             // 
-            // CbxCn7
-            // 
-            CbxCn7.AutoSize = true;
-            CbxCn7.BackColor = Color.FromArgb(31, 45, 56);
-            CbxCn7.Font = new Font("Segoe UI", 11F);
-            CbxCn7.Location = new Point(102, 66);
-            CbxCn7.Margin = new Padding(10, 3, 3, 3);
-            CbxCn7.Name = "CbxCn7";
-            CbxCn7.Size = new Size(77, 24);
-            CbxCn7.TabIndex = 46;
-            CbxCn7.Text = "Canal 7";
-            CbxCn7.UseVisualStyleBackColor = false;
-            CbxCn7.CheckedChanged += CbxCn1_CheckedChanged;
-            // 
             // CbxCn2
             // 
             CbxCn2.AutoSize = true;
@@ -219,20 +219,6 @@
             CbxCn2.Text = "Canal 2";
             CbxCn2.UseVisualStyleBackColor = false;
             CbxCn2.CheckedChanged += CbxCn1_CheckedChanged;
-            // 
-            // CbxCn6
-            // 
-            CbxCn6.AutoSize = true;
-            CbxCn6.BackColor = Color.FromArgb(31, 45, 56);
-            CbxCn6.Font = new Font("Segoe UI", 11F);
-            CbxCn6.Location = new Point(102, 35);
-            CbxCn6.Margin = new Padding(10, 3, 3, 3);
-            CbxCn6.Name = "CbxCn6";
-            CbxCn6.Size = new Size(77, 24);
-            CbxCn6.TabIndex = 44;
-            CbxCn6.Text = "Canal 6";
-            CbxCn6.UseVisualStyleBackColor = false;
-            CbxCn6.CheckedChanged += CbxCn1_CheckedChanged;
             // 
             // CbxCn1
             // 
@@ -252,6 +238,8 @@
             // 
             CbxCn5.AutoSize = true;
             CbxCn5.BackColor = Color.FromArgb(31, 45, 56);
+            CbxCn5.Checked = true;
+            CbxCn5.CheckState = CheckState.Checked;
             CbxCn5.Font = new Font("Segoe UI", 11F);
             CbxCn5.Location = new Point(102, 4);
             CbxCn5.Margin = new Padding(10, 3, 3, 3);
@@ -261,6 +249,34 @@
             CbxCn5.Text = "Canal 5";
             CbxCn5.UseVisualStyleBackColor = false;
             CbxCn5.CheckedChanged += CbxCn1_CheckedChanged;
+            // 
+            // CbxCn6
+            // 
+            CbxCn6.AutoSize = true;
+            CbxCn6.BackColor = Color.FromArgb(31, 45, 56);
+            CbxCn6.Font = new Font("Segoe UI", 11F);
+            CbxCn6.Location = new Point(102, 35);
+            CbxCn6.Margin = new Padding(10, 3, 3, 3);
+            CbxCn6.Name = "CbxCn6";
+            CbxCn6.Size = new Size(77, 24);
+            CbxCn6.TabIndex = 44;
+            CbxCn6.Text = "Canal 6";
+            CbxCn6.UseVisualStyleBackColor = false;
+            CbxCn6.CheckedChanged += CbxCn1_CheckedChanged;
+            // 
+            // CbxCn7
+            // 
+            CbxCn7.AutoSize = true;
+            CbxCn7.BackColor = Color.FromArgb(31, 45, 56);
+            CbxCn7.Font = new Font("Segoe UI", 11F);
+            CbxCn7.Location = new Point(102, 66);
+            CbxCn7.Margin = new Padding(10, 3, 3, 3);
+            CbxCn7.Name = "CbxCn7";
+            CbxCn7.Size = new Size(77, 24);
+            CbxCn7.TabIndex = 46;
+            CbxCn7.Text = "Canal 7";
+            CbxCn7.UseVisualStyleBackColor = false;
+            CbxCn7.CheckedChanged += CbxCn1_CheckedChanged;
             // 
             // panel5
             // 
@@ -280,10 +296,10 @@
             TbSvID.BorderStyle = BorderStyle.FixedSingle;
             TbSvID.Font = new Font("Segoe UI", 13F);
             TbSvID.ForeColor = Color.Lavender;
-            TbSvID.Location = new Point(88, 5);
+            TbSvID.Location = new Point(76, 5);
             TbSvID.Margin = new Padding(0, 5, 0, 5);
             TbSvID.Name = "TbSvID";
-            TbSvID.Size = new Size(140, 31);
+            TbSvID.Size = new Size(152, 31);
             TbSvID.TabIndex = 39;
             TbSvID.Text = "TRTC";
             TbSvID.TextAlign = HorizontalAlignment.Center;
@@ -297,9 +313,9 @@
             label1.Location = new Point(3, 5);
             label1.Margin = new Padding(0, 5, 0, 5);
             label1.Name = "label1";
-            label1.Size = new Size(85, 31);
+            label1.Size = new Size(73, 31);
             label1.TabIndex = 38;
-            label1.Text = "SV ID";
+            label1.Text = "Nome";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
@@ -398,10 +414,10 @@
             TbDuration.BorderStyle = BorderStyle.FixedSingle;
             TbDuration.Font = new Font("Segoe UI", 13F);
             TbDuration.ForeColor = Color.Lavender;
-            TbDuration.Location = new Point(88, 5);
+            TbDuration.Location = new Point(76, 5);
             TbDuration.Margin = new Padding(0, 5, 0, 5);
             TbDuration.Name = "TbDuration";
-            TbDuration.Size = new Size(140, 31);
+            TbDuration.Size = new Size(152, 31);
             TbDuration.TabIndex = 44;
             TbDuration.Text = "TRTC";
             TbDuration.TextAlign = HorizontalAlignment.Center;
@@ -415,7 +431,7 @@
             label2.Location = new Point(3, 5);
             label2.Margin = new Padding(0, 5, 0, 5);
             label2.Name = "label2";
-            label2.Size = new Size(85, 31);
+            label2.Size = new Size(73, 31);
             label2.TabIndex = 43;
             label2.Text = "Tempo";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -487,20 +503,6 @@
             panel8.Size = new Size(823, 505);
             panel8.TabIndex = 1;
             panel8.MouseDown += topPanel_MouseDown;
-            // 
-            // CbxCn8
-            // 
-            CbxCn8.AutoSize = true;
-            CbxCn8.BackColor = Color.FromArgb(31, 45, 56);
-            CbxCn8.Font = new Font("Segoe UI", 11F);
-            CbxCn8.Location = new Point(102, 97);
-            CbxCn8.Margin = new Padding(10, 3, 3, 3);
-            CbxCn8.Name = "CbxCn8";
-            CbxCn8.Size = new Size(77, 24);
-            CbxCn8.TabIndex = 48;
-            CbxCn8.Text = "Canal 8";
-            CbxCn8.UseVisualStyleBackColor = false;
-            CbxCn8.CheckedChanged += CbxCn1_CheckedChanged;
             // 
             // ShowData
             // 

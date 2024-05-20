@@ -7,6 +7,7 @@ using System.Data;
 using static System.Windows.Forms.Design.AxImporter;
 using static TestSet.MainForm;
 using MathNet.Numerics;
+using System.Xml;
 
 namespace TestSet
 {
@@ -74,6 +75,14 @@ namespace TestSet
             };
             addSVButtons();
             UpdateFields();
+
+            //config.setup
+
+            for (int i = 0; i < config.setup.Length; i++)
+            {
+                comboBoxes[i].SelectedIndex = config.setup[i];
+            }
+
         }
 
         private void addSVButtons()
@@ -190,10 +199,18 @@ namespace TestSet
         private void UpdateFields()
         {
             TbFileName.Text = config.fileName;
+            TbFileLabel.Text = config.fileLabel;
             TbNDados.Text = config.nData.ToString();
             cbOptions = new List<string> { "None" };
-            for (int i = 1; i < config.data.Count; i++)
-                cbOptions.Add($"Data {i}");
+            for (int i = 0; i < config.data.Count-1; i++)
+            {
+                //cbOptions.Add($"Data {i}");
+                if (config.labels != null)
+                    cbOptions.Add(config.labels[i]);
+                else
+                    cbOptions.Add($"Data {i}");
+            }
+
             foreach (ComboBox cb in comboBoxes)
             {
                 cb.Items.Clear();
@@ -205,7 +222,7 @@ namespace TestSet
                 comboBoxes[i].SelectedIndexChanged -= CbIa_SelectedIndexChanged;
                 try
                 {
-                    comboBoxes[i].SelectedIndex = config.setup[i] + 1;
+                    comboBoxes[i].SelectedIndex = config.setup[i];
                 }
                 catch (Exception)
                 {
@@ -270,7 +287,7 @@ namespace TestSet
             foreach (int i in selected)
             {
                 if (config.setup[i] != -1)
-                    data.Add(config.data[config.setup[i] + 1]);
+                    data.Add(config.data[config.setup[i]]);
             }
             if (data.Count == 0)
             {
@@ -330,10 +347,46 @@ namespace TestSet
 
         }
 
+        private List<string> loadSimNames(string path)
+        {
+            try
+            {
+                List<string> lines = new List<string>();
+
+                // Read the file line by line
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        // Add the line to the list
+                        lines.Add(line);
+                    }
+                }
+                return lines;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
         private void BtnLoadFile_Click(object sender, EventArgs e)
         {
 
-            openFileDialog1.Filter = "PsCAD Output (*.out)|*.out|All files (*.*)|*.*";
+            //openFileDialog1.Filter = "PsCAD Output (*.out)|*.out|All files (*.*)|*.*";
+            //openFileDialog1.FilterIndex = 1;
+            //openFileDialog1.RestoreDirectory = true;
+            //if (!(openFileDialog1.ShowDialog() == DialogResult.OK))
+            //    return;
+            //else
+            //{
+            //    string filePath = openFileDialog1.FileName;
+            //    if (!config.LoadDataFromFile(filePath)) MessageBox.Show("Error: Could not read file from disk. Original error: ");
+            //}
+
+            openFileDialog1.Filter = "PsCAD Output (*.csv)|*.csv|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             openFileDialog1.RestoreDirectory = true;
             if (!(openFileDialog1.ShowDialog() == DialogResult.OK))
@@ -342,8 +395,29 @@ namespace TestSet
             {
                 string filePath = openFileDialog1.FileName;
                 if (!config.LoadDataFromFile(filePath)) MessageBox.Show("Error: Could not read file from disk. Original error: ");
-                UpdateFields();
+                config.fileName = openFileDialog1.FileName;
             }
+
+            openFileDialog1.Filter = "PsCAD Output Names (*.csv)|*.csv|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            if (!(openFileDialog1.ShowDialog() == DialogResult.OK))
+                return;
+            else
+            {
+                string filePath = openFileDialog1.FileName;
+                config.labels = loadSimNames(filePath);
+
+                config.fileLabel  = openFileDialog1.FileName;
+            }
+
+
+            TbFileName.Text = config.fileName;
+            TbFileLabel.Text = config.fileLabel;
+            
+
+            UpdateFields();
+
 
         }
 
@@ -356,7 +430,7 @@ namespace TestSet
         {
             ComboBox local = (ComboBox)sender;
             sbyte idx = (sbyte)local.SelectedIndex;
-            config.setup[comboBoxes.IndexOf(local)] = idx - 1;
+            config.setup[comboBoxes.IndexOf(local)] = idx;
             updateGraph();
         }
 
@@ -430,13 +504,13 @@ namespace TestSet
             {
                 main.serverCon.changeConProperties(main.communicationConfig.ip, main.communicationConfig.port);
                 string res = main.serverCon.SendData("stopTransient", " ");
+                BtnStart.Text = "Start";
+                running = false;
                 if (res == null || res == "error")
                 {
                     MessageBox.Show("It Wasn't possible to connected to vMU!");
                     return;
                 }
-                BtnStart.Text = "Start";
-                running = false;
             }
         }
 

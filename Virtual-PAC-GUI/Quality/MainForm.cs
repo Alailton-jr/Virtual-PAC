@@ -11,6 +11,7 @@ namespace Quality
         private GeneralForm generalForm;
         private SnifferForm snifferForm;
         private MonitorForm monitorForm;
+        private AnalyseForm analyseForm;
         public static vQualityControl mainControl;
 
 
@@ -25,6 +26,8 @@ namespace Quality
             generalForm = new GeneralForm();
             snifferForm = new SnifferForm();
             monitorForm = new MonitorForm();
+            analyseForm = new AnalyseForm();
+
 
             mainControl.socket.ConnectionEstablished += (sender, e) =>
             {
@@ -39,7 +42,24 @@ namespace Quality
                 TimerServerCon.Stop();
             };
 
+            int newWidth = BtnHome.Width;
+            int newHeight = (int)(((float)BtnHome.Image.Height / BtnHome.Image.Width) * newWidth);
+            Image resizedImage = ResizeImage(BtnHome.Image, newWidth, newHeight);
+
+            BtnHome.Image = resizedImage;
+
         }
+
+        private Image ResizeImage(Image image, int width, int height)
+        {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(image, 0, 0, width, height);
+            }
+            return resizedImage;
+        }
+
 
         #region Windows Config
 
@@ -120,6 +140,12 @@ namespace Quality
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainControl.saveConfig();
+        }
+
+        private void BtnGeneral_Click(object sender, EventArgs e)
+        {
+            analyseForm.extLoad();
+            openChildForm(analyseForm);
         }
     }
 }

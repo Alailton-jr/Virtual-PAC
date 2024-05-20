@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -244,6 +245,23 @@ namespace Quality
             public event EventHandler ConnectionLost;
             public event EventHandler ConnectionEstablished;
 
+            public enum entryType:byte
+            {
+                CAPT_ANY_SV = 0,
+                CAPT_ESPECIFC_SV = 1,
+                CAPT_SV_STOP = 2,
+                CAPT_SV_STATUS = 3,
+                CAPT_SV_DATA = 4,
+                CAPT_SV_WAVEFORM = 5,
+                ANALYSER_START = 6,
+                ANALYSER_STOP = 7,
+                ANALYSER_SETUP = 8,
+                ANALYSER_STATUS = 9,
+                ANALYSER_DATA = 10,
+                ANALYSER_EVENT_INFO = 11,
+                NONE = 255,
+            }
+
             public SocketConnection()
             {
                 this.serverIp = "0.0.0.0";
@@ -327,7 +345,7 @@ namespace Quality
                 }
             }
 
-            public string? SendData(string Entry, string Data)
+            public string? SendData(entryType entry, string Data)
             {
                 IsSocketConnected();
 
@@ -337,17 +355,48 @@ namespace Quality
                 _mutex.WaitOne();
                 try
                 {
-                    Dictionary<string, string> data = new Dictionary<string, string>()
+                    
+                    int dataLen = Data.Length;
+                    byte[] dataBytes = Encoding.ASCII.GetBytes(Data);
+                    byte[] dataLenBytes = BitConverter.GetBytes(dataLen);
+
+
+                    int totalLength = dataLen + 5;
+
+                    if (totalLength < 4096)
                     {
-                        {"entry", Entry },
-                        {"data", Data }
-                    };
+                        byte[] sendbuffer = new byte[totalLength];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        dataBytes.CopyTo(sendbuffer, 5);
 
-                    string jsonData = JsonConvert.SerializeObject(data);
+                        clientSocket.Send(sendbuffer, totalLength, SocketFlags.None);
+                    }
+                    else
+                    {
+                        int remainingLength = totalLength;
+                        int offset = 0;
+                        byte[] sendbuffer = new byte[4096];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        Array.Copy(dataBytes, offset, sendbuffer, 5, Math.Min(4096 - (5), dataBytes.Length - offset));
+                        clientSocket.Send(sendbuffer, 4096, SocketFlags.None);
 
-                    byte[] yamlBytes = Encoding.ASCII.GetBytes(jsonData);
-                    byte[] buffer = new byte[1024 * 8];
-                    clientSocket.Send(yamlBytes);
+                        remainingLength -= 4096;
+                        offset += 4096 - 5;
+
+                        while (remainingLength > 0)
+                        {
+                            int chunkSize = Math.Min(remainingLength, 4096);
+                            sendbuffer = new byte[chunkSize];
+                            Array.Copy(dataBytes, offset, sendbuffer, 0, chunkSize);
+                            clientSocket.Send(sendbuffer, chunkSize, SocketFlags.None);
+                            offset += chunkSize;
+                            remainingLength -= chunkSize;
+                        }
+                    }
+
+                    byte[] buffer = new byte[4096];
                     int bytesRead = clientSocket.Receive(buffer);
                     if (bytesRead > 0)
                     {
@@ -396,7 +445,7 @@ namespace Quality
                     return null;
             }
 
-            public byte[]? ReceiveFile(string Entry, string Data)
+            public byte[]? ReceiveFile(entryType entry, string Data)
             {
                 IsSocketConnected();
 
@@ -405,19 +454,50 @@ namespace Quality
                         return null;
                 _mutex.WaitOne();
                 try
-                {
-                    Dictionary<string, string> data = new Dictionary<string, string>()
+                { 
+
+                    int dataLen = Data.Length;
+                    byte[] dataBytes = Encoding.ASCII.GetBytes(Data);
+                    byte[] dataLenBytes = BitConverter.GetBytes(dataLen);
+
+
+                    int totalLength = dataLen + 5;
+
+                    if (totalLength < 4096)
                     {
-                        {"entry", Entry },
-                        {"data", Data }
-                    };
-                    string jsonData = JsonConvert.SerializeObject(data);
-                    byte[] yamlBytes = Encoding.ASCII.GetBytes(jsonData);
-                    byte[] buffer = new byte[1024 * 8];
-                    clientSocket.Send(yamlBytes);
+                        byte[] sendbuffer = new byte[totalLength];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        dataBytes.CopyTo(sendbuffer, 5);
+
+                        clientSocket.Send(sendbuffer, totalLength, SocketFlags.None);
+                    }
+                    else
+                    {
+                        int remainingLength = totalLength;
+                        int offset = 0;
+                        byte[] sendbuffer = new byte[4096];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        Array.Copy(dataBytes, offset, sendbuffer, 5, Math.Min(4096 - (5), dataBytes.Length - offset));
+                        clientSocket.Send(sendbuffer, 4096, SocketFlags.None);
+
+                        remainingLength -= 4096;
+                        offset += 4096 - 5;
+
+                        while (remainingLength > 0)
+                        {
+                            int chunkSize = Math.Min(remainingLength, 4096);
+                            sendbuffer = new byte[chunkSize];
+                            Array.Copy(dataBytes, offset, sendbuffer, 0, chunkSize);
+                            clientSocket.Send(sendbuffer, chunkSize, SocketFlags.None);
+                            offset += chunkSize;
+                            remainingLength -= chunkSize;
+                        }
+                    }
 
                     // Receive the length of the file data (4 bytes)
-                    byte[] lengthBytes = new byte[8];
+                    byte[] lengthBytes = new byte[4];
                     clientSocket.Receive(lengthBytes);
                     int fileLength = BitConverter.ToInt32(lengthBytes, 0);
 
@@ -459,6 +539,7 @@ namespace Quality
             public int vLANPriority { get; set; }
             public int nominalVoltage { get; set; }
             public int nominalCurrent { get; set; }    
+            public GeneralInfo generalInfo { get; set; }
             public QualityEvent sag { get; set; }
             public QualityEvent swell { get; set; }
             public QualityEvent interruption { get; set; }
@@ -466,8 +547,10 @@ namespace Quality
             public QualityEvent underVoltage { get; set; }
             public QualityEvent sustainedinterruption { get; set; }
 
+
             public SampledValue()
             {
+                this.generalInfo = new GeneralInfo();
                 this.sag = new QualityEvent()
                 {
                     bottomThreshold = 0.1,
@@ -511,7 +594,27 @@ namespace Quality
                     maxDuration = 180
                 };
             }
+
+            public class GeneralInfo()
+            {
+                public double[][][] PhasorPolar { get; set; }
+                public double[] Rms { get; set; }
+                public double[][][] Symmetrical { get; set; }
+                public double[] Unbalance { get; set; }
+                public double[] power { get; set; }
+                public double Frequency { get; set; }
+            }
             
+            public class JsonServerRegistedEvents
+            {
+                public string Type { get; set; }
+                public string Duration { get; set; }
+                public string MinValue { get; set; }
+                public string MaxValue { get; set; }
+                public string Name { get; set; }
+                public string Date { get; set; }
+            }
+
             public class QualityEvent
             {
                 public bool flag;

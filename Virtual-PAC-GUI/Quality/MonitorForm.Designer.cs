@@ -36,9 +36,9 @@
             TlpSvTable = new TableLayoutPanel();
             svMonitor10 = new SvMonitor();
             panel3 = new Panel();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
+            BtnConfig = new Button();
+            BtnDel = new Button();
+            BtnSaveWaveForm = new Button();
             PnMenu = new Panel();
             Cbxfluctuation = new CheckBox();
             CbxUnbalance = new CheckBox();
@@ -48,6 +48,35 @@
             CbxVtld = new CheckBox();
             CbxVtcd = new CheckBox();
             CbxGeneral = new CheckBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            TbGenVaAng = new TextBox();
+            LbGenVa = new Label();
+            TbGenVaMod = new TextBox();
+            label7 = new Label();
+            label6 = new Label();
+            TbGenVbAng = new TextBox();
+            LbGenVb = new Label();
+            TbGenVbMod = new TextBox();
+            LbGenVc = new Label();
+            LbGenVn = new Label();
+            TbGenVcMod = new TextBox();
+            TbGenVnMod = new TextBox();
+            TbGenVcAng = new TextBox();
+            TbGenVnAng = new TextBox();
+            LbGenIa = new Label();
+            LbGenIc = new Label();
+            LbGenIn = new Label();
+            TbGenIaMod = new TextBox();
+            TbGenIaAng = new TextBox();
+            TbGenIbMod = new TextBox();
+            TbGenIbAng = new TextBox();
+            TbGenIcMod = new TextBox();
+            TbGenIcAng = new TextBox();
+            TbGenInMod = new TextBox();
+            TbGenInAng = new TextBox();
+            label5 = new Label();
+            label17 = new Label();
+            LbGenIb = new Label();
             PnVt = new Panel();
             CbVtEvents = new ComboBox();
             BtnVtConfirm = new Button();
@@ -63,13 +92,35 @@
             label2 = new Label();
             label4 = new Label();
             TimerEvents = new System.Windows.Forms.Timer(components);
+            PnGeneral = new Panel();
+            groupBox2 = new GroupBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            panel5 = new Panel();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label18 = new Label();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            TbGenUnbalanceI = new TextBox();
+            TbGenUnbalanceV = new TextBox();
+            label19 = new Label();
+            label20 = new Label();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            CbGenMeasures = new ComboBox();
+            BtnAbcOr012 = new Button();
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panel2.SuspendLayout();
             TlpSvTable.SuspendLayout();
             panel3.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             PnVt.SuspendLayout();
             groupBox1.SuspendLayout();
+            PnGeneral.SuspendLayout();
+            groupBox2.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            panel5.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -169,9 +220,9 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(button3);
-            panel3.Controls.Add(button2);
-            panel3.Controls.Add(button1);
+            panel3.Controls.Add(BtnConfig);
+            panel3.Controls.Add(BtnDel);
+            panel3.Controls.Add(BtnSaveWaveForm);
             panel3.Controls.Add(PnMenu);
             panel3.Controls.Add(Cbxfluctuation);
             panel3.Controls.Add(CbxUnbalance);
@@ -189,46 +240,47 @@
             panel3.Size = new Size(313, 499);
             panel3.TabIndex = 1;
             // 
-            // button3
+            // BtnConfig
             // 
-            button3.AutoSize = true;
-            button3.FlatAppearance.BorderSize = 5;
-            button3.FlatStyle = FlatStyle.Popup;
-            button3.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(11, 419);
-            button3.Name = "button3";
-            button3.Size = new Size(133, 33);
-            button3.TabIndex = 84;
-            button3.Text = "Configurar SV";
-            button3.UseVisualStyleBackColor = true;
+            BtnConfig.AutoSize = true;
+            BtnConfig.FlatAppearance.BorderSize = 5;
+            BtnConfig.FlatStyle = FlatStyle.Popup;
+            BtnConfig.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnConfig.Location = new Point(11, 419);
+            BtnConfig.Name = "BtnConfig";
+            BtnConfig.Size = new Size(133, 33);
+            BtnConfig.TabIndex = 84;
+            BtnConfig.Text = "Configurar SV";
+            BtnConfig.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // BtnDel
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button2.AutoSize = true;
-            button2.FlatAppearance.BorderSize = 5;
-            button2.FlatStyle = FlatStyle.Popup;
-            button2.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(180, 419);
-            button2.Name = "button2";
-            button2.Size = new Size(125, 33);
-            button2.TabIndex = 83;
-            button2.Text = "Excluir";
-            button2.UseVisualStyleBackColor = true;
+            BtnDel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnDel.AutoSize = true;
+            BtnDel.FlatAppearance.BorderSize = 5;
+            BtnDel.FlatStyle = FlatStyle.Popup;
+            BtnDel.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnDel.Location = new Point(180, 419);
+            BtnDel.Name = "BtnDel";
+            BtnDel.Size = new Size(125, 33);
+            BtnDel.TabIndex = 83;
+            BtnDel.Text = "Excluir";
+            BtnDel.UseVisualStyleBackColor = true;
+            BtnDel.Click += BtnDel_Click;
             // 
-            // button1
+            // BtnSaveWaveForm
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.AutoSize = true;
-            button1.FlatAppearance.BorderSize = 5;
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(20, 458);
-            button1.Name = "button1";
-            button1.Size = new Size(272, 33);
-            button1.TabIndex = 82;
-            button1.Text = "Capturar Forma de Onda";
-            button1.UseVisualStyleBackColor = true;
+            BtnSaveWaveForm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnSaveWaveForm.AutoSize = true;
+            BtnSaveWaveForm.FlatAppearance.BorderSize = 5;
+            BtnSaveWaveForm.FlatStyle = FlatStyle.Popup;
+            BtnSaveWaveForm.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnSaveWaveForm.Location = new Point(20, 458);
+            BtnSaveWaveForm.Name = "BtnSaveWaveForm";
+            BtnSaveWaveForm.Size = new Size(272, 33);
+            BtnSaveWaveForm.TabIndex = 82;
+            BtnSaveWaveForm.Text = "Capturar Forma de Onda";
+            BtnSaveWaveForm.UseVisualStyleBackColor = true;
             // 
             // PnMenu
             // 
@@ -361,6 +413,450 @@
             CbxGeneral.UseVisualStyleBackColor = true;
             CbxGeneral.CheckedChanged += CbxGeneral_CheckedChanged;
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.ColumnCount = 6;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.636364F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.90909F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel1.Controls.Add(TbGenVaAng, 2, 1);
+            tableLayoutPanel1.Controls.Add(LbGenVa, 0, 1);
+            tableLayoutPanel1.Controls.Add(TbGenVaMod, 1, 1);
+            tableLayoutPanel1.Controls.Add(label7, 2, 0);
+            tableLayoutPanel1.Controls.Add(label6, 1, 0);
+            tableLayoutPanel1.Controls.Add(TbGenVbAng, 2, 2);
+            tableLayoutPanel1.Controls.Add(LbGenVb, 0, 2);
+            tableLayoutPanel1.Controls.Add(TbGenVbMod, 1, 2);
+            tableLayoutPanel1.Controls.Add(LbGenVc, 0, 3);
+            tableLayoutPanel1.Controls.Add(LbGenVn, 0, 4);
+            tableLayoutPanel1.Controls.Add(TbGenVcMod, 1, 3);
+            tableLayoutPanel1.Controls.Add(TbGenVnMod, 1, 4);
+            tableLayoutPanel1.Controls.Add(TbGenVcAng, 2, 3);
+            tableLayoutPanel1.Controls.Add(TbGenVnAng, 2, 4);
+            tableLayoutPanel1.Controls.Add(LbGenIa, 3, 1);
+            tableLayoutPanel1.Controls.Add(LbGenIc, 3, 3);
+            tableLayoutPanel1.Controls.Add(LbGenIn, 3, 4);
+            tableLayoutPanel1.Controls.Add(TbGenIaMod, 4, 1);
+            tableLayoutPanel1.Controls.Add(TbGenIaAng, 5, 1);
+            tableLayoutPanel1.Controls.Add(TbGenIbMod, 4, 2);
+            tableLayoutPanel1.Controls.Add(TbGenIbAng, 5, 2);
+            tableLayoutPanel1.Controls.Add(TbGenIcMod, 4, 3);
+            tableLayoutPanel1.Controls.Add(TbGenIcAng, 5, 3);
+            tableLayoutPanel1.Controls.Add(TbGenInMod, 4, 4);
+            tableLayoutPanel1.Controls.Add(TbGenInAng, 5, 4);
+            tableLayoutPanel1.Controls.Add(label5, 4, 0);
+            tableLayoutPanel1.Controls.Add(label17, 5, 0);
+            tableLayoutPanel1.Controls.Add(LbGenIb, 3, 2);
+            tableLayoutPanel1.Dock = DockStyle.Top;
+            tableLayoutPanel1.Location = new Point(3, 41);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 6;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 0F));
+            tableLayoutPanel1.Size = new Size(275, 121);
+            tableLayoutPanel1.TabIndex = 93;
+            // 
+            // TbGenVaAng
+            // 
+            TbGenVaAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVaAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVaAng.Dock = DockStyle.Fill;
+            TbGenVaAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVaAng.ForeColor = Color.Lavender;
+            TbGenVaAng.Location = new Point(95, 21);
+            TbGenVaAng.Margin = new Padding(0);
+            TbGenVaAng.Name = "TbGenVaAng";
+            TbGenVaAng.Size = new Size(41, 25);
+            TbGenVaAng.TabIndex = 92;
+            // 
+            // LbGenVa
+            // 
+            LbGenVa.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenVa.BorderStyle = BorderStyle.FixedSingle;
+            LbGenVa.Dock = DockStyle.Fill;
+            LbGenVa.FlatStyle = FlatStyle.Popup;
+            LbGenVa.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenVa.Location = new Point(0, 21);
+            LbGenVa.Margin = new Padding(0);
+            LbGenVa.Name = "LbGenVa";
+            LbGenVa.Size = new Size(32, 25);
+            LbGenVa.TabIndex = 90;
+            LbGenVa.Text = "Va";
+            LbGenVa.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TbGenVaMod
+            // 
+            TbGenVaMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVaMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVaMod.Dock = DockStyle.Fill;
+            TbGenVaMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVaMod.ForeColor = Color.Lavender;
+            TbGenVaMod.Location = new Point(32, 21);
+            TbGenVaMod.Margin = new Padding(0);
+            TbGenVaMod.Name = "TbGenVaMod";
+            TbGenVaMod.Size = new Size(63, 25);
+            TbGenVaMod.TabIndex = 91;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.FromArgb(31, 45, 56);
+            label7.BorderStyle = BorderStyle.FixedSingle;
+            label7.Dock = DockStyle.Fill;
+            label7.FlatStyle = FlatStyle.Popup;
+            label7.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label7.Location = new Point(95, 0);
+            label7.Margin = new Padding(0);
+            label7.Name = "label7";
+            label7.Size = new Size(41, 21);
+            label7.TabIndex = 37;
+            label7.Text = "Ang";
+            label7.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = Color.FromArgb(31, 45, 56);
+            label6.BorderStyle = BorderStyle.FixedSingle;
+            label6.Dock = DockStyle.Fill;
+            label6.FlatStyle = FlatStyle.Popup;
+            label6.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label6.Location = new Point(32, 0);
+            label6.Margin = new Padding(0);
+            label6.Name = "label6";
+            label6.Size = new Size(63, 21);
+            label6.TabIndex = 36;
+            label6.Text = "Modulo";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TbGenVbAng
+            // 
+            TbGenVbAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVbAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVbAng.Dock = DockStyle.Fill;
+            TbGenVbAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVbAng.ForeColor = Color.Lavender;
+            TbGenVbAng.Location = new Point(95, 46);
+            TbGenVbAng.Margin = new Padding(0);
+            TbGenVbAng.Name = "TbGenVbAng";
+            TbGenVbAng.Size = new Size(41, 25);
+            TbGenVbAng.TabIndex = 94;
+            // 
+            // LbGenVb
+            // 
+            LbGenVb.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenVb.BorderStyle = BorderStyle.FixedSingle;
+            LbGenVb.Dock = DockStyle.Fill;
+            LbGenVb.FlatStyle = FlatStyle.Popup;
+            LbGenVb.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenVb.Location = new Point(0, 46);
+            LbGenVb.Margin = new Padding(0);
+            LbGenVb.Name = "LbGenVb";
+            LbGenVb.Size = new Size(32, 25);
+            LbGenVb.TabIndex = 93;
+            LbGenVb.Text = "Vb";
+            LbGenVb.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TbGenVbMod
+            // 
+            TbGenVbMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVbMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVbMod.Dock = DockStyle.Fill;
+            TbGenVbMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVbMod.ForeColor = Color.Lavender;
+            TbGenVbMod.Location = new Point(32, 46);
+            TbGenVbMod.Margin = new Padding(0);
+            TbGenVbMod.Name = "TbGenVbMod";
+            TbGenVbMod.Size = new Size(63, 25);
+            TbGenVbMod.TabIndex = 95;
+            // 
+            // LbGenVc
+            // 
+            LbGenVc.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenVc.BorderStyle = BorderStyle.FixedSingle;
+            LbGenVc.Dock = DockStyle.Fill;
+            LbGenVc.FlatStyle = FlatStyle.Popup;
+            LbGenVc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenVc.Location = new Point(0, 71);
+            LbGenVc.Margin = new Padding(0);
+            LbGenVc.Name = "LbGenVc";
+            LbGenVc.Size = new Size(32, 25);
+            LbGenVc.TabIndex = 96;
+            LbGenVc.Text = "Vc";
+            LbGenVc.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // LbGenVn
+            // 
+            LbGenVn.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenVn.BorderStyle = BorderStyle.FixedSingle;
+            LbGenVn.Dock = DockStyle.Fill;
+            LbGenVn.FlatStyle = FlatStyle.Popup;
+            LbGenVn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenVn.Location = new Point(0, 96);
+            LbGenVn.Margin = new Padding(0);
+            LbGenVn.Name = "LbGenVn";
+            LbGenVn.Size = new Size(32, 25);
+            LbGenVn.TabIndex = 97;
+            LbGenVn.Text = "Vn";
+            LbGenVn.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TbGenVcMod
+            // 
+            TbGenVcMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVcMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVcMod.Dock = DockStyle.Fill;
+            TbGenVcMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVcMod.ForeColor = Color.Lavender;
+            TbGenVcMod.Location = new Point(32, 71);
+            TbGenVcMod.Margin = new Padding(0);
+            TbGenVcMod.Name = "TbGenVcMod";
+            TbGenVcMod.Size = new Size(63, 25);
+            TbGenVcMod.TabIndex = 102;
+            // 
+            // TbGenVnMod
+            // 
+            TbGenVnMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVnMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVnMod.Dock = DockStyle.Fill;
+            TbGenVnMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVnMod.ForeColor = Color.Lavender;
+            TbGenVnMod.Location = new Point(32, 96);
+            TbGenVnMod.Margin = new Padding(0);
+            TbGenVnMod.Name = "TbGenVnMod";
+            TbGenVnMod.Size = new Size(63, 25);
+            TbGenVnMod.TabIndex = 103;
+            // 
+            // TbGenVcAng
+            // 
+            TbGenVcAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVcAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVcAng.Dock = DockStyle.Fill;
+            TbGenVcAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVcAng.ForeColor = Color.Lavender;
+            TbGenVcAng.Location = new Point(95, 71);
+            TbGenVcAng.Margin = new Padding(0);
+            TbGenVcAng.Name = "TbGenVcAng";
+            TbGenVcAng.Size = new Size(41, 25);
+            TbGenVcAng.TabIndex = 107;
+            // 
+            // TbGenVnAng
+            // 
+            TbGenVnAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenVnAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenVnAng.Dock = DockStyle.Fill;
+            TbGenVnAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenVnAng.ForeColor = Color.Lavender;
+            TbGenVnAng.Location = new Point(95, 96);
+            TbGenVnAng.Margin = new Padding(0);
+            TbGenVnAng.Name = "TbGenVnAng";
+            TbGenVnAng.Size = new Size(41, 25);
+            TbGenVnAng.TabIndex = 108;
+            // 
+            // LbGenIa
+            // 
+            LbGenIa.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenIa.BorderStyle = BorderStyle.FixedSingle;
+            LbGenIa.Dock = DockStyle.Fill;
+            LbGenIa.FlatStyle = FlatStyle.Popup;
+            LbGenIa.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenIa.Location = new Point(136, 21);
+            LbGenIa.Margin = new Padding(0);
+            LbGenIa.Name = "LbGenIa";
+            LbGenIa.Size = new Size(27, 25);
+            LbGenIa.TabIndex = 98;
+            LbGenIa.Text = "Ia";
+            LbGenIa.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // LbGenIc
+            // 
+            LbGenIc.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenIc.BorderStyle = BorderStyle.FixedSingle;
+            LbGenIc.Dock = DockStyle.Fill;
+            LbGenIc.FlatStyle = FlatStyle.Popup;
+            LbGenIc.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenIc.Location = new Point(136, 71);
+            LbGenIc.Margin = new Padding(0);
+            LbGenIc.Name = "LbGenIc";
+            LbGenIc.Size = new Size(27, 25);
+            LbGenIc.TabIndex = 100;
+            LbGenIc.Text = "Ic";
+            LbGenIc.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // LbGenIn
+            // 
+            LbGenIn.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenIn.BorderStyle = BorderStyle.FixedSingle;
+            LbGenIn.Dock = DockStyle.Fill;
+            LbGenIn.FlatStyle = FlatStyle.Popup;
+            LbGenIn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenIn.Location = new Point(136, 96);
+            LbGenIn.Margin = new Padding(0);
+            LbGenIn.Name = "LbGenIn";
+            LbGenIn.Size = new Size(27, 25);
+            LbGenIn.TabIndex = 101;
+            LbGenIn.Text = "In";
+            LbGenIn.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TbGenIaMod
+            // 
+            TbGenIaMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIaMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIaMod.Dock = DockStyle.Fill;
+            TbGenIaMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIaMod.ForeColor = Color.Lavender;
+            TbGenIaMod.Location = new Point(163, 21);
+            TbGenIaMod.Margin = new Padding(0);
+            TbGenIaMod.Name = "TbGenIaMod";
+            TbGenIaMod.Size = new Size(69, 25);
+            TbGenIaMod.TabIndex = 104;
+            // 
+            // TbGenIaAng
+            // 
+            TbGenIaAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIaAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIaAng.Dock = DockStyle.Fill;
+            TbGenIaAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIaAng.ForeColor = Color.Lavender;
+            TbGenIaAng.Location = new Point(232, 21);
+            TbGenIaAng.Margin = new Padding(0);
+            TbGenIaAng.Name = "TbGenIaAng";
+            TbGenIaAng.Size = new Size(43, 25);
+            TbGenIaAng.TabIndex = 109;
+            // 
+            // TbGenIbMod
+            // 
+            TbGenIbMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIbMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIbMod.Dock = DockStyle.Fill;
+            TbGenIbMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIbMod.ForeColor = Color.Lavender;
+            TbGenIbMod.Location = new Point(163, 46);
+            TbGenIbMod.Margin = new Padding(0);
+            TbGenIbMod.Name = "TbGenIbMod";
+            TbGenIbMod.Size = new Size(69, 25);
+            TbGenIbMod.TabIndex = 105;
+            // 
+            // TbGenIbAng
+            // 
+            TbGenIbAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIbAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIbAng.Dock = DockStyle.Fill;
+            TbGenIbAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIbAng.ForeColor = Color.Lavender;
+            TbGenIbAng.Location = new Point(232, 46);
+            TbGenIbAng.Margin = new Padding(0);
+            TbGenIbAng.Name = "TbGenIbAng";
+            TbGenIbAng.Size = new Size(43, 25);
+            TbGenIbAng.TabIndex = 110;
+            // 
+            // TbGenIcMod
+            // 
+            TbGenIcMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIcMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIcMod.Dock = DockStyle.Fill;
+            TbGenIcMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIcMod.ForeColor = Color.Lavender;
+            TbGenIcMod.Location = new Point(163, 71);
+            TbGenIcMod.Margin = new Padding(0);
+            TbGenIcMod.Name = "TbGenIcMod";
+            TbGenIcMod.Size = new Size(69, 25);
+            TbGenIcMod.TabIndex = 106;
+            // 
+            // TbGenIcAng
+            // 
+            TbGenIcAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenIcAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenIcAng.Dock = DockStyle.Fill;
+            TbGenIcAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenIcAng.ForeColor = Color.Lavender;
+            TbGenIcAng.Location = new Point(232, 71);
+            TbGenIcAng.Margin = new Padding(0);
+            TbGenIcAng.Name = "TbGenIcAng";
+            TbGenIcAng.Size = new Size(43, 25);
+            TbGenIcAng.TabIndex = 112;
+            // 
+            // TbGenInMod
+            // 
+            TbGenInMod.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenInMod.BorderStyle = BorderStyle.FixedSingle;
+            TbGenInMod.Dock = DockStyle.Fill;
+            TbGenInMod.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenInMod.ForeColor = Color.Lavender;
+            TbGenInMod.Location = new Point(163, 96);
+            TbGenInMod.Margin = new Padding(0);
+            TbGenInMod.Name = "TbGenInMod";
+            TbGenInMod.Size = new Size(69, 25);
+            TbGenInMod.TabIndex = 113;
+            // 
+            // TbGenInAng
+            // 
+            TbGenInAng.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenInAng.BorderStyle = BorderStyle.FixedSingle;
+            TbGenInAng.Dock = DockStyle.Fill;
+            TbGenInAng.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenInAng.ForeColor = Color.Lavender;
+            TbGenInAng.Location = new Point(232, 96);
+            TbGenInAng.Margin = new Padding(0);
+            TbGenInAng.Name = "TbGenInAng";
+            TbGenInAng.Size = new Size(43, 25);
+            TbGenInAng.TabIndex = 111;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.FromArgb(31, 45, 56);
+            label5.BorderStyle = BorderStyle.FixedSingle;
+            label5.Dock = DockStyle.Fill;
+            label5.FlatStyle = FlatStyle.Popup;
+            label5.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label5.Location = new Point(163, 0);
+            label5.Margin = new Padding(0);
+            label5.Name = "label5";
+            label5.Size = new Size(69, 21);
+            label5.TabIndex = 114;
+            label5.Text = "Modulo";
+            label5.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.BackColor = Color.FromArgb(31, 45, 56);
+            label17.BorderStyle = BorderStyle.FixedSingle;
+            label17.Dock = DockStyle.Fill;
+            label17.FlatStyle = FlatStyle.Popup;
+            label17.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label17.Location = new Point(232, 0);
+            label17.Margin = new Padding(0);
+            label17.Name = "label17";
+            label17.Size = new Size(43, 21);
+            label17.TabIndex = 115;
+            label17.Text = "Ang";
+            label17.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // LbGenIb
+            // 
+            LbGenIb.BackColor = Color.FromArgb(31, 45, 56);
+            LbGenIb.BorderStyle = BorderStyle.FixedSingle;
+            LbGenIb.Dock = DockStyle.Fill;
+            LbGenIb.FlatStyle = FlatStyle.Popup;
+            LbGenIb.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            LbGenIb.Location = new Point(136, 46);
+            LbGenIb.Margin = new Padding(0);
+            LbGenIb.Name = "LbGenIb";
+            LbGenIb.Size = new Size(27, 25);
+            LbGenIb.TabIndex = 99;
+            LbGenIb.Text = "Ib";
+            LbGenIb.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // PnVt
             // 
             PnVt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -370,7 +866,7 @@
             PnVt.Controls.Add(BtnVtDownload);
             PnVt.Controls.Add(groupBox1);
             PnVt.Controls.Add(label4);
-            PnVt.Location = new Point(47, 626);
+            PnVt.Location = new Point(20, 603);
             PnVt.Name = "PnVt";
             PnVt.Padding = new Padding(5);
             PnVt.Size = new Size(303, 301);
@@ -576,12 +1072,220 @@
             TimerEvents.Interval = 1000;
             TimerEvents.Tick += TimerEvents_Tick;
             // 
+            // PnGeneral
+            // 
+            PnGeneral.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PnGeneral.BackColor = Color.FromArgb(31, 45, 56);
+            PnGeneral.Controls.Add(groupBox2);
+            PnGeneral.Location = new Point(369, 603);
+            PnGeneral.Name = "PnGeneral";
+            PnGeneral.Padding = new Padding(5);
+            PnGeneral.Size = new Size(303, 301);
+            PnGeneral.TabIndex = 2;
+            PnGeneral.Visible = false;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(tableLayoutPanel3);
+            groupBox2.Font = new Font("Segoe UI", 11F);
+            groupBox2.ForeColor = Color.Lavender;
+            groupBox2.Location = new Point(8, 8);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(287, 285);
+            groupBox2.TabIndex = 88;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Medições";
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel1, 0, 1);
+            tableLayoutPanel3.Controls.Add(panel5, 0, 2);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel6, 0, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(3, 23);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.Padding = new Padding(0, 6, 0, 0);
+            tableLayoutPanel3.RowCount = 3;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 131F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+            tableLayoutPanel3.Size = new Size(281, 259);
+            tableLayoutPanel3.TabIndex = 94;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(tableLayoutPanel4);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(3, 172);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(275, 84);
+            panel5.TabIndex = 94;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.AutoSize = true;
+            tableLayoutPanel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel4.ColumnCount = 1;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.Controls.Add(label18, 0, 0);
+            tableLayoutPanel4.Controls.Add(tableLayoutPanel5, 0, 1);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(0, 0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 2;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle());
+            tableLayoutPanel4.RowStyles.Add(new RowStyle());
+            tableLayoutPanel4.Size = new Size(275, 84);
+            tableLayoutPanel4.TabIndex = 3;
+            // 
+            // label18
+            // 
+            label18.BackColor = Color.FromArgb(31, 45, 56);
+            label18.BorderStyle = BorderStyle.FixedSingle;
+            label18.Dock = DockStyle.Fill;
+            label18.FlatStyle = FlatStyle.Popup;
+            label18.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            label18.Location = new Point(0, 0);
+            label18.Margin = new Padding(0);
+            label18.Name = "label18";
+            label18.Size = new Size(275, 23);
+            label18.TabIndex = 35;
+            label18.Text = "Desbalaço";
+            label18.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.AutoSize = true;
+            tableLayoutPanel5.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel5.ColumnCount = 2;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 54.6391754F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45.3608246F));
+            tableLayoutPanel5.Controls.Add(TbGenUnbalanceI, 1, 1);
+            tableLayoutPanel5.Controls.Add(TbGenUnbalanceV, 1, 0);
+            tableLayoutPanel5.Controls.Add(label19, 0, 0);
+            tableLayoutPanel5.Controls.Add(label20, 0, 1);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(3, 26);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle());
+            tableLayoutPanel5.RowStyles.Add(new RowStyle());
+            tableLayoutPanel5.RowStyles.Add(new RowStyle());
+            tableLayoutPanel5.Size = new Size(269, 55);
+            tableLayoutPanel5.TabIndex = 36;
+            // 
+            // TbGenUnbalanceI
+            // 
+            TbGenUnbalanceI.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenUnbalanceI.BorderStyle = BorderStyle.FixedSingle;
+            TbGenUnbalanceI.Dock = DockStyle.Fill;
+            TbGenUnbalanceI.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenUnbalanceI.ForeColor = Color.Lavender;
+            TbGenUnbalanceI.Location = new Point(146, 25);
+            TbGenUnbalanceI.Margin = new Padding(0);
+            TbGenUnbalanceI.Name = "TbGenUnbalanceI";
+            TbGenUnbalanceI.Size = new Size(123, 25);
+            TbGenUnbalanceI.TabIndex = 93;
+            // 
+            // TbGenUnbalanceV
+            // 
+            TbGenUnbalanceV.BackColor = Color.FromArgb(31, 45, 56);
+            TbGenUnbalanceV.BorderStyle = BorderStyle.FixedSingle;
+            TbGenUnbalanceV.Dock = DockStyle.Fill;
+            TbGenUnbalanceV.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            TbGenUnbalanceV.ForeColor = Color.Lavender;
+            TbGenUnbalanceV.Location = new Point(146, 0);
+            TbGenUnbalanceV.Margin = new Padding(0);
+            TbGenUnbalanceV.Name = "TbGenUnbalanceV";
+            TbGenUnbalanceV.Size = new Size(123, 25);
+            TbGenUnbalanceV.TabIndex = 92;
+            // 
+            // label19
+            // 
+            label19.BackColor = Color.FromArgb(31, 45, 56);
+            label19.BorderStyle = BorderStyle.FixedSingle;
+            label19.Dock = DockStyle.Fill;
+            label19.FlatStyle = FlatStyle.Popup;
+            label19.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label19.Location = new Point(0, 0);
+            label19.Margin = new Padding(0);
+            label19.Name = "label19";
+            label19.Size = new Size(146, 25);
+            label19.TabIndex = 36;
+            label19.Text = "Tensão";
+            label19.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label20
+            // 
+            label20.BackColor = Color.FromArgb(31, 45, 56);
+            label20.BorderStyle = BorderStyle.FixedSingle;
+            label20.FlatStyle = FlatStyle.Popup;
+            label20.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            label20.Location = new Point(0, 25);
+            label20.Margin = new Padding(0);
+            label20.Name = "label20";
+            label20.Size = new Size(146, 25);
+            label20.TabIndex = 37;
+            label20.Text = "Corrente";
+            label20.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.AutoSize = true;
+            tableLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel6.ColumnCount = 2;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel6.Controls.Add(CbGenMeasures, 0, 0);
+            tableLayoutPanel6.Controls.Add(BtnAbcOr012, 1, 0);
+            tableLayoutPanel6.Dock = DockStyle.Fill;
+            tableLayoutPanel6.Location = new Point(0, 6);
+            tableLayoutPanel6.Margin = new Padding(0);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 1;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel6.Size = new Size(281, 32);
+            tableLayoutPanel6.TabIndex = 5;
+            // 
+            // CbGenMeasures
+            // 
+            CbGenMeasures.BackColor = Color.FromArgb(31, 45, 56);
+            CbGenMeasures.Dock = DockStyle.Fill;
+            CbGenMeasures.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            CbGenMeasures.ForeColor = Color.Lavender;
+            CbGenMeasures.FormattingEnabled = true;
+            CbGenMeasures.Items.AddRange(new object[] { "RMS", "Componente Simétrica", "Fundamental", "2º Harmônico", "3º Harmônico", "4º Harmônico", "5º Harmônico", "6º Harmônico", "7º Harmônico", "8º Harmônico", "9º Harmônico", "10º Harmônico", "11º Harmônico", "12º Harmônico", "13º Harmônico", "14º Harmônico", "15º Harmônico", "16º Harmônico", "17º Harmônico", "18º Harmônico", "19º Harmônico", "20º Harmônico", "21º Harmônico", "22º Harmônico", "23º Harmônico", "24º Harmônico" });
+            CbGenMeasures.Location = new Point(5, 0);
+            CbGenMeasures.Margin = new Padding(5, 0, 5, 0);
+            CbGenMeasures.Name = "CbGenMeasures";
+            CbGenMeasures.Size = new Size(214, 29);
+            CbGenMeasures.TabIndex = 87;
+            CbGenMeasures.SelectedIndexChanged += CbGenMeasures_SelectedIndexChanged;
+            // 
+            // BtnAbcOr012
+            // 
+            BtnAbcOr012.AutoSize = true;
+            BtnAbcOr012.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnAbcOr012.Dock = DockStyle.Fill;
+            BtnAbcOr012.FlatStyle = FlatStyle.Popup;
+            BtnAbcOr012.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnAbcOr012.Location = new Point(227, 3);
+            BtnAbcOr012.Name = "BtnAbcOr012";
+            BtnAbcOr012.Size = new Size(51, 26);
+            BtnAbcOr012.TabIndex = 6;
+            BtnAbcOr012.Text = "012";
+            BtnAbcOr012.UseVisualStyleBackColor = true;
+            BtnAbcOr012.Click += button1_Click;
+            // 
             // MonitorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 58, 73);
-            ClientSize = new Size(1068, 954);
+            ClientSize = new Size(1068, 1100);
+            Controls.Add(PnGeneral);
             Controls.Add(PnVt);
             Controls.Add(panel1);
             ForeColor = Color.Lavender;
@@ -597,10 +1301,24 @@
             TlpSvTable.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             PnVt.ResumeLayout(false);
             PnVt.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            PnGeneral.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -629,9 +1347,9 @@
         private CheckBox CbxHarm;
         private Panel PnMenu;
         private CheckBox Cbxfluctuation;
-        private Button button2;
-        private Button button1;
-        private Button button3;
+        private Button BtnDel;
+        private Button BtnSaveWaveForm;
+        private Button BtnConfig;
         private Panel PnVt;
         private Label label8;
         private TextBox TbVtType;
@@ -648,5 +1366,48 @@
         private Button BtnVtConfirm;
         private Button BtnStartSearch;
         private System.Windows.Forms.Timer TimerEvents;
+        private Panel PnGeneral;
+        private GroupBox groupBox2;
+        private ComboBox CbGenMeasures;
+        private Label label7;
+        private Label label6;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TextBox TbGenVaAng;
+        private Label LbGenVa;
+        private TextBox TbGenVaMod;
+        private TextBox TbGenVbMod;
+        private Label LbGenVb;
+        private TextBox TbGenVbAng;
+        private TextBox TbGenInMod;
+        private Label LbGenIn;
+        private Label LbGenVc;
+        private Label LbGenVn;
+        private Label LbGenIa;
+        private Label LbGenIb;
+        private Label LbGenIc;
+        private TextBox TbGenVcMod;
+        private TextBox TbGenVnMod;
+        private TextBox TbGenIaMod;
+        private TextBox TbGenIbMod;
+        private TextBox TbGenIcMod;
+        private TextBox TbGenVcAng;
+        private TextBox TbGenVnAng;
+        private TextBox TbGenIaAng;
+        private TextBox TbGenIbAng;
+        private TextBox TbGenInAng;
+        private TextBox TbGenIcAng;
+        private Label label5;
+        private Label label17;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Panel panel5;
+        private Label label18;
+        private Label label19;
+        private TableLayoutPanel tableLayoutPanel4;
+        private TableLayoutPanel tableLayoutPanel5;
+        private TextBox TbGenUnbalanceI;
+        private TextBox TbGenUnbalanceV;
+        private Label label20;
+        private TableLayoutPanel tableLayoutPanel6;
+        private Button BtnAbcOr012;
     }
 }

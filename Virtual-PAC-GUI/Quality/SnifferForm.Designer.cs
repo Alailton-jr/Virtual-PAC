@@ -134,6 +134,7 @@
             label27 = new Label();
             label26 = new Label();
             TimerGetResults = new System.Windows.Forms.Timer(components);
+            pBarSearch = new ProgressBar();
             TlpData.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -1069,6 +1070,7 @@
             // 
             // PnMainSniffer
             // 
+            PnMainSniffer.Controls.Add(pBarSearch);
             PnMainSniffer.Controls.Add(label1);
             PnMainSniffer.Controls.Add(TbSVFound);
             PnMainSniffer.Controls.Add(LbLoading);
@@ -1715,6 +1717,16 @@
             TimerGetResults.Interval = 500;
             TimerGetResults.Tick += TimerGetResults_Tick;
             // 
+            // pBarSearch
+            // 
+            pBarSearch.BackColor = Color.FromArgb(40, 58, 73);
+            pBarSearch.ForeColor = Color.Brown;
+            pBarSearch.Location = new Point(284, 71);
+            pBarSearch.Name = "pBarSearch";
+            pBarSearch.Size = new Size(202, 23);
+            pBarSearch.TabIndex = 56;
+            pBarSearch.Visible = false;
+            // 
             // SnifferForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1880,5 +1892,6 @@
         private CheckBox CbxUnbalance;
         private CheckBox CbxTransient;
         private CheckBox CbxHarm;
+        private ProgressBar pBarSearch;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -797,15 +798,17 @@ namespace TestSet
     {
         [JsonIgnore]
         public List<List<double>> data { get; set; }
+        public List<string> labels { get; set; }
         public string fileName { get; set; }
+        public string fileLabel { get; set; }
         public bool loop { get; set; }
         public int nData { get; set; }
-        public int[] setup { get; 
-        set; }
+        public int[] setup { get; set; }
         public TransientConfig()
         {
             this.data = new List<List<double>>();
             this.fileName = "";
+
             this.setup = new int[8];
             this.nData = -1;
             for (int i = 0; i < 8; i++)
@@ -820,9 +823,45 @@ namespace TestSet
     
         public bool LoadDataFromFile(string filePath)
         {
-            data = new List<List<double>>();
+            
             try
             {
+                if (filePath.EndsWith(".csv"))
+                {
+                    List<List<double>> columnsList = new List<List<double>>();
+                    using (TextFieldParser parser = new TextFieldParser(filePath))
+                    {
+                        parser.TextFieldType = FieldType.Delimited;
+                        parser.SetDelimiters(",");
+                        while (!parser.EndOfData)
+                        {
+                            string[] fields = parser.ReadFields();
+                            for (int i = 0; i < fields.Length; i++)
+                            {
+                                double value;
+                                if (double.TryParse(fields[i], out value))
+                                {
+                                    // If this is the first row, create a new list for each column
+                                    if (columnsList.Count <= i)
+                                    {
+                                        columnsList.Add(new List<double>());
+                                    }
+                                    // Add the value to the corresponding column list
+                                    columnsList[i].Add(value);
+                                }
+                                else
+                                {
+                                    // Handle parsing errors if necessary
+                                    Console.WriteLine($"Error parsing value: {fields[i]}");
+                                }
+                            }
+                        }
+                    }
+                    this.data = columnsList;
+                    return  true;
+                }
+
+                data = new List<List<double>>();
                 using StreamReader sr = new StreamReader(filePath);
                 string line;
                 while ((line = sr.ReadLine()) != null)
