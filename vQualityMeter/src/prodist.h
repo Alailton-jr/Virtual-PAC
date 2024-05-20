@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <stdint.h>
 #include "sampledValue.h"
+#include <complex.h>
 
 typedef enum {
     Normal = 0,
@@ -23,7 +24,11 @@ typedef struct voltageVarThread{
     double criticalVoltage[2];
     union{
         uint64_t timestamp[2];
-        double voltage[3];
+        double complex measurement[41][8];
+        double fp;
+        double dit_h, dtt, dtt_p, dtt_i, dtt_3, dtt_95, dtt_p_99, dtt_i_95, dtt_3_95;
+        double complex compSym
+        double fd;
         voltageState_t state;
     }data[4096];
     int index;
