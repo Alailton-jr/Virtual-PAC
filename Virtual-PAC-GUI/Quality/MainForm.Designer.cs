@@ -51,6 +51,7 @@
             button2 = new Button();
             button4 = new Button();
             TimerServerCon = new System.Windows.Forms.Timer(components);
+            BtnProdist = new Button();
             PnTop.SuspendLayout();
             PnLeft.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -129,9 +130,10 @@
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(button3, 0, 4);
+            tableLayoutPanel1.Controls.Add(BtnProdist, 0, 3);
+            tableLayoutPanel1.Controls.Add(button3, 0, 5);
             tableLayoutPanel1.Controls.Add(BtnMonitor, 0, 2);
-            tableLayoutPanel1.Controls.Add(BtnSniffer, 0, 3);
+            tableLayoutPanel1.Controls.Add(BtnSniffer, 0, 4);
             tableLayoutPanel1.Controls.Add(BtnGeneral, 0, 1);
             tableLayoutPanel1.Controls.Add(BtnServerConfig, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
@@ -139,13 +141,14 @@
             tableLayoutPanel1.Margin = new Padding(3, 30, 0, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(0, 40, 0, 0);
-            tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Size = new Size(180, 335);
+            tableLayoutPanel1.RowCount = 6;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel1.Size = new Size(180, 394);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // button3
@@ -158,7 +161,7 @@
             button3.Font = new Font("Segoe UI", 15F);
             button3.Image = Properties.Resources.file;
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(3, 279);
+            button3.Location = new Point(3, 338);
             button3.Margin = new Padding(3, 3, 3, 18);
             button3.Name = "button3";
             button3.Size = new Size(174, 38);
@@ -197,7 +200,7 @@
             BtnSniffer.Font = new Font("Segoe UI", 15F);
             BtnSniffer.Image = Properties.Resources.data;
             BtnSniffer.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnSniffer.Location = new Point(3, 220);
+            BtnSniffer.Location = new Point(3, 279);
             BtnSniffer.Margin = new Padding(3, 3, 3, 18);
             BtnSniffer.Name = "BtnSniffer";
             BtnSniffer.Size = new Size(174, 38);
@@ -355,6 +358,26 @@
             TimerServerCon.Interval = 1000;
             TimerServerCon.Tick += TimerServerCon_Tick;
             // 
+            // BtnProdist
+            // 
+            BtnProdist.AutoSize = true;
+            BtnProdist.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnProdist.Dock = DockStyle.Top;
+            BtnProdist.FlatAppearance.BorderSize = 0;
+            BtnProdist.FlatStyle = FlatStyle.Flat;
+            BtnProdist.Font = new Font("Segoe UI", 15F);
+            BtnProdist.Image = Properties.Resources.spyware;
+            BtnProdist.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnProdist.Location = new Point(3, 220);
+            BtnProdist.Margin = new Padding(3, 3, 3, 18);
+            BtnProdist.Name = "BtnProdist";
+            BtnProdist.Size = new Size(174, 38);
+            BtnProdist.TabIndex = 7;
+            BtnProdist.Text = "          PRODIST";
+            BtnProdist.TextAlign = ContentAlignment.MiddleLeft;
+            BtnProdist.UseVisualStyleBackColor = true;
+            BtnProdist.Click += BtnProdist_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -403,5 +426,6 @@
         private System.Windows.Forms.Timer TimerServerCon;
         private Label LbConStatus;
         private Button button3;
+        private Button BtnProdist;
     }
 }

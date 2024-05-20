@@ -186,3 +186,8 @@ C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.dll
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\refint\Ied.dll
 C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.pdb
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\bin\Debug\net6.0-windows\Ied.deps.json
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\bin\Debug\net6.0-windows\Ied.runtimeconfig.json
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\bin\Debug\net6.0-windows\Ied.pdb
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\Ied.genruntimeconfig.cache
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Ied\obj\Debug\net6.0-windows\ref\Ied.dll

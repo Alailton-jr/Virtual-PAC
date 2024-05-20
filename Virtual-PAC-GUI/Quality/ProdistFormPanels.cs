@@ -12,9 +12,14 @@ namespace Quality
 {
     public partial class ProdistFormPanels : Form
     {
+        public Panel varVoltage;
+
         public ProdistFormPanels()
         {
             InitializeComponent();
+
+            varVoltage = PnVarVoltage;
         }
+
     }
 }

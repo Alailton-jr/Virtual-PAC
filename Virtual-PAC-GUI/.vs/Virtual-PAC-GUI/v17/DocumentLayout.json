@@ -3,31 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\analyseform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\prodistformpanels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\prodistformpanels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\prodistformpanels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -36,6 +17,34 @@
     {
       "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\prodistformpanels.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\prodistformpanels.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\analyseform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\analyseform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\prodistform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|c:\\users\\alailton\\documents\\github\\virtual-pac\\virtual-pac-gui\\quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\snifferform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF517A6B-9812-4F13-979D-142DCF0CFCDC}|Quality\\Quality.csproj|solutionrelative:quality\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -45,82 +54,107 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Microsoft.Common.CurrentVersion.targets",
-              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ViewState": "AQIAAIMVAAAAAAAAAAAtwJsVAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2024-05-20T17:50:03.418Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AnalyseForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.Designer.cs",
-              "RelativeDocumentMoniker": "Quality\\AnalyseForm.Designer.cs",
-              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.Designer.cs",
-              "RelativeToolTip": "Quality\\AnalyseForm.Designer.cs",
-              "ViewState": "AQIAACcVAAAAAAAAAAArwDUVAAAWAAAA",
+              "Title": "ProdistFormPanels.cs",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.cs",
+              "RelativeDocumentMoniker": "Quality\\ProdistFormPanels.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.cs",
+              "RelativeToolTip": "Quality\\ProdistFormPanels.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:50:00.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AnalyseForm.cs",
-              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
-              "RelativeDocumentMoniker": "Quality\\AnalyseForm.cs",
-              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
-              "RelativeToolTip": "Quality\\AnalyseForm.cs",
-              "ViewState": "AQIAANMAAAAAAAAAAAArwOEAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:49:39.549Z",
+              "WhenOpened": "2024-05-20T19:05:44.46Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.Designer.cs",
-              "RelativeDocumentMoniker": "Quality\\MainForm.Designer.cs",
-              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.Designer.cs",
-              "RelativeToolTip": "Quality\\MainForm.Designer.cs",
-              "ViewState": "AQIAAJAAAAAAAAAAAAArwJ0AAAA1AAAA",
+              "Title": "ProdistFormPanels.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.Designer.cs",
+              "RelativeDocumentMoniker": "Quality\\ProdistFormPanels.Designer.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.Designer.cs",
+              "RelativeToolTip": "Quality\\ProdistFormPanels.Designer.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAwAAABrAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:49:08.695Z",
+              "WhenOpened": "2024-05-20T19:05:35.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
+              "Title": "AnalyseForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.Designer.cs",
+              "RelativeDocumentMoniker": "Quality\\AnalyseForm.Designer.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.Designer.cs",
+              "RelativeToolTip": "Quality\\AnalyseForm.Designer.cs",
+              "ViewState": "AQIAAIUUAAAAAAAAAAArwJkUAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T19:05:17.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SnifferForm.cs",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeDocumentMoniker": "Quality\\SnifferForm.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeToolTip": "Quality\\SnifferForm.cs",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAAAFMAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T19:04:17.917Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProdistForm.cs",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistForm.cs",
+              "RelativeDocumentMoniker": "Quality\\ProdistForm.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistForm.cs",
+              "RelativeToolTip": "Quality\\ProdistForm.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAADsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T18:59:35.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AnalyseForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs",
               "RelativeDocumentMoniker": "Quality\\AnalyseForm.cs",
               "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\AnalyseForm.cs [Design]",
               "RelativeToolTip": "Quality\\AnalyseForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:44:03.043Z",
+              "WhenOpened": "2024-05-20T18:43:47.36Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "ProdistFormPanels.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.cs",
               "RelativeDocumentMoniker": "Quality\\ProdistFormPanels.cs",
               "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\ProdistFormPanels.cs [Design]",
               "RelativeToolTip": "Quality\\ProdistFormPanels.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:40:53.149Z",
+              "WhenOpened": "2024-05-20T18:35:35.601Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SnifferForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs",
+              "RelativeDocumentMoniker": "Quality\\SnifferForm.cs",
+              "ToolTip": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\SnifferForm.cs [Design]",
+              "RelativeToolTip": "Quality\\SnifferForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T18:27:24.667Z",
               "EditorCaption": " [Design]"
             },
             {
@@ -136,12 +170,8 @@
               "EditorCaption": " [Design]"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "Classes.cs",
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\Classes.cs",
               "RelativeDocumentMoniker": "Quality\\Classes.cs",
@@ -149,12 +179,11 @@
               "RelativeToolTip": "Quality\\Classes.cs",
               "ViewState": "AQIAAOsAAAAAAAAAAAArwAQBAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T16:30:36.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T16:30:36.967Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "MainForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Alailton\\Documents\\Github\\Virtual-PAC\\Virtual-PAC-GUI\\Quality\\MainForm.cs",
               "RelativeDocumentMoniker": "Quality\\MainForm.cs",
