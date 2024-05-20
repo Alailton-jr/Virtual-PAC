@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Server
-build_property.ProjectDir = C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Server\
+build_property.ProjectDir = C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Server\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -28,9 +28,6 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MonitoringForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="PdirForm.cs">
       <SubType>Form</SubType>
     </Compile>
