@@ -60,3 +60,6 @@ C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug
 =======
 C:\Users\alail\OneDrive\Documentos\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.AnalyseForm.resources
 >>>>>>> 0104aa3f14601efaa4424075e2d5651f03c80a26
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.AnalyseForm.resources
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.ProdistForm.resources
+C:\Users\Alailton\Documents\Github\Virtual-PAC\Virtual-PAC-GUI\Quality\obj\Debug\net8.0-windows\Quality.ProdistFormPanels.resources
