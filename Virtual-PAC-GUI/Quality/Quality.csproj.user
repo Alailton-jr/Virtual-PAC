@@ -13,6 +13,12 @@
     <Compile Update="MonitorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ProdistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ProdistFormPanels.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ShowData.cs">
       <SubType>Form</SubType>
     </Compile>

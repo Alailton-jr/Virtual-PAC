@@ -12,6 +12,7 @@ namespace Quality
         private SnifferForm snifferForm;
         private MonitorForm monitorForm;
         private AnalyseForm analyseForm;
+        private ProdistForm prodistForm;
         public static vQualityControl mainControl;
 
 
@@ -27,6 +28,7 @@ namespace Quality
             snifferForm = new SnifferForm();
             monitorForm = new MonitorForm();
             analyseForm = new AnalyseForm();
+            prodistForm = new ProdistForm();
 
 
             mainControl.socket.ConnectionEstablished += (sender, e) =>
@@ -146,6 +148,11 @@ namespace Quality
         {
             analyseForm.extLoad();
             openChildForm(analyseForm);
+        }
+
+        private void BtnProdist_Click(object sender, EventArgs e)
+        {
+            openChildForm(prodistForm);
         }
     }
 }
