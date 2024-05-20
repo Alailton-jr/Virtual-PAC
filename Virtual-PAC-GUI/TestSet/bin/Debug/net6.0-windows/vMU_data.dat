@@ -1,5 +1,5 @@
 {
-  "numSV": 1,
+  "numSV": 5,
   "networkConfig": [
     {
       "svConfig": {
@@ -22,6 +22,94 @@
         "macSrc": "01:0C:CD:04:00:00",
         "confRev": 1
       }
+    },
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "SV_1",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:01",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_1",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:01",
+        "confRev": 1
+      }
+    },
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "SV_2",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:02",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_2",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:02",
+        "confRev": 1
+      }
+    },
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "SV_3",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:03",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_3",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:03",
+        "confRev": 1
+      }
+    },
+    {
+      "svConfig": {
+        "frequency": 60,
+        "svId": "SV_4",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "noAsdu": 1,
+        "macSrc": "01:0C:CD:01:00:04",
+        "confRev": 1,
+        "smpRate": 80
+      },
+      "goConfig": {
+        "controlRef": "GOOSE",
+        "goId": "GOOSE_4",
+        "vLan": 100,
+        "vLanPriority": 4,
+        "appId": 4800,
+        "macSrc": "01:0C:CD:04:00:04",
+        "confRev": 1
+      }
     }
   ],
   "communicationConfig": {
@@ -35,6 +123,38 @@
     {
       "values": null,
       "data": [
+        {
+          "Mod": 20.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 20.0,
+          "Ang": 120.0
+        },
+        {
+          "Mod": 20.0,
+          "Ang": -120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
         {
           "Mod": 0.0,
           "Ang": 0.0
@@ -452,6 +572,154 @@
           "Ang": 0.0
         }
       ]
+    },
+    {
+      "values": null,
+      "data": [
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": -120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        }
+      ]
+    },
+    {
+      "values": null,
+      "data": [
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": -120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        }
+      ]
+    },
+    {
+      "values": null,
+      "data": [
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": -120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        }
+      ]
+    },
+    {
+      "values": null,
+      "data": [
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": -120.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        },
+        {
+          "Mod": 0.0,
+          "Ang": 0.0
+        }
+      ]
     }
   ],
   "sequencesConfig": [
@@ -686,11 +954,15 @@
           }
         ]
       }
-    ]
+    ],
+    [],
+    [],
+    [],
+    []
   ],
   "transientConfig": [
     {
-      "fileName": "C:\\Users\\alail\\OneDrive\\Área de Trabalho\\simulation_01.out",
+      "fileName": "",
       "loop": true,
       "nData": 9,
       "setup": [
