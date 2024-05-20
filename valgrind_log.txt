@@ -1,0 +1,188 @@
+==9409== Memcheck, a memory error detector
+==9409== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==9409== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==9409== Command: /root/Virtual-PAC/vQualityMeterNew/src/main
+==9409== Parent PID: 3855
+==9409== 
+==9409== Thread 3:
+==9409== Invalid read of size 4
+==9409==    at 0x4A4FD7C: __condvar_dec_grefs (pthread_cond_wait.c:152)
+==9409==    by 0x4A5019C: __pthread_cond_wait_common (pthread_cond_wait.c:521)
+==9409==    by 0x4A5019C: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2358 is 88 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 8
+==9409==    at 0x4A5001F: __atomic_wide_counter_load_relaxed (atomic_wide_counter.h:30)
+==9409==    by 0x4A5001F: __condvar_load_g1_start_relaxed (pthread_cond_common.c:46)
+==9409==    by 0x4A5001F: __pthread_cond_wait_common (pthread_cond_wait.c:539)
+==9409==    by 0x4A5001F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2350 is 80 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 4
+==9409==    at 0x4A4FCC9: __condvar_confirm_wakeup (pthread_cond_wait.c:53)
+==9409==    by 0x4A50046: __pthread_cond_wait_common (pthread_cond_wait.c:603)
+==9409==    by 0x4A50046: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb236c is 108 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 4
+==9409==    at 0x4A5004A: __pthread_cond_wait_common (pthread_cond_wait.c:607)
+==9409==    by 0x4A5004A: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x57AFFFF: ???
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x1FFEFFA420: ???
+==9409==    by 0x4BB22FF: ???
+==9409==    by 0x200111366: ???
+==9409==    by 0x201FFA2F7: ???
+==9409==    by 0xFFFFFFFFFFFFFF87: ???
+==9409==    by 0x12: ???
+==9409==    by 0x5FAFECF: ???
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==  Address 0x4bb2330 is 48 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 4
+==9409==    at 0x4A53298: __pthread_mutex_cond_lock (pthread_mutex_lock.c:93)
+==9409==    by 0x4A5004E: __pthread_cond_wait_common (pthread_cond_wait.c:607)
+==9409==    by 0x4A5004E: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2320 is 32 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 4
+==9409==    at 0x4A532A2: __pthread_mutex_cond_lock (pthread_mutex_lock.c:94)
+==9409==    by 0x4A5004E: __pthread_cond_wait_common (pthread_cond_wait.c:607)
+==9409==    by 0x4A5004E: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2328 is 40 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid write of size 4
+==9409==    at 0x4A532B5: __pthread_mutex_cond_lock (pthread_mutex_lock.c:182)
+==9409==    by 0x4A5004E: __pthread_cond_wait_common (pthread_cond_wait.c:607)
+==9409==    by 0x4A5004E: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:618)
+==9409==    by 0x112923: task_queue_pop (threadTask.c:33)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2328 is 40 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== Invalid read of size 4
+==9409==    at 0x112928: task_queue_pop (threadTask.c:32)
+==9409==    by 0x112A1A: thread_worker (threadTask.c:50)
+==9409==    by 0x4A50DBA: start_thread (pthread_create.c:444)
+==9409==    by 0x4AD287F: clone (clone.S:100)
+==9409==  Address 0x4bb2318 is 24 bytes inside a block of size 168 free'd
+==9409==    at 0x48431EF: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112BA0: thread_pool_destroy (threadTask.c:81)
+==9409==    by 0x11254F: timed_snifferThread (sniffer.c:646)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409==  Block was alloc'd at
+==9409==    at 0x4840808: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x112A72: thread_pool_init (threadTask.c:59)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== 
+==9409== HEAP SUMMARY:
+==9409==     in use at exit: 272 bytes in 1 blocks
+==9409==   total heap usage: 30 allocs, 29 frees, 25,656 bytes allocated
+==9409== 
+==9409== Thread 1:
+==9409== 272 bytes in 1 blocks are possibly lost in loss record 1 of 1
+==9409==    at 0x48459F3: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9409==    by 0x40112A2: calloc (rtld-malloc.h:44)
+==9409==    by 0x40112A2: allocate_dtv (dl-tls.c:370)
+==9409==    by 0x4011CCD: _dl_allocate_tls (dl-tls.c:629)
+==9409==    by 0x4A5199F: allocate_stack (allocatestack.c:429)
+==9409==    by 0x4A5199F: pthread_create@@GLIBC_2.34 (pthread_create.c:652)
+==9409==    by 0x112B02: thread_pool_init (threadTask.c:66)
+==9409==    by 0x112257: timed_snifferThread (sniffer.c:591)
+==9409==    by 0x10CB89: main (main.c:117)
+==9409== 
+==9409== LEAK SUMMARY:
+==9409==    definitely lost: 0 bytes in 0 blocks
+==9409==    indirectly lost: 0 bytes in 0 blocks
+==9409==      possibly lost: 272 bytes in 1 blocks
+==9409==    still reachable: 0 bytes in 0 blocks
+==9409==         suppressed: 0 bytes in 0 blocks
+==9409== 
+==9409== For lists of detected and suppressed errors, rerun with: -s
+==9409== ERROR SUMMARY: 15 errors from 9 contexts (suppressed: 0 from 0)

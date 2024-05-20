@@ -76,7 +76,11 @@
 			"complex.h": "c",
 			"interface.h": "c",
 			"fstream": "c",
-			"numbers": "c"
+			"numbers": "c",
+			"in.h": "c",
+			"if.h": "c",
+			"fft.h": "c",
+			"util.h": "c"
 		},
 		"C_Cpp.intelliSenseEngineFallback": "enabled",
 		"cmake.sourceDirectory": "/root/Virtual-PAC/vQualityMeterNew/src"

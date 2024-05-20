@@ -15,7 +15,8 @@
                 "/usr/include/python3.11/",
                 "-lm",
                 "-lfftw3",
-                "-lpython3.11"
+                "-lpython3.11",
+                "-fopenmp"
             ],
             "options": {
                 "cwd": "${fileDirname}"
