@@ -293,7 +293,7 @@ namespace Quality
             curVtEvents.AddRange(curSv.interruption.RegisteredEvents);
 
             CbVtEvents.Items.Clear();
-            CbVtEvents.Items.AddRange(curVtEvents.Select(x => x.name).ToArray());
+            CbVtEvents.Items.AddRange(curVtEvents.Select(x => x.eventType.ToString()).ToArray());
 
             TbVtDate.Text = "";
             TbVtMagnitude.Text = "";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tableLayoutPanel1 = new TableLayoutPanel();
             label1 = new Label();
             panel1 = new Panel();
@@ -39,15 +40,19 @@
             checkBox1 = new CheckBox();
             CbxVarVolt = new CheckBox();
             PnMain = new Panel();
+            PbProg = new ProgressBar();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            tmUpt = new System.Windows.Forms.Timer(components);
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
+            PnMain.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(panel1, 0, 1);
             tableLayoutPanel1.Controls.Add(PnMain, 0, 2);
@@ -55,9 +60,9 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 46.42857F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 53.57143F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 484F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 438F));
             tableLayoutPanel1.Size = new Size(1068, 636);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -67,7 +72,8 @@
             label1.Font = new Font("Segoe UI", 16F);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(100, 30);
+            label1.Padding = new Padding(0, 0, 0, 12);
+            label1.Size = new Size(100, 42);
             label1.TabIndex = 0;
             label1.Text = "PRODIST";
             // 
@@ -77,10 +83,11 @@
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel1.Controls.Add(tableLayoutPanel2);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 73);
+            panel1.Location = new Point(3, 45);
+            panel1.Margin = new Padding(3, 3, 3, 12);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(10, 0, 10, 0);
-            panel1.Size = new Size(1062, 75);
+            panel1.Size = new Size(1062, 85);
             panel1.TabIndex = 2;
             // 
             // tableLayoutPanel2
@@ -104,7 +111,7 @@
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 52.63158F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 47.36842F));
-            tableLayoutPanel2.Size = new Size(595, 75);
+            tableLayoutPanel2.Size = new Size(595, 85);
             tableLayoutPanel2.TabIndex = 3;
             // 
             // checkBox5
@@ -115,9 +122,9 @@
             checkBox5.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
             checkBox5.FlatStyle = FlatStyle.Flat;
             checkBox5.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox5.Location = new Point(3, 42);
+            checkBox5.Location = new Point(3, 47);
             checkBox5.Name = "checkBox5";
-            checkBox5.Size = new Size(146, 30);
+            checkBox5.Size = new Size(146, 35);
             checkBox5.TabIndex = 6;
             checkBox5.Text = "Flutuação de Tensão";
             checkBox5.TextAlign = ContentAlignment.MiddleCenter;
@@ -131,9 +138,9 @@
             checkBox4.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
             checkBox4.FlatStyle = FlatStyle.Flat;
             checkBox4.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox4.Location = new Point(155, 42);
+            checkBox4.Location = new Point(155, 47);
             checkBox4.Name = "checkBox4";
-            checkBox4.Size = new Size(163, 30);
+            checkBox4.Size = new Size(163, 35);
             checkBox4.TabIndex = 5;
             checkBox4.Text = "Variação de Frequência";
             checkBox4.TextAlign = ContentAlignment.MiddleCenter;
@@ -149,7 +156,7 @@
             checkBox3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             checkBox3.Location = new Point(424, 3);
             checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(168, 33);
+            checkBox3.Size = new Size(168, 38);
             checkBox3.TabIndex = 4;
             checkBox3.Text = "Desequilíbrio de Tensão";
             checkBox3.TextAlign = ContentAlignment.MiddleCenter;
@@ -165,7 +172,7 @@
             checkBox2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             checkBox2.Location = new Point(324, 3);
             checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(94, 33);
+            checkBox2.Size = new Size(94, 38);
             checkBox2.TabIndex = 3;
             checkBox2.Text = "Harmônicos";
             checkBox2.TextAlign = ContentAlignment.MiddleCenter;
@@ -181,7 +188,7 @@
             checkBox1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             checkBox1.Location = new Point(155, 3);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(163, 33);
+            checkBox1.Size = new Size(163, 38);
             checkBox1.TabIndex = 2;
             checkBox1.Text = "Fator de Potência";
             checkBox1.TextAlign = ContentAlignment.MiddleCenter;
@@ -191,13 +198,15 @@
             // 
             CbxVarVolt.Appearance = Appearance.Button;
             CbxVarVolt.AutoSize = true;
+            CbxVarVolt.Checked = true;
+            CbxVarVolt.CheckState = CheckState.Checked;
             CbxVarVolt.Dock = DockStyle.Fill;
             CbxVarVolt.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
             CbxVarVolt.FlatStyle = FlatStyle.Flat;
             CbxVarVolt.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             CbxVarVolt.Location = new Point(3, 3);
             CbxVarVolt.Name = "CbxVarVolt";
-            CbxVarVolt.Size = new Size(146, 33);
+            CbxVarVolt.Size = new Size(146, 38);
             CbxVarVolt.TabIndex = 1;
             CbxVarVolt.Text = "Variação de Tensão";
             CbxVarVolt.TextAlign = ContentAlignment.MiddleCenter;
@@ -206,11 +215,24 @@
             // 
             // PnMain
             // 
+            PnMain.Controls.Add(PbProg);
             PnMain.Dock = DockStyle.Fill;
-            PnMain.Location = new Point(3, 154);
+            PnMain.Location = new Point(3, 145);
             PnMain.Name = "PnMain";
-            PnMain.Size = new Size(1062, 479);
+            PnMain.Size = new Size(1062, 488);
             PnMain.TabIndex = 3;
+            // 
+            // PbProg
+            // 
+            PbProg.Location = new Point(732, 3);
+            PbProg.Name = "PbProg";
+            PbProg.Size = new Size(321, 16);
+            PbProg.TabIndex = 0;
+            PbProg.Visible = false;
+            // 
+            // tmUpt
+            // 
+            tmUpt.Tick += tmUpt_Tick;
             // 
             // ProdistForm
             // 
@@ -229,6 +251,7 @@
             panel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
+            PnMain.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -245,5 +268,8 @@
         private CheckBox checkBox2;
         private CheckBox checkBox1;
         private Panel PnMain;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ProgressBar PbProg;
+        private System.Windows.Forms.Timer tmUpt;
     }
 }

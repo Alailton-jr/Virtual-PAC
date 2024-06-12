@@ -259,6 +259,12 @@ namespace Quality
                 ANALYSER_STATUS = 9,
                 ANALYSER_DATA = 10,
                 ANALYSER_EVENT_INFO = 11,
+                PRODIST_STATUS = 12,
+                PRODIST_SETUP = 13,
+                PRODIST_START = 14,
+                PRODIST_STOP = 15,
+                PRODIST_DATA = 16,
+                PRODIST_INFO_DATA = 17,
                 NONE = 255,
             }
 
@@ -344,6 +350,76 @@ namespace Quality
                     isConnected = false;
                 }
             }
+
+            public string? SendByte(entryType entry , byte[] Data)
+            {
+                IsSocketConnected();
+
+                if (!isConnected)
+                    if (!Connect())
+                        return null;
+                _mutex.WaitOne();
+                try
+                {
+                    int dataLen = Data.Length;
+                    byte[] dataLenBytes = BitConverter.GetBytes(dataLen);
+
+                    int totalLength = dataLen + 5;
+
+                    if (totalLength < 4096)
+                    {
+                        byte[] sendbuffer = new byte[totalLength];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        Data.CopyTo(sendbuffer, 5);
+
+                        clientSocket.Send(sendbuffer, totalLength, SocketFlags.None);
+                    }
+                    else
+                    {
+                        int remainingLength = totalLength;
+                        int offset = 0;
+                        byte[] sendbuffer = new byte[4096];
+                        sendbuffer[0] = (byte)entry;
+                        dataLenBytes.CopyTo(sendbuffer, 1);
+                        Array.Copy(Data, offset, sendbuffer, 5, Math.Min(4096 - (5), Data.Length - offset));
+                        clientSocket.Send(sendbuffer, 4096, SocketFlags.None);
+
+                        remainingLength -= 4096;
+                        offset += 4096 - 5;
+
+                        while (remainingLength > 0)
+                        {
+                            int chunkSize = Math.Min(remainingLength, 4096);
+                            sendbuffer = new byte[chunkSize];
+                            Array.Copy(Data, offset, sendbuffer, 0, chunkSize);
+                            clientSocket.Send(sendbuffer, chunkSize, SocketFlags.None);
+                            offset += chunkSize;
+                            remainingLength -= chunkSize;
+                        }
+                    }
+
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = clientSocket.Receive(buffer);
+                    if (bytesRead > 0)
+                    {
+                        string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        return receivedData;
+                    }
+                    else
+                        return null;
+                }
+                catch (Exception)
+                {
+                    IsSocketConnected();
+                    return null;
+                }
+                finally
+                {
+                    _mutex.ReleaseMutex();
+                }
+            }
+
 
             public string? SendData(entryType entry, string Data)
             {
@@ -546,7 +622,7 @@ namespace Quality
             public QualityEvent overVoltage { get; set; }
             public QualityEvent underVoltage { get; set; }
             public QualityEvent sustainedinterruption { get; set; }
-
+            public ProdistInfo prodistInfo { get; set; }
 
             public SampledValue()
             {
@@ -593,6 +669,7 @@ namespace Quality
                     minDuration = 60,
                     maxDuration = 180
                 };
+                this.prodistInfo = new ProdistInfo();
             }
 
             public class GeneralInfo()
@@ -654,6 +731,51 @@ namespace Quality
                 overVoltage,
                 underVoltage,
                 sustainedinterruption
+            }
+        
+            public class ProdistInfo
+            {
+                public double[] precLims;
+                public double[] critLims;
+
+                public ProdistInfo()
+                {
+                    precLims = new double[2];
+                    critLims = new double[2];
+                }
+
+                public void setNormalLimist(double nomVoltage)
+                {
+                    if (nomVoltage > 230e3)
+                    {
+                        //0.93 | 0.95 | 1.05 | 1.07
+                        critLims[0] = 0.93 * nomVoltage;
+                        precLims[0] = 0.95 * nomVoltage;
+                        precLims[1] = 1.05 * nomVoltage;
+                        critLims[1] = 1.07 * nomVoltage;
+                    }else if (nomVoltage > 69e3)
+                    {
+                        // 0.90 | 0.95 | 1.05 | 1.07
+                        critLims[0] = 0.90 * nomVoltage;
+                        precLims[0] = 0.95 * nomVoltage;
+                        precLims[1] = 1.05 * nomVoltage;
+                        critLims[1] = 1.07 * nomVoltage;
+                    }else if (nomVoltage > 2.3e3)
+                    {
+                        // 0.9 | 0.93 | 1.06 | 1.05
+                        critLims[0] = 0.9 * nomVoltage;
+                        precLims[0] = 0.93 * nomVoltage;
+                        precLims[1] = 1.06 * nomVoltage;
+                        critLims[1] = 1.05 * nomVoltage;
+                    }else
+                    {
+                        // 0.9 | 0.95 | 1.05 | 1.1
+                        critLims[0] = 0.9 * nomVoltage;
+                        precLims[0] = 0.95 * nomVoltage;
+                        precLims[1] = 1.05 * nomVoltage;
+                        critLims[1] = 1.1 * nomVoltage;
+                    }
+                }
             }
         }
 

@@ -36,9 +36,10 @@
             BtnExit = new Button();
             PnLeft = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            BtnSniffer = new Button();
+            BtnProdist = new Button();
             button3 = new Button();
             BtnMonitor = new Button();
-            BtnSniffer = new Button();
             BtnGeneral = new Button();
             BtnServerConfig = new Button();
             label1 = new Label();
@@ -51,7 +52,6 @@
             button2 = new Button();
             button4 = new Button();
             TimerServerCon = new System.Windows.Forms.Timer(components);
-            BtnProdist = new Button();
             PnTop.SuspendLayout();
             PnLeft.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -130,11 +130,11 @@
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(BtnProdist, 0, 3);
-            tableLayoutPanel1.Controls.Add(button3, 0, 5);
-            tableLayoutPanel1.Controls.Add(BtnMonitor, 0, 2);
-            tableLayoutPanel1.Controls.Add(BtnSniffer, 0, 4);
-            tableLayoutPanel1.Controls.Add(BtnGeneral, 0, 1);
+            tableLayoutPanel1.Controls.Add(BtnSniffer, 0, 2);
+            tableLayoutPanel1.Controls.Add(BtnProdist, 0, 5);
+            tableLayoutPanel1.Controls.Add(button3, 0, 1);
+            tableLayoutPanel1.Controls.Add(BtnMonitor, 0, 4);
+            tableLayoutPanel1.Controls.Add(BtnGeneral, 0, 3);
             tableLayoutPanel1.Controls.Add(BtnServerConfig, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(10, 140);
@@ -151,6 +151,46 @@
             tableLayoutPanel1.Size = new Size(180, 394);
             tableLayoutPanel1.TabIndex = 3;
             // 
+            // BtnSniffer
+            // 
+            BtnSniffer.AutoSize = true;
+            BtnSniffer.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnSniffer.Dock = DockStyle.Top;
+            BtnSniffer.FlatAppearance.BorderSize = 0;
+            BtnSniffer.FlatStyle = FlatStyle.Flat;
+            BtnSniffer.Font = new Font("Segoe UI", 15F);
+            BtnSniffer.Image = Properties.Resources.data;
+            BtnSniffer.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnSniffer.Location = new Point(3, 161);
+            BtnSniffer.Margin = new Padding(3, 3, 3, 18);
+            BtnSniffer.Name = "BtnSniffer";
+            BtnSniffer.Size = new Size(174, 38);
+            BtnSniffer.TabIndex = 4;
+            BtnSniffer.Text = "          Sniffer";
+            BtnSniffer.TextAlign = ContentAlignment.MiddleLeft;
+            BtnSniffer.UseVisualStyleBackColor = true;
+            BtnSniffer.Click += BtnSniffer_Click;
+            // 
+            // BtnProdist
+            // 
+            BtnProdist.AutoSize = true;
+            BtnProdist.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnProdist.Dock = DockStyle.Top;
+            BtnProdist.FlatAppearance.BorderSize = 0;
+            BtnProdist.FlatStyle = FlatStyle.Flat;
+            BtnProdist.Font = new Font("Segoe UI", 15F);
+            BtnProdist.Image = (Image)resources.GetObject("BtnProdist.Image");
+            BtnProdist.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnProdist.Location = new Point(3, 338);
+            BtnProdist.Margin = new Padding(3, 3, 3, 18);
+            BtnProdist.Name = "BtnProdist";
+            BtnProdist.Size = new Size(174, 38);
+            BtnProdist.TabIndex = 7;
+            BtnProdist.Text = "          PRODIST";
+            BtnProdist.TextAlign = ContentAlignment.MiddleLeft;
+            BtnProdist.UseVisualStyleBackColor = true;
+            BtnProdist.Click += BtnProdist_Click;
+            // 
             // button3
             // 
             button3.AutoSize = true;
@@ -161,7 +201,7 @@
             button3.Font = new Font("Segoe UI", 15F);
             button3.Image = Properties.Resources.file;
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(3, 338);
+            button3.Location = new Point(3, 102);
             button3.Margin = new Padding(3, 3, 3, 18);
             button3.Name = "button3";
             button3.Size = new Size(174, 38);
@@ -180,7 +220,7 @@
             BtnMonitor.Font = new Font("Segoe UI", 15F);
             BtnMonitor.Image = Properties.Resources.spyware;
             BtnMonitor.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnMonitor.Location = new Point(3, 161);
+            BtnMonitor.Location = new Point(3, 279);
             BtnMonitor.Margin = new Padding(3, 3, 3, 18);
             BtnMonitor.Name = "BtnMonitor";
             BtnMonitor.Size = new Size(174, 38);
@@ -189,26 +229,6 @@
             BtnMonitor.TextAlign = ContentAlignment.MiddleLeft;
             BtnMonitor.UseVisualStyleBackColor = true;
             BtnMonitor.Click += BtnMonitor_Click;
-            // 
-            // BtnSniffer
-            // 
-            BtnSniffer.AutoSize = true;
-            BtnSniffer.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BtnSniffer.Dock = DockStyle.Top;
-            BtnSniffer.FlatAppearance.BorderSize = 0;
-            BtnSniffer.FlatStyle = FlatStyle.Flat;
-            BtnSniffer.Font = new Font("Segoe UI", 15F);
-            BtnSniffer.Image = Properties.Resources.data;
-            BtnSniffer.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnSniffer.Location = new Point(3, 279);
-            BtnSniffer.Margin = new Padding(3, 3, 3, 18);
-            BtnSniffer.Name = "BtnSniffer";
-            BtnSniffer.Size = new Size(174, 38);
-            BtnSniffer.TabIndex = 4;
-            BtnSniffer.Text = "          Sniffer";
-            BtnSniffer.TextAlign = ContentAlignment.MiddleLeft;
-            BtnSniffer.UseVisualStyleBackColor = true;
-            BtnSniffer.Click += BtnSniffer_Click;
             // 
             // BtnGeneral
             // 
@@ -220,7 +240,7 @@
             BtnGeneral.Font = new Font("Segoe UI", 15F);
             BtnGeneral.Image = Properties.Resources.monitoring;
             BtnGeneral.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnGeneral.Location = new Point(3, 102);
+            BtnGeneral.Location = new Point(3, 220);
             BtnGeneral.Margin = new Padding(3, 3, 3, 18);
             BtnGeneral.Name = "BtnGeneral";
             BtnGeneral.Size = new Size(174, 38);
@@ -357,26 +377,6 @@
             // 
             TimerServerCon.Interval = 1000;
             TimerServerCon.Tick += TimerServerCon_Tick;
-            // 
-            // BtnProdist
-            // 
-            BtnProdist.AutoSize = true;
-            BtnProdist.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BtnProdist.Dock = DockStyle.Top;
-            BtnProdist.FlatAppearance.BorderSize = 0;
-            BtnProdist.FlatStyle = FlatStyle.Flat;
-            BtnProdist.Font = new Font("Segoe UI", 15F);
-            BtnProdist.Image = Properties.Resources.spyware;
-            BtnProdist.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnProdist.Location = new Point(3, 220);
-            BtnProdist.Margin = new Padding(3, 3, 3, 18);
-            BtnProdist.Name = "BtnProdist";
-            BtnProdist.Size = new Size(174, 38);
-            BtnProdist.TabIndex = 7;
-            BtnProdist.Text = "          PRODIST";
-            BtnProdist.TextAlign = ContentAlignment.MiddleLeft;
-            BtnProdist.UseVisualStyleBackColor = true;
-            BtnProdist.Click += BtnProdist_Click;
             // 
             // MainForm
             // 

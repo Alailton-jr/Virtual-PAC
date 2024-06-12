@@ -39,9 +39,23 @@ namespace Quality
             };
             mainControl.socket.ConnectionLost += (sender, e) =>
             {
-                LbConStatus.Text = "Desconectado";
-                LbConStatus.ForeColor = System.Drawing.Color.Red;
-                TimerServerCon.Stop();
+                // if invoke is necessary
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        LbConStatus.Text = "Desconectado";
+                        LbConStatus.ForeColor = System.Drawing.Color.Red;
+                        TimerServerCon.Stop();
+                    }));
+                    return;
+                }
+                else
+                {
+                    LbConStatus.Text = "Desconectado";
+                    LbConStatus.ForeColor = System.Drawing.Color.Red;
+                    TimerServerCon.Stop();
+                }
             };
 
             int newWidth = BtnHome.Width;
@@ -152,6 +166,7 @@ namespace Quality
 
         private void BtnProdist_Click(object sender, EventArgs e)
         {
+            prodistForm.openExt();
             openChildForm(prodistForm);
         }
     }
