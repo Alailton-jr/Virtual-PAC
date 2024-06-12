@@ -173,6 +173,35 @@ void runAnalyse(){
 
 #pragma endregion
 
+#pragma region PRODIST
+
+void run_Prodist(double waitTime, int numSv, int numSample){
+    
+
+    if (prodistThd->running){
+        return;
+    }
+
+    strcpy(prodistThd->ifName, IF_NAME);
+    prodistThd->running = 0;
+    prodistThd->stop = 0;
+    prodistThd->wait_time = waitTime;
+    prodistThd->numSv = numSv;
+    prodistThd->sv_info = pProdistSvs;
+    prodistThd->noSample = numSample;   
+
+    pthread_create(&prodistThd->thread, NULL, startProdist, (void *)prodistThd);
+}
+
+void stop_Prodist(){
+    if (prodistThd->running){
+        prodistThd->stop = 1;
+    }
+}
+
+
+#pragma endregion
+
 typedef enum {
     CAPT_ANY_SV = 0,
     CAPT_ESPECIFC_SV = 1,
@@ -186,6 +215,12 @@ typedef enum {
     ANALYSER_STATUS = 9,
     ANALYSER_DATA = 10,
     ANALYSER_EVENT_INFO = 11,
+    PRODIST_STATUS = 12,
+    PRODIST_SETUP = 13,
+    PRODIST_START = 14,
+    PRODIST_STOP = 15,
+    PRODIST_DATA = 16,
+    PRODIST_INFO_DATA = 17,
 } entryType_e;
 
 void *handle_client(void *threadInfo) {
@@ -435,6 +470,84 @@ void *handle_client(void *threadInfo) {
                     fclose(fp);
                     send(client_socket, data, size, 0);
                     free(data);
+                }
+                break;
+            }
+            case PRODIST_STATUS:{
+                char res[10];
+                sprintf(res, "%d|", prodistThd->running);
+                send(client_socket, res, 10, 0);
+                break;
+            }
+            case PRODIST_SETUP:{
+                send(client_socket, "success", 7, 0);
+                int dataLen = buffer[1] + buffer[2]*256 + buffer[3]*65536 + buffer[4]*16777216;
+                int nSV = buffer[5] + buffer[6]*256 + buffer[7]*65536 + buffer[8]*16777216;
+                for (int i=0;i<nSV;i++){
+                    memcpy(&pProdistSvs[i], &buffer[9+i*sizeof(Prodist_Info_t)], sizeof(Prodist_Info_t));
+                }
+                break;
+            }
+            case PRODIST_START:{
+                send(client_socket, "success", 7, 0);
+                buffer[bytes_received] = '\0';
+                // buffer -> "nSV|WaitTime|numSamples|"
+
+                char *token = strtok(buffer + 5, "|");
+                int nSv = atoi(token);
+                token = strtok(NULL, "|");
+                double waitTime = atof(token);
+                token = strtok(NULL, "|");
+                int numSamples = atoi(token);
+                run_Prodist(waitTime, nSv, numSamples);
+                break;
+            }
+            case PRODIST_STOP:{
+                send(client_socket, "success", 7, 0);
+                stop_Prodist();
+                break;
+            }
+            case PRODIST_INFO_DATA:{
+                char res[40];
+                sprintf(res, "%u|%u|%u|%lf|",prodistThd->running, prodistThd->noSaved, prodistThd->noSample, prodistThd->wait_time);
+                send(client_socket, res, 40, 0);
+                // buffer[bytes_received] = '\0';
+                // char svId[128];
+                // strcpy(svId, buffer + 5);
+                break;
+            }
+            case PRODIST_DATA:{
+                buffer[bytes_received] = '\0';
+                // buffer -> "idx|svID"
+                char *token = strtok(buffer + 5, "|");
+                int idx = atoi(token);
+                token = strtok(NULL, "|");
+                // char filePath[256];
+                // sprintf(filePath, "%s/prodistFiles/%s.bin", curDir, token);
+                char svId[128];
+                strcpy(svId, token);
+                int found = 0;
+                for (int i=0;i<prodistThd->numSv;i++){
+                    if (strcmp(prodistThd->sv_info[i].svID, svId) == 0){
+                        found = 1;
+                        prodistData_t x;
+                        char filePath[256];
+                        sprintf(filePath, "%s/prodistFiles/%s.bin", curDir, svId, idx);
+                        FILE* fp = fopen(filePath, "rb");
+                        if (fp == NULL){
+                            send(client_socket, &error, 4, 0);
+                            break;
+                        }else{
+                            get_data_from_index(fp, idx, &x);
+                            int size = sizeof(prodistData_t);
+                            send(client_socket, &size, 4, 0);
+                            send(client_socket, &x, sizeof(prodistData_t), 0);
+                        }
+                        break;
+                    }
+                }
+                if (!found){
+                    send(client_socket, &error, 4, 0);
                 }
                 break;
             }

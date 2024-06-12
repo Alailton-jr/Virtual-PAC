@@ -9,6 +9,7 @@
 #include "yamlReader.h"
 #include "sniffer.h"
 #include "analyser.h"
+#include "prodist.h"
 
 typedef struct clientThread{
     pthread_t thread;
@@ -21,6 +22,7 @@ typedef struct clientThread{
 extern clientThread_t* clientThd;
 extern snifferThread_t* snifferThd;
 extern analyserThread_t* analyserThd;
+extern prodistThread_t* prodistThd;
 extern char curDir[128];
 
 int create_socket(const char ifname[], int port);

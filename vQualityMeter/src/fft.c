@@ -49,7 +49,6 @@ fft_plan_t fft_plan_create(int N, complex double* signal){
     return plan;
 }
 
-
 void fft_exec(fft_plan_t *plan){
     for (int i = 0; i < plan->nBitOrder; i++){
         plan->t = plan->signal[plan->reverseBitOrder[i][0]];

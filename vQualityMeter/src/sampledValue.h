@@ -55,7 +55,7 @@ typedef struct Quality_Info{
 }Quality_Info_t;
 
 typedef struct SV_Processing{
-    int32_t ***captArr;
+    int32_t ***captArr; // [Channel][Buffer][Cycle] [8][60][80] -> fs = 4800, 60 cycles, 80 samples
     uint8_t found;
     pthread_mutex_t mutex;
     pthread_cond_t condition;
@@ -70,6 +70,12 @@ typedef struct SV_Processing{
     double *rms;
 }SV_Processing_t;
 
+typedef struct Prodist_Info{
+    char svID[128];
+    int32_t noChannel;
+    int32_t smpRate;
+}Prodist_Info_t;
+
 typedef struct SampledValue{
     SV_Info_t info;
     Quality_Info_t quality;
@@ -80,5 +86,6 @@ typedef struct SampledValue{
 
 #define MAX_SAMPLED_VALUES 20
 extern SampledValue_t *pSvs;
+extern Prodist_Info_t *pProdistSvs;
 
 #endif // SAMPLEDVALUE_H

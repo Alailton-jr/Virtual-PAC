@@ -1,10 +1,10 @@
-// valgrind --leak-check=full --log-file="valgrind_log.txt" /root/Virtual-PAC/vQualityMeterNew/src/main
+// valgrind --leak-check=full --log-file="valgrind_log.txt" /root/Virtual-PAC/vQualityMeter/src/main
 
 #include "qualityAPI.h"
 #include "interface.h"
 #include "sampledValue.h"
 #include "util.h"
-
+#include "prodist.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,9 +19,12 @@ cursesThread_t* cursesThd;
 clientThread_t* clientThd;
 snifferThread_t* snifferThd;
 analyserThread_t* analyserThd;
+prodistThread_t* prodistThd;
 char curDir[128];
 
 SampledValue_t *pSvs;
+Prodist_Info_t *pProdistSvs;
+
 
 #define MATH_PI 3.14159265358979323846
 
@@ -79,7 +82,6 @@ void cleanUp(){
 
 #pragma endregion
 
-
 void runServer(){
     int serverSocket = create_socket(IF_NAME, PORT);
     clientThread_t *curClient = clientThd;
@@ -101,22 +103,52 @@ int main(){
     SampledValue_t svs[20];
     pSvs = svs; // Glogal Sampled Value Pointer
 
+    Prodist_Info_t prodistSvs[20];
+    pProdistSvs = prodistSvs;
+
     clientThread_t _clientThd = {0};
     snifferThread_t _snifferThd = {0};
     analyserThread_t _analyserThd = {0};
     cursesThread_t _cursesThd = {0};
+    prodistThread_t _prodistThd = {0};
 
     clientThd = &_clientThd;
     snifferThd = &_snifferThd;
     analyserThd = &_analyserThd;
     cursesThd = &_cursesThd;
+    prodistThd = &_prodistThd;
 
     signal(SIGINT, cleanUp);
     signal(SIGTERM, cleanUp);
 
     get_script_dir(curDir, sizeof(curDir));
 
+    // int num_sv = 0;
+    // load_analyser_setup("monitorSetup.yaml", &num_sv, pSvs);
+    // SampledValue_t* sv = pSvs;
+    // if (num_sv == 0){
+    //     printf("No Sampled Values found\n");
+    //     return;
+    // }
+
+    // prodistThread_t thd;
+    // strcpy(thd.ifName, IF_NAME);
+    // thd.numSv = num_sv;
+    // thd.stop = 0;
+    // thd.sv = sv;
+    // thd.wait_time = 5;
+    // pthread_create(&thd.thread, NULL, startProdist, (void *)&thd);
+
+    // pthread_join(thd.thread, NULL);
+
+    // return 0;
+
+    // 
+
+    // startProdist();
+
     runServer();
+    return 0;
 
     // startInterface();
 

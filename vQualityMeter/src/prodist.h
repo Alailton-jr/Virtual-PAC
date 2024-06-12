@@ -6,45 +6,32 @@
 #include "sampledValue.h"
 #include <complex.h>
 
-typedef enum {
-    Normal = 0,
-    Precarious = 1,
-    Critical = 2
-} voltageState_t;
-
-typedef struct voltageVarThread{
-    pthread_t threadAnalyse, threadCapture;
-    int8_t running, stop;
-    uint16_t numSv;
-    SampledValue_t* sv;
-    uint16_t noSamples;
-    double interval;
-    double nominalVoltage;
-    double precVoltage[2];
-    double criticalVoltage[2];
-    union{
-        uint64_t timestamp[2];
-        double complex measurement[41][8];
-        double fp;
-        double dit_h, dtt, dtt_p, dtt_i, dtt_3, dtt_95, dtt_p_99, dtt_i_95, dtt_3_95;
-        double complex compSym
-        double fd;
-        voltageState_t state;
-    }data[4096];
-    int index;
-    int32_t buffer;
-} voltageVarThread_t;
+extern char curDir[128];
 
 typedef struct prodistThread{
     pthread_t thread;
+    char ifName[128];
     int8_t running, stop;
     uint16_t numSv;
-    SampledValue_t *sv;
+    Prodist_Info_t *sv_info;
+    double wait_time;
+    int noSample;
+    uint32_t noSaved;
 }prodistThread_t;
 
+typedef struct prodistData{
+    uint64_t timestamp[2];
+    double complex phasor[8];
+    double complex aparentPower;
+    double activePower, reactivePower;
+    double fp;
+    double dit_h, dtt, dtt_p, dtt_i, dtt_3, dtt_95, dtt_p_99, dtt_i_95, dtt_3_95;
+    double complex compSym_I[3], compSym_V[3];
+    double fd;
+}prodistData_t;
 
-
-
+void* startProdist(void* threadInfo);
+void get_data_from_index(FILE* fp, int idx, prodistData_t* x);
 
 
 #endif // PRODIST_H 

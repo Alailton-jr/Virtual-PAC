@@ -15,13 +15,13 @@
 #define POST_FAULT_CYCLES 5
 #define CYCLE_WINDOW 10
 
-complex double symCompMatrix[3][3] = {
+static complex double symCompMatrix[3][3] = {
     {1.0/3.0, -0.5/3.0 - 0.86602540378/3.0*I, -0.5/3.0 + 0.86602540378/3.0*I},
     {1.0/3.0, -0.5/3.0 + 0.86602540378/3.0*I, -0.5/3.0 - 0.86602540378/3.0*I},
     {1.0/3.0, 1.0/3.0, 1.0/3.0}
 };
 
-void threePhaseToSymComp(complex double* abc, complex double* sym){
+static void threePhaseToSymComp(complex double* abc, complex double* sym){
     for (int i=0; i<3; i++){
         sym[i] = 0;
         for (int j=0; j<3; j++){
@@ -190,7 +190,7 @@ int closestPowerOfTwo(int n){
     return i/2;
 }
 
-void downsample(const double* input, int input_size, complex double *output, int output_size) {
+void downsample(complex double* input, int input_size, complex double *output, int output_size) {
     double step = (double)input_size / output_size;
     int i;
     for (i = 0; i < output_size; i++) {
@@ -234,7 +234,7 @@ void* single_sv_analyser(void* ThreadInfo){
     uint32_t pSmpRate = sv->process.pSmpRate;
     pthread_mutex_unlock(&procs->mutex);
 
-    double *pre_input = (double*)malloc(sizeof(double) * smpRate);
+    complex double *pre_input = (complex double*)malloc(sizeof(complex double) * smpRate);
     complex double *output = (complex double *)malloc(pSmpRate * sizeof(complex double));
     fft_plan_t plan = fft_plan_create(pSmpRate, output);
 

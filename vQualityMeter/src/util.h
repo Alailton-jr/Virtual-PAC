@@ -9,5 +9,5 @@
 
 
 void get_script_dir(char *path, size_t size);
-
+void remove_dir(const char *name);
 #endif

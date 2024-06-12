@@ -80,7 +80,11 @@
 			"in.h": "c",
 			"if.h": "c",
 			"fft.h": "c",
-			"util.h": "c"
+			"util.h": "c",
+			"prodist.h": "c",
+			"net_tstamp.h": "c",
+			"math.h": "c",
+			"dirent.h": "c"
 		},
 		"C_Cpp.intelliSenseEngineFallback": "enabled",
 		"cmake.sourceDirectory": "/root/Virtual-PAC/vQualityMeterNew/src"

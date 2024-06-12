@@ -127,3 +127,23 @@ int32_t createSocket(eth_t *eth, char* ifName, uint8_t pushFrames2driver, uint8_
 
     return EXIT_SUCCESS;
 }
+
+void configMsgHdr(struct msghdr *msg_hdr, struct iovec* iov, eth_t* eth){
+    memset(msg_hdr, 0, sizeof(msg_hdr));
+    memset(iov, 0, sizeof(iov));
+
+    msg_hdr->msg_name = &eth->bind_addr;
+    msg_hdr->msg_namelen = eth->bind_addrSize;
+
+    iov->iov_base = eth->rx_buffer;
+    iov->iov_len = eth->rx_size;
+    
+    // msg_hdr->msg_name = NULL;
+    msg_hdr->msg_iov = iov;
+    msg_hdr->msg_iovlen = 1;
+    msg_hdr->msg_control = NULL;
+    msg_hdr->msg_controllen = 0;
+}
+
+
+
