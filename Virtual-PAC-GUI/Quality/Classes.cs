@@ -271,7 +271,7 @@ namespace Quality
             public SocketConnection()
             {
                 this.serverIp = "0.0.0.0";
-                this.serverPort = 8000;
+                this.serverPort = 8008;
                 isConnected = false;
                 _mutex = new Mutex();
             }
@@ -423,6 +423,11 @@ namespace Quality
 
             public string? SendData(entryType entry, string Data)
             {
+                //try
+                //{
+                //    clientSocket.Shutdown(SocketShutdown.Receive);
+                //}catch(Exception) { }
+                
                 IsSocketConnected();
 
                 if (!isConnected)
@@ -432,6 +437,8 @@ namespace Quality
                 try
                 {
                     
+
+
                     int dataLen = Data.Length;
                     byte[] dataBytes = Encoding.ASCII.GetBytes(Data);
                     byte[] dataLenBytes = BitConverter.GetBytes(dataLen);
@@ -737,11 +744,13 @@ namespace Quality
             {
                 public double[] precLims;
                 public double[] critLims;
+                public double[] fpLims;
 
                 public ProdistInfo()
                 {
                     precLims = new double[2];
                     critLims = new double[2];
+                    fpLims = new double[2];
                 }
 
                 public void setNormalLimist(double nomVoltage)
@@ -775,6 +784,8 @@ namespace Quality
                         precLims[1] = 1.05 * nomVoltage;
                         critLims[1] = 1.1 * nomVoltage;
                     }
+                    fpLims[0] = 0.92;
+                    fpLims[1] = 0.92;
                 }
             }
         }

@@ -33,11 +33,10 @@
             label1 = new Label();
             panel1 = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
-            checkBox5 = new CheckBox();
-            checkBox4 = new CheckBox();
-            checkBox3 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox1 = new CheckBox();
+            CbxFluct = new CheckBox();
+            CbxUnbalance = new CheckBox();
+            CbxHarmonico = new CheckBox();
+            CbxFP = new CheckBox();
             CbxVarVolt = new CheckBox();
             PnMain = new Panel();
             PbProg = new ProgressBar();
@@ -61,8 +60,8 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 438F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 61F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 477F));
             tableLayoutPanel1.Size = new Size(1068, 636);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -79,7 +78,6 @@
             // 
             // panel1
             // 
-            panel1.AutoSize = true;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel1.Controls.Add(tableLayoutPanel2);
             panel1.Dock = DockStyle.Fill;
@@ -87,112 +85,95 @@
             panel1.Margin = new Padding(3, 3, 3, 12);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(10, 0, 10, 0);
-            panel1.Size = new Size(1062, 85);
+            panel1.Size = new Size(1062, 46);
             panel1.TabIndex = 2;
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.AutoSize = true;
             tableLayoutPanel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            tableLayoutPanel2.ColumnCount = 4;
+            tableLayoutPanel2.ColumnCount = 5;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel2.Controls.Add(checkBox5, 0, 1);
-            tableLayoutPanel2.Controls.Add(checkBox4, 0, 1);
-            tableLayoutPanel2.Controls.Add(checkBox3, 3, 0);
-            tableLayoutPanel2.Controls.Add(checkBox2, 2, 0);
-            tableLayoutPanel2.Controls.Add(checkBox1, 1, 0);
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.Controls.Add(CbxFluct, 5, 0);
+            tableLayoutPanel2.Controls.Add(CbxUnbalance, 3, 0);
+            tableLayoutPanel2.Controls.Add(CbxHarmonico, 2, 0);
+            tableLayoutPanel2.Controls.Add(CbxFP, 1, 0);
             tableLayoutPanel2.Controls.Add(CbxVarVolt, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Left;
             tableLayoutPanel2.Location = new Point(10, 0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 52.63158F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 47.36842F));
-            tableLayoutPanel2.Size = new Size(595, 85);
+            tableLayoutPanel2.Size = new Size(719, 46);
             tableLayoutPanel2.TabIndex = 3;
             // 
-            // checkBox5
+            // CbxFluct
             // 
-            checkBox5.Appearance = Appearance.Button;
-            checkBox5.AutoSize = true;
-            checkBox5.Dock = DockStyle.Fill;
-            checkBox5.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
-            checkBox5.FlatStyle = FlatStyle.Flat;
-            checkBox5.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox5.Location = new Point(3, 47);
-            checkBox5.Name = "checkBox5";
-            checkBox5.Size = new Size(146, 35);
-            checkBox5.TabIndex = 6;
-            checkBox5.Text = "Flutuação de Tensão";
-            checkBox5.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox5.UseVisualStyleBackColor = true;
+            CbxFluct.Appearance = Appearance.Button;
+            CbxFluct.AutoSize = true;
+            CbxFluct.Dock = DockStyle.Fill;
+            CbxFluct.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
+            CbxFluct.FlatStyle = FlatStyle.Flat;
+            CbxFluct.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            CbxFluct.Location = new Point(555, 3);
+            CbxFluct.Name = "CbxFluct";
+            CbxFluct.Size = new Size(161, 40);
+            CbxFluct.TabIndex = 6;
+            CbxFluct.Text = "Flutuação de Tensão";
+            CbxFluct.TextAlign = ContentAlignment.MiddleCenter;
+            CbxFluct.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // CbxUnbalance
             // 
-            checkBox4.Appearance = Appearance.Button;
-            checkBox4.AutoSize = true;
-            checkBox4.Dock = DockStyle.Fill;
-            checkBox4.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
-            checkBox4.FlatStyle = FlatStyle.Flat;
-            checkBox4.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox4.Location = new Point(155, 47);
-            checkBox4.Name = "checkBox4";
-            checkBox4.Size = new Size(163, 35);
-            checkBox4.TabIndex = 5;
-            checkBox4.Text = "Variação de Frequência";
-            checkBox4.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox4.UseVisualStyleBackColor = true;
+            CbxUnbalance.Appearance = Appearance.Button;
+            CbxUnbalance.AutoSize = true;
+            CbxUnbalance.Dock = DockStyle.Fill;
+            CbxUnbalance.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
+            CbxUnbalance.FlatStyle = FlatStyle.Flat;
+            CbxUnbalance.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            CbxUnbalance.Location = new Point(381, 3);
+            CbxUnbalance.Name = "CbxUnbalance";
+            CbxUnbalance.Size = new Size(168, 40);
+            CbxUnbalance.TabIndex = 4;
+            CbxUnbalance.Text = "Desequilíbrio de Tensão";
+            CbxUnbalance.TextAlign = ContentAlignment.MiddleCenter;
+            CbxUnbalance.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // CbxHarmonico
             // 
-            checkBox3.Appearance = Appearance.Button;
-            checkBox3.AutoSize = true;
-            checkBox3.Dock = DockStyle.Fill;
-            checkBox3.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
-            checkBox3.FlatStyle = FlatStyle.Flat;
-            checkBox3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox3.Location = new Point(424, 3);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(168, 38);
-            checkBox3.TabIndex = 4;
-            checkBox3.Text = "Desequilíbrio de Tensão";
-            checkBox3.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox3.UseVisualStyleBackColor = true;
+            CbxHarmonico.Appearance = Appearance.Button;
+            CbxHarmonico.AutoSize = true;
+            CbxHarmonico.Dock = DockStyle.Fill;
+            CbxHarmonico.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
+            CbxHarmonico.FlatStyle = FlatStyle.Flat;
+            CbxHarmonico.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            CbxHarmonico.Location = new Point(281, 3);
+            CbxHarmonico.Name = "CbxHarmonico";
+            CbxHarmonico.Size = new Size(94, 40);
+            CbxHarmonico.TabIndex = 3;
+            CbxHarmonico.Text = "Harmônicos";
+            CbxHarmonico.TextAlign = ContentAlignment.MiddleCenter;
+            CbxHarmonico.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // CbxFP
             // 
-            checkBox2.Appearance = Appearance.Button;
-            checkBox2.AutoSize = true;
-            checkBox2.Dock = DockStyle.Fill;
-            checkBox2.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
-            checkBox2.FlatStyle = FlatStyle.Flat;
-            checkBox2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox2.Location = new Point(324, 3);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(94, 38);
-            checkBox2.TabIndex = 3;
-            checkBox2.Text = "Harmônicos";
-            checkBox2.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            checkBox1.Appearance = Appearance.Button;
-            checkBox1.AutoSize = true;
-            checkBox1.Dock = DockStyle.Fill;
-            checkBox1.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
-            checkBox1.FlatStyle = FlatStyle.Flat;
-            checkBox1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            checkBox1.Location = new Point(155, 3);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(163, 38);
-            checkBox1.TabIndex = 2;
-            checkBox1.Text = "Fator de Potência";
-            checkBox1.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox1.UseVisualStyleBackColor = true;
+            CbxFP.Appearance = Appearance.Button;
+            CbxFP.AutoSize = true;
+            CbxFP.Dock = DockStyle.Fill;
+            CbxFP.FlatAppearance.CheckedBackColor = Color.FromArgb(31, 45, 56);
+            CbxFP.FlatStyle = FlatStyle.Flat;
+            CbxFP.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            CbxFP.Location = new Point(147, 3);
+            CbxFP.Name = "CbxFP";
+            CbxFP.Size = new Size(128, 40);
+            CbxFP.TabIndex = 2;
+            CbxFP.Text = "Fator de Potência";
+            CbxFP.TextAlign = ContentAlignment.MiddleCenter;
+            CbxFP.UseVisualStyleBackColor = true;
             // 
             // CbxVarVolt
             // 
@@ -206,7 +187,7 @@
             CbxVarVolt.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             CbxVarVolt.Location = new Point(3, 3);
             CbxVarVolt.Name = "CbxVarVolt";
-            CbxVarVolt.Size = new Size(146, 38);
+            CbxVarVolt.Size = new Size(138, 40);
             CbxVarVolt.TabIndex = 1;
             CbxVarVolt.Text = "Variação de Tensão";
             CbxVarVolt.TextAlign = ContentAlignment.MiddleCenter;
@@ -217,9 +198,9 @@
             // 
             PnMain.Controls.Add(PbProg);
             PnMain.Dock = DockStyle.Fill;
-            PnMain.Location = new Point(3, 145);
+            PnMain.Location = new Point(3, 106);
             PnMain.Name = "PnMain";
-            PnMain.Size = new Size(1062, 488);
+            PnMain.Size = new Size(1062, 527);
             PnMain.TabIndex = 3;
             // 
             // PbProg
@@ -248,7 +229,6 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             PnMain.ResumeLayout(false);
@@ -262,11 +242,10 @@
         private Panel panel1;
         private CheckBox CbxVarVolt;
         private TableLayoutPanel tableLayoutPanel2;
-        private CheckBox checkBox5;
-        private CheckBox checkBox4;
-        private CheckBox checkBox3;
-        private CheckBox checkBox2;
-        private CheckBox checkBox1;
+        private CheckBox CbxFluct;
+        private CheckBox CbxUnbalance;
+        private CheckBox CbxHarmonico;
+        private CheckBox CbxFP;
         private Panel PnMain;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ProgressBar PbProg;

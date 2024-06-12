@@ -30,6 +30,8 @@ namespace Quality
         private bool running;
         private bool _serverConnected;
 
+        private List<ComboBox> allSVIDsCbx;
+
         private BackgroundWorker serverCheckWorker;
 
         private int noDownloadedCapt;
@@ -64,8 +66,9 @@ namespace Quality
                 if (value)
                 {
                     // TODO: Start a thread to check connect here
-                    panels.BtnVarVoltConnect.Enabled = false;
-                    panels.BtnVarVoltConnect.Text = "Connected";
+                    ChangeBtnConnected(false);
+                    //panels.BtnVarVoltConnect.Enabled = false;
+                    //panels.BtnVarVoltConnect.Text = "Connected";
                     if (!serverCheckWorker.IsBusy)
                     {
                         serverCheckWorker.RunWorkerAsync();
@@ -75,12 +78,23 @@ namespace Quality
                 }
                 else
                 {
-                    panels.BtnVarVoltConnect.Enabled = true;
-                    panels.BtnVarVoltConnect.Text = "Connect";
-                    panels.BtnVarVolStart.Enabled = false;
-                    panels.BtnVarVoltStop.Enabled = false;
+                    ChangeBtnConnected(true);
+                    //panels.BtnVarVoltConnect.Enabled = true;
+                    //panels.BtnVarVoltConnect.Text = "Connect";
+                    //panels.BtnVarVolStart.Enabled = false;
+                    //panels.BtnVarVoltStop.Enabled = false;
                 }
             }
+        }
+
+        private void ChangeBtnConnected(bool status)
+        {
+            panels.BtnVarVoltConnect.Enabled = status;
+            panels.BtnVarVoltConnect.Text = status ? "Connect" : "Connected";
+
+            panels.BtnFPCon.Enabled = status;
+            panels.BtnFPCon.Text = status ? "Connect" : "Connected";
+
         }
 
         public ProdistForm()
@@ -90,15 +104,28 @@ namespace Quality
             cbxList = new List<CheckBox>()
             {
                 CbxVarVolt,
+                CbxFP,
+                CbxHarmonico,
+                CbxUnbalance,
+                CbxFluct
             };
 
             socket = mainControl.socket;
             serverConnected = false;
 
             panels = new ProdistFormPanels();
+
             panels.BtnVarVoltConnect.Click += Connect2Server;
+            panels.BtnFPCon.Click += Connect2Server;
+
+
             panels.BtnVarVolStart.Click += BtnVarVoltStart_Click;
             panels.BtnVarVoltStop.Click += BtnVarVoltStop_Click;
+
+            panels.BtnFPCon.Click += Connect2Server;
+            panels.BtnFPStart.Click += BtnVarVoltStart_Click;
+            panels.BtnFPStop.Click += BtnVarVoltStop_Click;
+
 
             serverCheckWorker = new BackgroundWorker();
             serverCheckWorker.DoWork += serverCheckWorker_DoWork;
@@ -119,6 +146,13 @@ namespace Quality
             panels.TbVarVoltPrecLow.Validated += VarVolLimsChanged;
 
             panels.CbxVarVoltSVID.SelectedIndexChanged += CbxSVIDChanged;
+            panels.CbxFPSVID.SelectedIndexChanged += CbxSVIDChanged;
+
+            allSVIDsCbx= new List<ComboBox>()
+            {
+                panels.CbxVarVoltSVID,
+                panels.CbxFPSVID
+            };
 
             svList = mainControl.sampledValues;
 
@@ -140,18 +174,26 @@ namespace Quality
             panels.BtnVarVoltStop.Enabled = run;
             panels.TbVarVoltInterval.Enabled = !run;
             panels.TbVarVoltNoSample.Enabled = !run;
+
+            panels.BtnFPStart.Enabled = !run;
+            panels.BtnFPStop.Enabled = run;
+            panels.TbFPInterval.Enabled = !run;
+            panels.TbFPNoSample.Enabled = !run;
         }
 
         private void fillCheckBoxSV()
         {
             panels.CbxVarVoltSVID.Items.Clear();
+            panels.CbxFPSVID.Items.Clear();
             foreach (var sv in mainControl.sampledValues)
             {
                 panels.CbxVarVoltSVID.Items.Add(sv.SVID);
+                panels.CbxFPSVID.Items.Add(sv.SVID);
             }
             if (panels.CbxVarVoltSVID.Items.Count > 0)
             {
                 panels.CbxVarVoltSVID.SelectedIndex = 0;
+                panels.CbxFPSVID.SelectedIndex = 0;
             }
         }
 
@@ -183,6 +225,35 @@ namespace Quality
                 panels.PnVarVoltage.BringToFront();
                 panels.PnVarVoltage.Visible = true;
             }
+            else if(local == CbxFP)
+            {
+                PnMain.Controls.Add(panels.PnFP);
+                panels.PnFP.Dock = DockStyle.Fill;
+                panels.PnFP.BringToFront();
+                panels.PnFP.Visible = true;
+            }
+            else if (local == CbxHarmonico)
+            {
+                PnMain.Controls.Add(panels.PnHar);
+                panels.PnHar.Dock = DockStyle.Fill;
+                panels.PnHar.BringToFront();
+                panels.PnHar.Visible = true;
+            }
+            else if (local == CbxUnbalance)
+            {
+                PnMain.Controls.Add(panels.PnUnbalance);
+                panels.PnUnbalance.Dock = DockStyle.Fill;
+                panels.PnUnbalance.BringToFront();
+                panels.PnUnbalance.Visible = true;
+            }
+            else if (local == CbxFluct)
+            {
+                PnMain.Controls.Add(panels.PnFluctua);
+                panels.PnFluctua.Dock = DockStyle.Fill;
+                panels.PnFluctua.BringToFront();
+                panels.PnFluctua.Visible = true;
+            }
+                        
 
 
         }
@@ -224,14 +295,13 @@ namespace Quality
                     serverConnected = true;
                     running = false;
                     changeEnables(false);
-                    panels.BtnVarVolStart.Enabled = true;
-                    panels.BtnVarVoltStop.Enabled = false;
                 }
                 else
                 {
                     serverConnected = false;
                     changeEnables(false);
                     panels.BtnVarVolStart.Enabled = false;
+                    panels.BtnFPStart.Enabled = false;
                 }
             }
             else
@@ -239,6 +309,7 @@ namespace Quality
                 serverConnected = false;
                 changeEnables(false);
                 panels.BtnVarVolStart.Enabled = false;
+                panels.BtnFPStart.Enabled = false;
             }
         }
 
@@ -264,8 +335,7 @@ namespace Quality
                     if (res == "success")
                     {
                         running = true;
-                        panels.BtnVarVolStart.Enabled = false;
-                        panels.BtnVarVoltStop.Enabled = true;
+                        changeEnables(true);
                         maxSmp = double.Parse(panels.TbVarVoltNoSample.Text);
                         clearCapt();
                     }
@@ -285,6 +355,10 @@ namespace Quality
             panels.TbVarVoltPrecLow.Text = svList[curSvIdx].prodistInfo.precLims[0].ToString();
             panels.TbVarVoltPrecHigh.Text = svList[curSvIdx].prodistInfo.precLims[1].ToString();
 
+            panels.TbFPLimInd.Text = svList[curSvIdx].prodistInfo.fpLims[0].ToString();
+            panels.TbFPLimCap.Text = svList[curSvIdx].prodistInfo.fpLims[1].ToString();
+
+
         }
 
         private void VarVolLimsChanged(object sender, EventArgs e)
@@ -293,6 +367,9 @@ namespace Quality
             svList[curSvIdx].prodistInfo.critLims[1] = double.Parse(panels.TbVarVoltCritcHigh.Text);
             svList[curSvIdx].prodistInfo.precLims[0] = double.Parse(panels.TbVarVoltPrecLow.Text);
             svList[curSvIdx].prodistInfo.precLims[1] = double.Parse(panels.TbVarVoltPrecHigh.Text);
+
+            svList[curSvIdx].prodistInfo.fpLims[0] = double.Parse(panels.TbFPLimInd.Text);
+            svList[curSvIdx].prodistInfo.fpLims[1] = double.Parse(panels.TbFPLimCap.Text);
 
             recreateTable();
         }
@@ -305,8 +382,7 @@ namespace Quality
                 {
                     var res = socket.SendData(SocketConnection.entryType.PRODIST_STOP, "");
                     running = false;
-                    panels.BtnVarVolStart.Enabled = true;
-                    panels.BtnVarVoltStop.Enabled = false;
+                    changeEnables(false);
                 }
             }
         }
@@ -316,13 +392,15 @@ namespace Quality
             if (panels == null) return;
             if (running)
             {
-                panels.BtnVarVolStart.Enabled = false;
-                panels.BtnVarVolStart.Enabled = true;
+                //panels.BtnVarVolStart.Enabled = false;
+                //panels.BtnVarVolStart.Enabled = true;
+                changeEnables(true);
             }
             else
             {
-                panels.BtnVarVolStart.Enabled = true;
-                panels.BtnVarVoltStop.Enabled = false;
+                //panels.BtnVarVolStart.Enabled = true;
+                //panels.BtnVarVoltStop.Enabled = false;
+                changeEnables(false);
             }
             panels.BtnVarVolStart.Update();
             panels.BtnVarVoltStop.Update();
@@ -331,6 +409,15 @@ namespace Quality
         private void CbxSVIDChanged(object sender, EventArgs e)
         {
             ComboBox local = sender as ComboBox;
+            for (int i=0;i<allSVIDsCbx.Count;i++)
+            {
+                if (local != allSVIDsCbx[i])
+                {
+                    allSVIDsCbx[i].SelectedIndexChanged -= CbxSVIDChanged;
+                    allSVIDsCbx[i].SelectedIndex = local.SelectedIndex;
+                    allSVIDsCbx[i].SelectedIndexChanged += CbxSVIDChanged;
+                }
+            }
             curSvIdx = local.SelectedIndex;
             clearCapt();
             updateTextBoxLims();
@@ -529,6 +616,7 @@ namespace Quality
                 nlc = 0;
                 nlp = 0;
                 panels.DgvVarVolt.Rows.Clear();
+                panels.DgvFP.Rows.Clear();
                 updateTable();
             }
         }

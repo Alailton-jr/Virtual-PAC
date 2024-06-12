@@ -482,6 +482,7 @@ namespace Quality
                         BtnStartSearch.Text = "Parar Monitoramento";
                     }
                 }
+                monitoring = true;
             }
             else
             {
@@ -493,6 +494,7 @@ namespace Quality
                     TimerEvents.Stop();
                     monitoring = false;
                 }
+                monitoring = false;
             }
         }
 
