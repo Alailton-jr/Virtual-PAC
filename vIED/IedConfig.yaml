@@ -12,7 +12,7 @@ Goose:
   - PROT.P1PIOC.Op.general
   dataSetName: DataSet_0
   goId: GO01
-  macDst: 01:0C:CD:01:00:00
+  macDst: 01:0C:CD:01:00:01
   maxTime: 2000
   minTime: 2
   vLanId: 256
@@ -26,15 +26,15 @@ Protection Function:
     Pickup: 0
     Polarity: null
   PDIS:
-  - Ajuste: 10.4
+  - Ajuste: 104
     Angle: 30
     Enabled: true
     Time Delay: 0
     Type: Admitancia
-  - Ajuste: 23.4
+  - Ajuste: 234
     Angle: 30
     Enabled: true
-    Time Delay: 0.5
+    Time Delay: 5
     Type: Admitancia
   - Ajuste: 32
     Angle: 80
@@ -42,9 +42,9 @@ Protection Function:
     Time Delay: 1
     Type: Reatancia
   PIOC Neutral:
-  - Enabled: false
-    Pickup: 0
-    Time Delay: 0
+  - Enabled: true
+    Pickup: 480
+    Time Delay: 2
   - Enabled: false
     Pickup: 0
     Time Delay: 0
@@ -54,16 +54,16 @@ Protection Function:
   PIOC Phase:
   - Enabled: true
     Pickup: 1200
-    Time Delay: 0.5
+    Time Delay: 5
   - Enabled: true
     Pickup: 3600
-    Time Delay: 0.2
-  - Enabled: true
+    Time Delay: 2
+  - Enabled: false
     Pickup: 4800
-    Time Delay: 0.05
+    Time Delay: 5
   PTOC Neutral:
   - Curve: C1
-    Enabled: false
+    Enabled: true
     Pickup: 0
     Time Dial: 0
   - Curve: C1
@@ -90,20 +90,20 @@ Protection Function:
   PTOV:
   - Enabled: true
     Pickup: 14490
-    Time Delay: 0.5
+    Time Delay: 5
   - Enabled: true
     Pickup: 15180
-    Time Delay: 0.3
+    Time Delay: 3
   - Enabled: false
     Pickup: 0
     Time Delay: 0
   PTUV:
   - Enabled: true
     Pickup: 13110
-    Time Delay: 0.5
+    Time Delay: 5
   - Enabled: true
     Pickup: 12420
-    Time Delay: 0.2
+    Time Delay: 2
   - Enabled: false
     Pickup: 0
     Time Delay: 0
@@ -113,7 +113,7 @@ Sniffer:
   Frequency: 60
   Iface: null
   IfaceIntern: null
-  MacDst: 01:0C:CD:04:00:00
+  MacDst: 01:0C:CD:01:00:00
   MacIntern: 01:0C:CD:0A:00:00
   NoAsdu: 0
   Ppc: 80

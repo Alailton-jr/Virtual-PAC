@@ -206,7 +206,7 @@ void downsample(complex double* input, int input_size, complex double *output, i
     }
 }
 
-void* single_sv_analyser(void* ThreadInfo){
+void* single_sv_analyser(void* ThreadInfo){ 
 
 #pragma region definitions
 

@@ -54,6 +54,44 @@ typedef struct prodistThreadData{
 } prodistThreadData_t;
 
 
+static void plot_and_save(int32_t *data, int size, const char *csv_filename, const char *plot_filename) {
+    if (!data || size <= 0 || !csv_filename || !plot_filename) {
+        fprintf(stderr, "Invalid input to plot_and_save\n");
+        return;
+    }
+
+    // Save data as a CSV file
+    FILE *csvFile = fopen(csv_filename, "w");
+    if (!csvFile) {
+        perror("fopen");
+        return;
+    }
+
+    // Write data to the CSV file
+    for (int i = 0; i < size; i++) {
+        fprintf(csvFile, "%d,%d\n", i, data[i]);
+    }
+    fclose(csvFile);
+
+    // Use gnuplot to generate the plot
+    FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
+    if (!gnuplotPipe) {
+        perror("popen");
+        return;
+    }
+
+    fprintf(gnuplotPipe, "set datafile separator ','\n");
+    fprintf(gnuplotPipe, "set terminal png\n");
+    fprintf(gnuplotPipe, "set output '%s'\n", plot_filename);
+    fprintf(gnuplotPipe, "set title 'Data Plot'\n");
+    fprintf(gnuplotPipe, "set xlabel 'Index'\n");
+    fprintf(gnuplotPipe, "set ylabel 'Value'\n");
+    fprintf(gnuplotPipe, "plot '%s' using 1:2 with lines title 'Data'\n", csv_filename);
+
+    fflush(gnuplotPipe);
+    pclose(gnuplotPipe);
+}
+
 void* prodist_process_frame(void* threadInfo){
 
     pkt_process_prodist_t* pktInfo = (pkt_process_prodist_t*) threadInfo;
@@ -219,9 +257,9 @@ static void downsample(int32_t* input, int input_size, complex double *output, i
 }
 
 static complex double symCompMatrix[3][3] = {
-    {1.0/3.0, -0.5/3.0 - 0.86602540378/3.0*I, -0.5/3.0 + 0.86602540378/3.0*I},
+    {1.0/3.0, 1.0/3.0, 1.0/3.0},
     {1.0/3.0, -0.5/3.0 + 0.86602540378/3.0*I, -0.5/3.0 - 0.86602540378/3.0*I},
-    {1.0/3.0, 1.0/3.0, 1.0/3.0}
+    {1.0/3.0, -0.5/3.0 - 0.86602540378/3.0*I, -0.5/3.0 + 0.86602540378/3.0*I}
 };
 
 static void threePhaseToSymComp(complex double* abc, complex double* sym){
@@ -232,6 +270,12 @@ static void threePhaseToSymComp(complex double* abc, complex double* sym){
         }
     }
     return;
+}
+
+int compare(const void *a, const void *b) {
+    double val1 = *(double*)a;
+    double val2 = *(double*)b;
+    return (val1 > val2) - (val1 < val2);
 }
 
 void process_sv_data(capture_data_t* svData, int numSv){
@@ -256,11 +300,16 @@ void process_sv_data(capture_data_t* svData, int numSv){
     }
 
     static complex double measurement[41][8];
+    memset(input, 0, sizeof(input));
+    memset(measurement, 0, sizeof(measurement));
 
     for (int i=0;i<numSv;i++){
         svData->idx = 0;
         clock_gettime(CLOCK_REALTIME, &t0);
         prodistData_t data;
+        if (i == 0){
+             plot_and_save(svData[i].buffer[4], 80, "test.csv", "test.png");
+        }
         for (int j=0; j<svData[i].noChannel; j++){
             if (svData[i].smpRate == 80){
                 downsample(svData[i].buffer[j], 80, &input, 64);
@@ -283,23 +332,77 @@ void process_sv_data(capture_data_t* svData, int numSv){
         data.timestamp[0] = t0.tv_sec;
         data.timestamp[1] = t0.tv_nsec;
 
+        double angRef = carg(measurement[1][4]);
+        for (int j = 0; j < 8; j++) {
+            double ang = carg(measurement[1][j]); 
+            double mag = cabs(measurement[1][j]);
+            double newAng = ang - angRef;
+            measurement[1][j] = mag * (cos(newAng) + 1.0i*sin(newAng)); // Corrected line
+        }
+
         // Power
         data.aparentPower = 0;
-        for (int i=0;i<3;i++){
-            data.aparentPower += measurement[1][i] * measurement[1][i+4];
+        for (int j=0;j<3;j++){
+            data.aparentPower += conj(measurement[1][j]) * measurement[1][j+4];
         }
         data.activePower = creal(data.aparentPower);
         data.reactivePower = cimag(data.aparentPower);
-        data.fp = carg(data.aparentPower) * 180 / PI;
+
+        data.fp = data.activePower/cabs(data.aparentPower);
+
 
         // Fundamental Phasor
-        for (int i=0;i<8;i++){
-            data.phasor[i] = measurement[1][i];
+        for (int j=0;j<8;j++){
+            data.phasor[j] = measurement[1][j];
         }
 
         // CompSym
         threePhaseToSymComp(&measurement[1][0], data.compSym_I);
         threePhaseToSymComp(&measurement[1][4], data.compSym_V);
+
+        data.fd = cabs(data.compSym_V[2])/cabs(data.compSym_V[1]) * 100;
+        
+        //Harmonics
+        // DIT_h
+        data.dtt = 0;
+        data.dtt_p = 0;
+        data.dtt_i = 0;
+        data.dtt_3 = 0;
+        for (int j=0;j<3;j++){
+            double dtt = 0, dtt_p = 0, dtt_i = 0, dtt_3 = 0;
+            double val;
+            for (int i=2; i<41;i++){
+                val = cabs(measurement[i][j+4] * measurement[i][j+4]);
+                dtt += val;
+                if (i%2 == 0 && i%3 != 0){
+                    dtt_p += val;
+                }
+                if ((i+1)%2 == 0 && i%3 != 0){
+                    dtt_i += val;
+                }
+                if (i%3 == 0){
+                    dtt_3 = 0;
+                }
+            }
+
+            dtt = sqrt(dtt)/cabs(measurement[1][j+4]) * 100;
+            dtt_p = sqrt(dtt_p)/cabs(measurement[1][j+4]) * 100;
+            dtt_i = sqrt(dtt_i)/cabs(measurement[1][j+4]) * 100;
+            dtt_3 = sqrt(dtt_3)/cabs(measurement[1][j+4]) * 100;
+
+            if (data.dtt < dtt){
+                data.dtt = dtt;
+            }
+            if (data.dtt_p < dtt_p){
+                data.dtt_p = dtt_p;
+            }
+            if (data.dtt_i < dtt_i){
+                data.dtt_i = dtt_i;
+            }
+            if (data.dtt_3 < dtt_3){
+                data.dtt_3 = dtt_3;
+            }
+        }
         
         
         save_data(svData[i].fp, &data);
@@ -388,6 +491,7 @@ void* startProdist(void* threadInfo){
         if (smpCount == noSample)
             goto CLEANUP;
 
+        // process_sv_data(NULL, 0);
 
 
         // Wait for next Capture

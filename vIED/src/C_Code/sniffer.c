@@ -19,8 +19,8 @@
 #define NUM_THREADS 4 // Number of threads in the pool
 #define MAX_RAW 80 // Number of samples per cycle
 #define NUM_DFT_PER_CYCLE 4 // Number of DFTs computation per cycle
-#define TASK_QUEUE_SIZE 5 // Max number of tasks in the queue
-#define NUM_CHANELS 8 // Number of channels
+#define TASK_QUEUE_SIZE 5 // Max numbe  r of tasks in the queue
+#define NUM_CHANNELS 8 // Number of channels
 ThreadPool pool; // Thread pool
 
 //---------------- Sampled Values --------------//
@@ -98,8 +98,8 @@ void computeDFT() {
         values[j*2] = sqrt(2*(dftOuput[1][0]*dftOuput[1][0] + dftOuput[1][1]*dftOuput[1][1]))/MAX_RAW;
         values[j*2+1] =  atan2(dftOuput[1][0], dftOuput[1][1]);
     }
-    // for(int i=0;i<8;i++) printf("%lf |_%lf\n", values[i+i],values[i+i+1]);
-    // printf("\n");
+    for(int i=0;i<8;i++) printf("%lf |_%lf\n", values[i+i],values[i+i+1]);
+    printf("\n");
 }
 
 /*

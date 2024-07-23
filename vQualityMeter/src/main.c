@@ -5,15 +5,16 @@
 #include "sampledValue.h"
 #include "util.h"
 #include "prodist.h"
+#include "fft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>
 #include <unistd.h>
-#include <fftw3.h>
 #include <complex.h>
 #include <signal.h>
+
 
 cursesThread_t* cursesThd;
 clientThread_t* clientThd;
@@ -146,6 +147,21 @@ int main(){
     // 
 
     // startProdist();
+
+    // static complex double input[256];
+
+    // static fft_plan_t plan64;
+    // plan64 = fft_plan_create(64, input);
+
+    // for (int i = 0; i<40;i++){
+    //     double t = 0.0;
+    //     for (int j=0; j < 64;j++){
+    //         input[j] = 100*sin(2*PI*60*t);
+    //         t += 1.0/60.0/64.0;
+    //     }
+    //     fft_exec(&plan64);
+    // }
+
 
     runServer();
     return 0;

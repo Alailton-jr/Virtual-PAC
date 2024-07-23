@@ -1,0 +1,13 @@
+
+
+
+# Ignore all .csv files
+*.csv
+
+# Ignore all .bin files
+*.bin
+
+# Other ignore rules
+# e.g., ignoring node_modules and log files
+node_modules/
+*.log

@@ -25,7 +25,7 @@ typedef struct prodistData{
     double complex aparentPower;
     double activePower, reactivePower;
     double fp;
-    double dit_h, dtt, dtt_p, dtt_i, dtt_3, dtt_95, dtt_p_99, dtt_i_95, dtt_3_95;
+    double dtt, dtt_p, dtt_i, dtt_3;
     double complex compSym_I[3], compSym_V[3];
     double fd;
 }prodistData_t;

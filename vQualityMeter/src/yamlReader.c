@@ -80,6 +80,7 @@ void printSampledValueYaml(SampledValuesYaml_t *sv, int numSv){
 }
 
 void parseYamlEvent2SV(QualityEventsYaml_t* yamlEvent, VTCD_Info_t* event, int32_t nomVal){
+    event->save_waveform = 1;
     event->topThreshold = (int32_t)(yamlEvent->topThreshold * nomVal);
     event->bottomThreshold = (int32_t)(yamlEvent->bottomThreshold * nomVal);
     event->minDuration = yamlEvent->minDuration;

@@ -221,6 +221,7 @@ typedef enum {
     PRODIST_STOP = 15,
     PRODIST_DATA = 16,
     PRODIST_INFO_DATA = 17,
+    ANALYSER_WAVEFORM = 18,
 } entryType_e;
 
 void *handle_client(void *threadInfo) {
@@ -458,6 +459,27 @@ void *handle_client(void *threadInfo) {
                 sprintf(filePath, "%s/analyserFiles/%s_info.csv", curDir, buffer + 5);
                 // printf("%s\n", filePath);
                 FILE *fp = fopen(filePath, "r");
+                if (fp == NULL){
+                    send(client_socket, &error, 4, 0);
+                }else{
+                    fseek(fp, 0, SEEK_END);
+                    int size = ftell(fp);
+                    send(client_socket, &size, 4, 0);
+                    fseek(fp, 0, SEEK_SET);
+                    char *data = (char*) malloc(size);
+                    fread(data, size, 1, fp);
+                    fclose(fp);
+                    send(client_socket, data, size, 0);
+                    free(data);
+                }
+                break;
+            }
+            case ANALYSER_WAVEFORM:{
+                // char fileName [960];
+                buffer[bytes_received] = '\0';
+                printf("%s\n", buffer+6);
+                // sprintf(fileName, "%s", buffer + 5);
+                FILE *fp = fopen(buffer + 6, "r");
                 if (fp == NULL){
                     send(client_socket, &error, 4, 0);
                 }else{

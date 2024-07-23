@@ -45,7 +45,7 @@ SYSTEM_SERVICE_PATH = /etc/systemd/system/
 .PHONY: install_service
 install_service:
 	@cp $(CURDIR)/$(SERVICE_NAME) $(SYSTEM_SERVICE_PATH)
-	@systemctl daemon-reload
+	
 
 .PHONY: install
 install: venv install_service
